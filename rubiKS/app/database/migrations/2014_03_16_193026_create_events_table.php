@@ -11,12 +11,12 @@ class CreateEventsTable extends Migration {
 			$table->increments('id');
 			$table->string('readable_id', 10);
 			$table->string('short_name', 10);
-			$table->string('name', 20);
-			$table->string('attempts', 40);
-			$table->string('type');
+			$table->string('name', 30);
+			$table->string('attempts', 20);
+			$table->string('type', 50);
 			$table->integer('time_limit');
 			$table->text('description');
-			$table->text('help');
+			$table->string('help', 50);
 		});
 	}
 

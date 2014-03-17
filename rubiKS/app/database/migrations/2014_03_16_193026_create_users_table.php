@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration {
 			$table->text('notes');
 			$table->string('status');
 			$table->date('joined_date');
+			$table->date('banned_date');
 			$table->timestamps();
 			$table->string('level', 1);
 			$table->string('forum_nickname')->nullable();
