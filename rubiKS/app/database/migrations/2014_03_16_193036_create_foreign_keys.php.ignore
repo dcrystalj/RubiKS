@@ -1,0 +1,103 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+
+class CreateForeignKeys extends Migration {
+
+	public function up()
+	{
+		Schema::table('results', function(Blueprint $table) {
+			$table->foreign('competition_id')->references('id')->on('competitions')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('results', function(Blueprint $table) {
+			$table->foreign('event_id')->references('id')->on('events')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('results', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('competitions', function(Blueprint $table) {
+			$table->foreign('delegate1')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('competitions', function(Blueprint $table) {
+			$table->foreign('delegate2')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('competitions', function(Blueprint $table) {
+			$table->foreign('delegate3')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('news', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('messages', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('registrations', function(Blueprint $table) {
+			$table->foreign('competition_id')->references('id')->on('competitions')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('registrations', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+		Schema::table('delegates', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
+	}
+
+	public function down()
+	{
+		Schema::table('results', function(Blueprint $table) {
+			$table->dropForeign('results_competition_id_foreign');
+		});
+		Schema::table('results', function(Blueprint $table) {
+			$table->dropForeign('results_event_id_foreign');
+		});
+		Schema::table('results', function(Blueprint $table) {
+			$table->dropForeign('results_user_id_foreign');
+		});
+		Schema::table('competitions', function(Blueprint $table) {
+			$table->dropForeign('competitions_delegate1_foreign');
+		});
+		Schema::table('competitions', function(Blueprint $table) {
+			$table->dropForeign('competitions_delegate2_foreign');
+		});
+		Schema::table('competitions', function(Blueprint $table) {
+			$table->dropForeign('competitions_delegate3_foreign');
+		});
+		Schema::table('news', function(Blueprint $table) {
+			$table->dropForeign('news_user_id_foreign');
+		});
+		Schema::table('messages', function(Blueprint $table) {
+			$table->dropForeign('messages_user_id_foreign');
+		});
+		Schema::table('registrations', function(Blueprint $table) {
+			$table->dropForeign('registrations_competition_id_foreign');
+		});
+		Schema::table('registrations', function(Blueprint $table) {
+			$table->dropForeign('registrations_user_id_foreign');
+		});
+		Schema::table('delegates', function(Blueprint $table) {
+			$table->dropForeign('delegates_user_id_foreign');
+		});
+	}
+}

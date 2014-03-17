@@ -12,6 +12,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'users';
 
+	public $timestamps = true;
+	protected $softDelete = false;
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -47,6 +50,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+
+	public function results()
+	{
+		return $this->hasMany('Result');
 	}
 
 }
