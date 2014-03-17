@@ -13,7 +13,7 @@ class CreateNewsTable extends Migration {
 			$table->text('text');
 			$table->integer('user_id')->unsigned();
 			$table->timestamps();
-			$table->string('url_slug', 40);
+			$table->string('url_slug', 60)->unique();
 			$table->string('visible', 1);
 		});
 	}
