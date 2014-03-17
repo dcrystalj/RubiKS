@@ -108,6 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Bootstrapper\BootstrapperServiceProvider',
+		'Former\FormerServiceProvider',
 
 	),
 
@@ -199,7 +200,8 @@ return array(
 		'Thumbnail' 	  => 'Bootstrapper\Thumbnail',
 		'Typeahead' 	  => 'Bootstrapper\Typeahead',
 		'Typography' 	  => 'Bootstrapper\Typography',
-		
+		'Former' 		  => 'Former\FormerServiceProvider',
+
 	),
 
 );
