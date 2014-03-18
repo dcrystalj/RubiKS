@@ -21,7 +21,6 @@ class CreateCompetitionsTable extends Migration {
 			$table->integer('delegate1')->unsigned()->nullable();
 			$table->integer('delegate2')->unsigned()->nullable();
 			$table->integer('delegate3')->unsigned()->nullable();
-			$table->string('algorithms_url');
 			$table->string('description');
 			$table->string('registration_fee');
 			$table->string('country');
