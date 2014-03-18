@@ -150,7 +150,7 @@ return array(
 		'Crypt'           => 'Illuminate\Support\Facades\Crypt',
 		'DB'              => 'Illuminate\Support\Facades\DB',
 		'Eloquent'        => 'Illuminate\Database\Eloquent\Model',
-		'Event'           => 'Illuminate\Support\Facades\Event',
+		'LaravelEvent'    => 'Illuminate\Support\Facades\Event',	// Renamed Event to LaravelEvent
 		'File'            => 'Illuminate\Support\Facades\File',
 		'Form'            => 'Illuminate\Support\Facades\Form',
 		'Hash'            => 'Illuminate\Support\Facades\Hash',
