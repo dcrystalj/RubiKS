@@ -11,7 +11,12 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/', 'NewsController@index');
+
+Route::get('news/archive', 'NewsController@archive');
+Route::resource('news', 'NewsController');
+
+App::missing(function($exception)
 {
-	return View::make('hello');
+    return Response::view('errors.missing', array(), 404);
 });
