@@ -14,6 +14,7 @@ class CreateEventsTable extends Migration {
 			$table->string('name', 30);
 			$table->string('attempts', 20);
 			$table->string('type', 50);
+			$table->string('show_average', '1');
 			$table->integer('time_limit');
 			$table->text('description');
 			$table->string('help', 50);
