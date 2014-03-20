@@ -22,4 +22,10 @@ class Competition extends Eloquent {
 		return User::find($id);
 	}
 
+	public static function getEvents($events, $array = FALSE)
+	{
+		if ($array) return explode(' ', $events);
+		return Event::whereRaw("readable_id IN ('" . implode("','", explode(' ', $events)) . "')")->get();
+	}
+
 }

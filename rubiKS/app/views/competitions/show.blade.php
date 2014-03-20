@@ -20,12 +20,16 @@
 			<td>{{ $competition->city }}</td>
 		</tr>
 		<tr>
+			<td>Startnina</td>
+			<td>{{ $competition->registration_fee }}</td>
+		</tr>
+		<tr>
 			<td>Prizorišče</td>
-			<td>{{ $competition->venue }}</td>
+			<td colspan="3">{{ $competition->venue }}</td>
 		</tr>
 		<tr>
 			<td>Opis</td>
-			<td>{{ $competition->description }}</td>
+			<td colspan="3">{{ $competition->description }}</td>
 		</tr>
 		<tr>
 			<td>Organizator</td>
@@ -61,7 +65,27 @@
 		</tr>
 		<tr>
 			<td>Discipline</td>
-			<td>{{ $competition->events }}</td>
+			<td colspan="3">
+				@foreach ($events as $i => $event)
+					<a href="{{ url('events', $event->readable_id) }}">{{ $event->short_name }}</a>@if ($i + 1!= count($events)), @endif
+				@endforeach
+			</td>
 		</tr>
 	</table>
+
+	@foreach ($events as $event)
+		<table class="table table-condensed table-striped">
+			<thead>
+				<tr>
+					<th colspan="4">{{ $event->name }}</th>
+				</tr>
+				<tr>
+					<th>Tekmovalec</th>
+					<th>Posamezno</th>
+					<th>Povprečje</th>
+					<th>Vsi poskusi</th>
+				</tr>
+			</thead>
+		</table>
+	@endforeach
 @stop

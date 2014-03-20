@@ -33,6 +33,8 @@ class CompetitionsController extends \BaseController {
 		$delegate2 = Competition::getDelegate($competition->delegate2);
 		$delegate3 = Competition::getDelegate($competition->delegate3);
 
-		return View::make('competitions.show')->with('competition', $competition)->with('d1', $delegate1)->with('d2', $delegate2)->with('d3', $delegate3);
+		$events = Competition::getEvents($competition->events);
+
+		return View::make('competitions.show')->with('competition', $competition)->with('d1', $delegate1)->with('d2', $delegate2)->with('d3', $delegate3)->with('events', $events);
 	}
 }
