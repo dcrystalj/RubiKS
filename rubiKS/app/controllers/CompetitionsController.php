@@ -26,8 +26,13 @@ class CompetitionsController extends \BaseController {
 			$competition = Competition::where('short_name', $id);
 		}
 
-		$competition = $competition->firstOrFail();
+		if ($competition->count() < 1) App::abort(404);
+		$competition = $competition->first();
 
-		return dd($competition);
+		$delegate1 = Competition::getDelegate($competition->delegate1);
+		$delegate2 = Competition::getDelegate($competition->delegate2);
+		$delegate3 = Competition::getDelegate($competition->delegate3);
+
+		return View::make('competitions.show')->with('competition', $competition)->with('d1', $delegate1)->with('d2', $delegate2)->with('d3', $delegate3);
 	}
 }

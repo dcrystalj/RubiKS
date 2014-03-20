@@ -16,4 +16,10 @@ class Competition extends Eloquent {
 		return $this->hasMany('Registration');
 	}
 
+	public static function getDelegate($id)
+	{
+		if (NULL == $id) return NULL;
+		return User::find($id);
+	}
+
 }
