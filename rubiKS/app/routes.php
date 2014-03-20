@@ -16,6 +16,8 @@ Route::get('/', 'NewsController@index');
 Route::get('news/archive', 'NewsController@archive');
 Route::resource('news', 'NewsController');
 
+Route::resource('competitors', 'UsersController');
+
 Route::get('competitions/without', 'CompetitionsController@indexWithout');
 Route::resource('competitions', 'CompetitionsController');
 
