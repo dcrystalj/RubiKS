@@ -73,6 +73,8 @@
 		</tr>
 	</table>
 
+	{{-- Preveri ali je tekma že zaključena! Če še ni, izpiši prijavljene tekmovalce oz. izpiši možnost prijave na tekmo. --}}
+
 	@foreach ($events as $event)
 		<table class="table table-condensed table-striped">
 			<thead>
