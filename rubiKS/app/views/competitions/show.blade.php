@@ -76,10 +76,10 @@
 	{{-- Preveri ali je tekma že zaključena! Če še ni, izpiši prijavljene tekmovalce oz. izpiši možnost prijave na tekmo. --}}
 
 	@foreach ($events as $event)
-		<table class="table table-condensed table-striped">
+		<table class="table table-condensed table-striped table-bordered">
 			<thead>
 				<tr>
-					<th colspan="4">{{ $event->name }}</th>
+					<th colspan="4" style="background-color: #ddd;">{{ $event->name }}</th>
 				</tr>
 				<tr>
 					<th>Tekmovalec</th>
