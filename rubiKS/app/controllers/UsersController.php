@@ -5,7 +5,7 @@ class UsersController extends \BaseController {
 	public function index()
 	{
 		$users = User::all()->sortBy('last_name');
-		return View::make('competitor.index')->with('users', $users)->with('i', 1);
+		return View::make('competitors.index')->with('users', $users)->with('i', 1);
 	}
 
 	public function show($id)
@@ -42,6 +42,6 @@ class UsersController extends \BaseController {
 			}
 		}
 
-		return View::make('competitor.show')->with('user', $user)->with('events', $events)->with('results', $results);
+		return View::make('competitors.show')->with('user', $user)->with('events', $events)->with('results', $results);
 	}
 }

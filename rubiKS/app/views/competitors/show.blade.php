@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<td>Datum registracije</td>
-				<td>{{ Help::date($user->joined_date) }}</td>
+				<td>{{ Date::parse($user->joined_date) }}</td>
 			</tr>
 			<tr>
 				<td>Status</td>

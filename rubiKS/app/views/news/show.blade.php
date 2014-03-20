@@ -1,6 +1,6 @@
 @extends('main')
 @section('content')
-	<h2>{{ $article->title }} <small class="pull-right">{{ Help::dateTime($article->created_at, TRUE) }}</small></h2>
+	<h2>{{ $article->title }} <small class="pull-right">{{ Date::dateTime($article->created_at, TRUE) }}</small></h2>
 	<span>
 		{{ $article->text }}
 	</span>

@@ -16,7 +16,7 @@
 					<td style="text-align: right;">{{ $i-- }}.</td>
 					<td><a href="{{ url('competitions', $competition['short_name']) }}">{{ $competition->name }}</a></td>
 					<td>{{ $competition->city }}</td>
-					<td>{{ Help::date($competition->date) }}</td>
+					<td>{{ Date::parse($competition->date) }}</td>
 				</tr>
 			@endforeach
 		</tbody>
