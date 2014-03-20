@@ -57,4 +57,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Result');
 	}
 
+	public function getGenderAttribute($g) {
+		//return $g === 'm' ? 'M' : 'Ž';
+		return $g === 'm' ? 'moški' : 'ženski';
+	}
+
 }
