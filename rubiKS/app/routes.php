@@ -16,6 +16,9 @@ Route::get('/', 'NewsController@index');
 Route::get('news/archive', 'NewsController@archive');
 Route::resource('news', 'NewsController');
 
+Route::get('competitions/without', 'CompetitionsController@indexWithout');
+Route::resource('competitions', 'CompetitionsController');
+
 App::missing(function($exception)
 {
     return Response::view('errors.missing', array(), 404);
