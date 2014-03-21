@@ -79,52 +79,10 @@
 		@endif
 	</table>
 
-	{{-- Preveri ali je tekma že zaključena! Če še ni, izpiši prijavljene tekmovalce oz. izpiši možnost prijave na tekmo. --}}
 	@if ($competition->status <= 0)
-	@foreach ($events as $event)
-		<table class="table table-condensed table-striped table-bordered">
-			<thead>
-				<tr>
-					<th colspan="4" style="background-color: #ddd;">{{ $event->name }}</th>
-				</tr>
-				<tr>
-					<th>Tekmovalec</th>
-					<th>Posamezno</th>
-					<th>Povprečje</th>
-					<th>Vsi poskusi</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach ($results as $r)
-					@if ($r->event_id == $event->id) 
-						<?php $competitor = $competitors[$r->user_id]; ?>
-						<tr>
-							<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->name . ' ' . $competitor->last_name }}</a></td>
-							<td>{{ Result::parse($r->single, $event->readable_id) }}</td>
-							@if ($event->show_average === '1')
-								<td> {{ Result::parse($r->average, $event->readable_id) }}</td>
-								<td>
-								<small>
-									<?php $res = Result::parseAll($r->results); ?>
-								@foreach ($res as $i => $r)
-									@if ($r['exclude'])
-										[{{ $r['t'] }}]@if ($i + 1 < count($res)), @endif
-									@else
-										{{ $r['t'] }}@if ($i + 1 < count($res)), @endif
-									@endif
-								@endforeach
-
-								</small>
-								</td>
-							@else
-								<td>/</td>
-								<td>/</td>
-							@endif
-						</tr>
-					@endif
-				@endforeach
-			</tbody>
-		</table>
-	@endforeach
+		@include('competitions.results')
+	@elseif ($competition->status == 1)
+		<a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a><br>
+		Seznam prijavljenih po disciplinah.
 	@endif
 @stop
