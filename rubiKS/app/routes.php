@@ -21,6 +21,8 @@ Route::resource('competitors', 'UsersController');
 Route::get('competitions/without', 'CompetitionsController@indexWithout');
 Route::resource('competitions', 'CompetitionsController');
 
+Route::resource('events', 'EventsController', array('only' => array('index', 'show')));
+
 Route::resource('algorithms', 'AlgorithmsController', array('only' => array('index', 'show')));
 
 App::missing(function($exception)
