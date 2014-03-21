@@ -23,10 +23,10 @@
 			<td>Kje obstaja ta podatek?</td>
 		</tr>--}}
 		<tr>
-			<td>Državni rekord:</td>
+			<td>Državni rekord (RubiKS):</td>
 			<td>
 				@if ($event->show_average)
-					{{ Result::parse($average->average, $event->readable_id) }} ({{ Result::parse($single->single, $event->readable_id) }})
+					{{ Result::parse($single->single, $event->readable_id) }} ({{ Result::parse($average->average, $event->readable_id) }})
 				@else
 					{{ Result::parse($single->single, $event->readable_id) }}
 				@endif
