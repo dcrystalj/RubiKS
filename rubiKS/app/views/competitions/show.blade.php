@@ -71,6 +71,12 @@
 				@endforeach
 			</td>
 		</tr>
+		@if ($competition->status == -1)
+		<tr>
+			<td>Mešalni algoritmi</td>
+			<td><a href="{{ url('algorithms', $competition->short_name) }}">arhiv</a></td>
+		</tr>
+		@endif
 	</table>
 
 	{{-- Preveri ali je tekma že zaključena! Če še ni, izpiši prijavljene tekmovalce oz. izpiši možnost prijave na tekmo. --}}
