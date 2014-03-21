@@ -80,7 +80,7 @@
 	</table>
 
 	{{-- Preveri ali je tekma že zaključena! Če še ni, izpiši prijavljene tekmovalce oz. izpiši možnost prijave na tekmo. --}}
-
+	@if ($competition->status <= 0)
 	@foreach ($events as $event)
 		<table class="table table-condensed table-striped table-bordered">
 			<thead>
@@ -126,4 +126,5 @@
 			</tbody>
 		</table>
 	@endforeach
+	@endif
 @stop
