@@ -99,8 +99,13 @@
 								<td> {{ Result::parse($r->average, $event->readable_id) }}</td>
 								<td>
 								<small>
-								@foreach (Result::parseAll($r->results) as $r)
-									{{ $r }}
+									<?php $res = Result::parseAll($r->results); ?>
+								@foreach ($res as $i => $r)
+									@if ($r['exclude'])
+										[{{ $r['t'] }}]@if ($i + 1 < count($res)), @endif
+									@else
+										{{ $r['t'] }}@if ($i + 1 < count($res)), @endif
+									@endif
 								@endforeach
 
 								</small>

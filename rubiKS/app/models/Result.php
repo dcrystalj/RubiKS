@@ -54,8 +54,25 @@ class Result extends Eloquent {
 	public static function parseAll($results, $event = NULL)
 	{
 		$results = explode('@', $results);
-		foreach ($results as $i => $r) $results[$i] = self::parse($r, $event);
-		return $results;
+		foreach ($results as $i => $r) $results[$i] = (int) $r;
+		$gotMin = FALSE;
+		$gotMax = FALSE;
+		$final = [];
+		foreach ($results as $i => $r) {
+			$exclude = FALSE;
+			if (!$gotMin AND $r === min($results)) {
+				$exclude = TRUE;
+				$gotMin = TRUE;
+			}
+			if (!$gotMax AND $r === max($results)) {
+				$exclude = TRUE;
+				$gotMax = TRUE;
+			}
+
+			$final[] = array('t' => self::parse($r, $event), 'exclude' => $exclude);
+		}
+
+		return $final;
 	}
 
 	public static function format33310MIN($nrCubes, $time)
