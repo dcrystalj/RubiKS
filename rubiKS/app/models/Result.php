@@ -51,6 +51,13 @@ class Result extends Eloquent {
 		}
 	}
 
+	public static function parseAll($results, $event = NULL)
+	{
+		$results = explode('@', $results);
+		foreach ($results as $i => $r) $results[$i] = self::parse($r, $event);
+		return $results;
+	}
+
 	public static function format33310MIN($nrCubes, $time)
 	{
 		$a = (string) (400 - $nrCubes);

@@ -35,6 +35,21 @@ class CompetitionsController extends \BaseController {
 
 		$events = Competition::getEvents($competition->events);
 
-		return View::make('competitions.show')->with('competition', $competition)->with('d1', $delegate1)->with('d2', $delegate2)->with('d3', $delegate3)->with('events', $events);
+		// Check competition's status
+		//$results = Result::where('competition_id', $competition->id)->get();
+		$results = $competition->results()->orderBy('average', 'asc');
+		$results = $results->get();
+
+		$competitors = array();
+		foreach ($results as $r) {
+			if (!array_key_exists($r->user_id, $competitors)) $competitors[$r->user_id] = User::find($r->user_id);
+		}
+
+		return View::make('competitions.show')
+						->with('competition', $competition)
+						->with('d1', $delegate1)->with('d2', $delegate2)->with('d3', $delegate3)
+						->with('events', $events)
+						->with('results', $results)
+						->with('competitors', $competitors);
 	}
 }

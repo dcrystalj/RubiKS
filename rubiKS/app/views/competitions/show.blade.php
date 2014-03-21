@@ -88,6 +88,31 @@
 					<th>Vsi poskusi</th>
 				</tr>
 			</thead>
+			<tbody>
+				@foreach ($results as $r)
+					@if ($r->event_id == $event->id) 
+						<?php $competitor = $competitors[$r->user_id]; ?>
+						<tr>
+							<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->name . ' ' . $competitor->last_name }}</a></td>
+							<td>{{ Result::parse($r->single, $event->readable_id) }}</td>
+							@if ($event->show_average === '1')
+								<td> {{ Result::parse($r->average, $event->readable_id) }}</td>
+								<td>
+								<small>
+								@foreach (Result::parseAll($r->results) as $r)
+									{{ $r }}
+								@endforeach
+
+								</small>
+								</td>
+							@else
+								<td>/</td>
+								<td>/</td>
+							@endif
+						</tr>
+					@endif
+				@endforeach
+			</tbody>
 		</table>
 	@endforeach
 @stop
