@@ -36,12 +36,16 @@ class CompetitionsController extends \BaseController {
 		$events = Competition::getEvents($competition->events);
 
 		// Check competition's status
-		//$results = Result::where('competition_id', $competition->id)->get();
-		$results = $competition->results()->orderBy('average', 'asc');
-		$results = $results->get();
-
+		
+		$results = array(); // $results[event id][round id][]
 		$competitors = array();
-		foreach ($results as $r) {
+		$res = $competition->results()->orderBy('event_id', 'asc')->orderBy('average', 'asc')->orderBy('single', 'asc')->get();
+
+		foreach ($res as $r) {
+			if (!array_key_exists($r->event_id, $results)) $results[$r->event_id] = array();
+			if (!array_key_exists($r->round, $results[$r->event_id])) $results[$r->event_id][$r->round] = array();
+			$results[$r->event_id][$r->round][] = $r;
+
 			if (!array_key_exists($r->user_id, $competitors)) $competitors[$r->user_id] = User::find($r->user_id);
 		}
 
