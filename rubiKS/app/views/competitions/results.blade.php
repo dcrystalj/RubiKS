@@ -31,14 +31,13 @@
 							<td>
 							<small>
 								<?php $resultAllResults = Result::parseAll($result->results); ?>
-							@foreach ($resultAllResults as $i => $subResult)
-								@if ($subResult['exclude'])
-									[{{ $subResult['t'] }}]@if ($i + 1 < count($resultAllResults)), @endif
-								@else
-									{{ $subResult['t'] }}@if ($i + 1 < count($resultAllResults)), @endif
-								@endif
-							@endforeach
-
+								@foreach ($resultAllResults as $i => $subResult)
+									@if ($subResult['exclude'])
+										[{{ $subResult['t'] }}]@if ($i + 1 < count($resultAllResults)), @endif
+									@else
+										{{ $subResult['t'] }}@if ($i + 1 < count($resultAllResults)), @endif
+									@endif
+								@endforeach
 							</small>
 							</td>
 						@else
