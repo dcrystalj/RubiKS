@@ -21,7 +21,7 @@ class Result extends Eloquent {
 		return $this->belongsTo('Competition');
 	}
 
-	public static function parse($t, $event = NULL, $additional = NULL)
+	public static function parse($t, $event = NULL)
 	{
 		if ($t == '77777777') return 'DNF';
 		if ($t == '88888888') return 'DNS';
@@ -33,7 +33,6 @@ class Result extends Eloquent {
 			//return $t . ' kock (' . self::parse($additional) . ')'; // Old format
 			$nrCubes = -1 * ((int) substr($t, 0, 3) - 400);
 			$time = (int) substr($t, 3);
-			//return $t . ' ' . self::format33310MIN($nrCubes, $time); // Testing
 			return $nrCubes . ' kock (' . self::parse($time) . ')';
 		}
 
