@@ -10,7 +10,7 @@ class CompetitionsController extends \BaseController {
 			$competitions = Competition::where('status', '<', '1')->orderBy('date', 'desc')->get();
 		}
 
-		return View::make('competitions.index')->with('competitions', $competitions)->with('competitionNumber', $competitions->count());
+		return View::make('competitions.index')->with('competitions', $competitions);
 	}
 
 	public function indexWithout()
