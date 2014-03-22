@@ -9,7 +9,7 @@ class NewsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$last5 = News::orderBy('created_at', 'desc')->take(5)->get();
+		$last5 = News::lastFive();
 		return View::make('news.index')->with('news', $last5);
 	}
 
@@ -47,13 +47,7 @@ class NewsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$article = News::where('url_slug', $id);
-
-		if ($article->count() < 1) {
-			return 'not found';
-		}
-		$article = $article->firstOrFail();
-
+		$article = News::where('url_slug', $id)->firstOrFail();
 		return View::make('news.show')->with('article', $article);
 	}
 
