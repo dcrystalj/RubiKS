@@ -2,8 +2,6 @@
 
 class AlgorithmsController extends \BaseController {
 
-	public $algorithmsPath = 'files/algorithms';
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -11,16 +9,8 @@ class AlgorithmsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$path = public_path() . '/' . $this->algorithmsPath;
-		
-		if (!is_dir($path)) App::abort(404);
-		if (!$handle = opendir($path)) App::abort(404);
-
-		$contents = array();
-		while (FALSE !== ($entry = readdir($handle))) {
-	        if ($entry != "." && $entry != "..") $contents[] = $entry;
-	    }
-	    closedir($handle);
+		$path = public_path() . '/' . self::algorithmsPath();
+	    $contents = Dir::read($path);
 
 		return View::make('algorithms.index')->with('contents', $contents);
 	}
@@ -33,22 +23,16 @@ class AlgorithmsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$competition = Competition::where('short_name', $id);
+		$competition = Competition::getCompetitionByShortName($id);
+		$path = public_path() . '/' . self::algorithmsPath() . '/' . $competition->short_name;
+		$contents = Dir::read($path);
 
-		if ($competition->count() < 1) App::abort(404);
-		$competition = $competition->first();
+		return View::make('algorithms.show')->with('contents', $contents)->with('path', self::algorithmsPath())->with('competition', $competition);
+	}
 
-		$path = public_path() . '/' . $this->algorithmsPath . '/' . $competition->short_name;
-
-		$contents = array();
-		if (is_dir($path) AND $handle = opendir($path)) {
-			while (FALSE !== ($entry = readdir($handle))) {
-		        if ($entry != "." && $entry != "..") $contents[] = $entry;
-		    }
-		    closedir($handle);
-		}
-
-		return View::make('algorithms.show')->with('contents', $contents)->with('path', $this->algorithmsPath)->with('competition', $competition);
+	public static function algorithmsPath()
+	{
+		return Config::get('paths')['algorithms'];
 	}
 
 }

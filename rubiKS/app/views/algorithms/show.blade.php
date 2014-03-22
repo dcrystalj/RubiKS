@@ -2,11 +2,10 @@
 @section('content')
 	<h4>Algoritmi</h4>
 	<h3>{{ $competition->name }} <small>{{ Date::parse($competition->date) }}</small></h3>
-	@if(count($contents) > 0)
-		@foreach ($contents as $f)
-			<a href="{{ asset($path . '/' . $competition->short_name . '/' . $f) }}">{{ $f }}</a>
-		@endforeach
-	@else
+	@unless (count($contents) > 0)
 		Algoritmi za to tekmo niso na voljo.
-	@endif
+	@endunless
+	@foreach ($contents as $file)
+		<a href="{{ asset($path . '/' . $competition->short_name . '/' . $file) }}">{{ $file }}</a>
+	@endforeach
 @stop

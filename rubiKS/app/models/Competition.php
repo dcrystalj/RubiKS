@@ -28,4 +28,9 @@ class Competition extends Eloquent {
 		return Event::whereRaw("readable_id IN ('" . implode("','", explode(' ', $events)) . "')")->get();
 	}
 
+	public static function getCompetitionByShortName($shortName)
+	{
+		return Competition::where('short_name', $shortName)->firstOrFail();
+	}
+
 }
