@@ -10,7 +10,7 @@ class CompetitionsController extends \BaseController {
 			$competitions = Competition::where('status', '<', '1')->orderBy('date', 'desc')->get();
 		}
 
-		return View::make('competitions.index')->with('competitions', $competitions)->with('i', $competitions->count());
+		return View::make('competitions.index')->with('competitions', $competitions)->with('competitionNumber', $competitions->count());
 	}
 
 	public function indexWithout()
@@ -26,8 +26,7 @@ class CompetitionsController extends \BaseController {
 			$competition = Competition::where('short_name', $id);
 		}
 
-		if ($competition->count() < 1) App::abort(404);
-		$competition = $competition->first();
+		$competition = $competition->firstOrFail();
 
 		$delegate1 = Competition::getDelegate($competition->delegate1);
 		$delegate2 = Competition::getDelegate($competition->delegate2);
@@ -51,7 +50,7 @@ class CompetitionsController extends \BaseController {
 
 		return View::make('competitions.show')
 						->with('competition', $competition)
-						->with('d1', $delegate1)->with('d2', $delegate2)->with('d3', $delegate3)
+						->with('delegate1', $delegate1)->with('delegate2', $delegate2)->with('delegate3', $delegate3)
 						->with('events', $events)
 						->with('results', $results)
 						->with('competitors', $competitors);

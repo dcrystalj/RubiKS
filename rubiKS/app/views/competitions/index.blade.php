@@ -13,7 +13,7 @@
 		<tbody>
 			@foreach ($competitions as $competition)
 				<tr>
-					<td style="text-align: right;">{{ $i-- }}.</td>
+					<td style="text-align: right;">{{ $competitionNumber-- }}.</td>
 					<td><a href="{{ url('competitions', $competition->short_name) }}">{{ $competition->name }}</a></td>
 					<td>{{ $competition->city }}</td>
 					<td>{{ $competition->getParsedDate() }}</td>
