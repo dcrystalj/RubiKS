@@ -42,10 +42,8 @@ class EventsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$event = Event::where('readable_id', $id);
-		if ($event->count() < 1) App::abort(404);
-		$event = $event->first();
-
+		$event = Event::where('readable_id', $id)->firstOrFail();
+		
 		$single = Result::where('event_id', $event->id)->take(1)->orderBy('single', 'asc')->firstOrFail();
 
 		if ($event->show_average) {

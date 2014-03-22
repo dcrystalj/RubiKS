@@ -16,10 +16,18 @@ class Competition extends Eloquent {
 		return $this->hasMany('Registration');
 	}
 
-	public static function getDelegate($id)
+	public function getDelegates()
 	{
-		if (NULL == $id) return NULL;
-		return User::find($id);
+		$ids = array($this->delegate1, $this->delegate2, $this->delegate3);
+		$result = User::find($ids);
+
+		$_delegates = array();
+		foreach ($result as $delegate) $_delegates[$delegate->id] = $delegate;
+
+		$delegates = array();
+		foreach ($ids as $id) $delegates[] = $id == NULL ? NULL : $_delegates[$id];
+		
+		return $delegates;
 	}
 
 	public static function getEvents($events, $array = FALSE)
