@@ -79,7 +79,7 @@
 		@endif
 	</table>
 
-	@if ($competition->isFinished() OR $competition->status == 0) {{-- Second condition will be removed in final version! --}}
+	@if ($competition->isFinished())
 		@include('competitions.results')
 	@elseif ($competition->registrationsOpened())
 		<a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a><br>

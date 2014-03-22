@@ -27,32 +27,16 @@ class CompetitionsController extends \BaseController {
 		}
 
 		$competition = $competition->firstOrFail();
-
 		$delegates = $competition->getDelegates();
-
 		$events = Competition::getEvents($competition->events);
 
-		// Check competition's status
-		
-		$results = array(); // $results[event id][round id][]
-		$competitors = array();
-		$res = $competition->results()->orderBy('event_id', 'asc')->orderBy('average', 'asc')->orderBy('single', 'asc')->get();
-
-		foreach ($res as $r) {
-			if (!array_key_exists($r->event_id, $results)) $results[$r->event_id] = array();
-			if (!array_key_exists($r->round, $results[$r->event_id])) $results[$r->event_id][$r->round] = array();
-			$results[$r->event_id][$r->round][] = $r;
-
-			if (!array_key_exists($r->user_id, $competitors)) $competitors[$r->user_id] = User::find($r->user_id);
-		}
-
-		foreach ($results as $eventId => $rounds) {
-			foreach ($rounds as $roundId => $round) {
-				$rank = 1;
-				foreach ($round as $i => $result) {
-					$result->round_rank = $rank++;
-				}
-			}
+		if ($competition->isFinished()) {
+			$parsed = $competition->parse($events);
+			$results = $parsed['results'];
+			$competitors = $parsed['competitors'];
+		} else {
+			$results = array();
+			$competitors = array();
 		}
 
 		return View::make('competitions.show')

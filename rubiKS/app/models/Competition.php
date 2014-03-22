@@ -45,6 +45,32 @@ class Competition extends Eloquent {
 		return $this->status == 0;
 	}
 
+	public function parse($events)
+	{
+		$results = array(); // $results[event id][round id][]
+		$competitors = array();
+		$res = $this->results()->orderBy('event_id', 'asc')->orderBy('average', 'asc')->orderBy('single', 'asc')->get();
+
+		foreach ($res as $r) {
+			if (!array_key_exists($r->event_id, $results)) $results[$r->event_id] = array();
+			if (!array_key_exists($r->round, $results[$r->event_id])) $results[$r->event_id][$r->round] = array();
+			$results[$r->event_id][$r->round][] = $r;
+
+			if (!array_key_exists($r->user_id, $competitors)) $competitors[$r->user_id] = User::find($r->user_id);
+		}
+
+		foreach ($results as $eventId => $rounds) {
+			foreach ($rounds as $roundId => $round) {
+				$rank = 1;
+				foreach ($round as $i => $result) {
+					$result->round_rank = $rank++;
+				}
+			}
+		}
+
+		return array('results' => $results, 'competitors' => $competitors);
+	}
+
 	public static function getEvents($events, $array = FALSE)
 	{
 		if ($array) return explode(' ', $events);
