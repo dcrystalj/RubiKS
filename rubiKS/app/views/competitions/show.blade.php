@@ -5,7 +5,7 @@
 	<table class="table table-condensed">
 		<tr>
 			<td>Datum prireditve</td>
-			<td>{{ Date::parse($competition->date) }}</td>
+			<td>{{ $competition->getParsedDate() }}</td>
 		</tr>
 		<tr>
 			<td>Čas trajanja</td>

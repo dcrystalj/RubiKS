@@ -1,7 +1,7 @@
 @extends('main')
 @section('content')
 	<h4>Algoritmi</h4>
-	<h3>{{ $competition->name }} <small>{{ Date::parse($competition->date) }}</small></h3>
+	<h3>{{ $competition->name }} <small>{{ $competition->getParsedDate() }}</small></h3>
 	@unless (count($contents) > 0)
 		Algoritmi za to tekmo niso na voljo.
 	@endunless

@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<td>Datum registracije</td>
-				<td>{{ Date::parse($user->joined_date) }}</td>
+				<td>{{ $user->getParsedJoinedDate() }}</td>
 			</tr>
 			<tr>
 				<td>Status</td>

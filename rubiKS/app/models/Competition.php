@@ -33,4 +33,9 @@ class Competition extends Eloquent {
 		return Competition::where('short_name', $shortName)->firstOrFail();
 	}
 
+	public function getParsedDate()
+	{
+		return Date::parse($this->attributes['date']);
+	}
+
 }

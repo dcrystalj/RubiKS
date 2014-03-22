@@ -11,4 +11,14 @@ class News extends Eloquent {
 		return self::orderBy('created_at', 'desc')->take(5)->get();
 	}
 
+	public function getParsedDate()
+	{
+		return Date::dateTime($this->attributes['created_at']);
+	}
+
+	public function getParsedDateShort()
+	{
+		return Date::dateTime($this->attributes['created_at'], TRUE);
+	}
+
 }
