@@ -19,9 +19,15 @@
 					<tr>
 						<td>{{ $result->round_rank }}.</td>
 						<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->name . ' ' . $competitor->last_name }}</a></td>
-						<td>{{ Result::parse($result->single, $event->readable_id) }}</td>
+						<td>
+							{{ Result::parse($result->single, $event->readable_id) }}
+							@if ($result->isSingleNR()) <b>NR</b> @else @if ($result->isSinglePB()) PB @endif @endif {{-- NR/PB --}}
+						</td>
 						@if ($event->showAverage())
-							<td> {{ Result::parse($result->average, $event->readable_id) }}</td>
+							<td>
+								{{ Result::parse($result->average, $event->readable_id) }}
+								@if ($result->isAverageNR()) <b>NR</b> @else @if ($result->isAveragePB()) PB @endif @endif {{-- NR/PB --}}
+							</td>
 							<td>
 							<small>
 								<?php $resultAllResults = Result::parseAll($result->results); ?>

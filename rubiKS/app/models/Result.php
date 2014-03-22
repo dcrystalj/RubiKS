@@ -21,6 +21,26 @@ class Result extends Eloquent {
 		return $this->belongsTo('Competition');
 	}
 
+	public function isSingleNR()
+	{
+		return $this->single_nr == '1';
+	}
+
+	public function isSinglePB()
+	{
+		return $this->single_pb == '1';
+	}
+
+	public function isAverageNR()
+	{
+		return $this->average_nr == '1';
+	}
+
+	public function isAveragePB()
+	{
+		return $this->average_pb == '1';
+	}
+
 	public static function parse($t, $event = NULL)
 	{
 		if ($t == '77777777') return 'DNF';
