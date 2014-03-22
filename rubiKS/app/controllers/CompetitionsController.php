@@ -46,6 +46,15 @@ class CompetitionsController extends \BaseController {
 			if (!array_key_exists($r->user_id, $competitors)) $competitors[$r->user_id] = User::find($r->user_id);
 		}
 
+		foreach ($results as $eventId => $rounds) {
+			foreach ($rounds as $roundId => $round) {
+				$rank = 1;
+				foreach ($round as $i => $result) {
+					$result->round_rank = $rank++;
+				}
+			}
+		}
+
 		return View::make('competitions.show')
 						->with('competition', $competition)
 						->with('delegate1', $delegates[0])->with('delegate2', $delegates[1])->with('delegate3', $delegates[2])

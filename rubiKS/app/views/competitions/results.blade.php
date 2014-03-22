@@ -14,11 +14,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php $rank = 1; ?>
 				@foreach ($roundResults as $result)
 							<?php $competitor = $competitors[$result->user_id]; ?>
 							<tr>
-								<td>{{ $rank++ }}.</td>
+								<td>{{ $result->round_rank }}.</td>
 								<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->name . ' ' . $competitor->last_name }}</a></td>
 								<td>{{ Result::parse($result->single, $event->readable_id) }}</td>
 								@if ($event->showAverage())
