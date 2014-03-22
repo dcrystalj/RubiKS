@@ -34,6 +34,7 @@ class CompetitionsController extends \BaseController {
 			$parsed = $competition->parse($events);
 			$results = $parsed['results'];
 			$competitors = $parsed['competitors'];
+			$events = $parsed['events'];
 		} else {
 			$results = array();
 			$competitors = array();

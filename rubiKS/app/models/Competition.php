@@ -68,7 +68,14 @@ class Competition extends Eloquent {
 			}
 		}
 
-		return array('results' => $results, 'competitors' => $competitors);
+		// Backwards compatibility - delete events with no results
+		$eventsWithResults = array_keys($results);
+		$newEvents = array();
+		foreach ($events as $event) {
+			if (in_array($event->id, $eventsWithResults)) $newEvents[] = $event;
+		}
+
+		return array('results' => $results, 'competitors' => $competitors, 'events' => $newEvents);
 	}
 
 	public static function getEvents($events, $array = FALSE)
