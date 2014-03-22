@@ -4,7 +4,7 @@ class UsersController extends \BaseController {
 
 	public function index()
 	{
-		$users = User::all()->sortBy('last_name');
+		$users = User::orderBy('last_name')->orderBy('name')->get();
 		return View::make('competitors.index')->with('users', $users)->with('i', 1);
 	}
 
@@ -15,29 +15,28 @@ class UsersController extends \BaseController {
 		} else {
 			$user = User::where('club_id', $id);
 		}
-		if ($user->count() < 1) App::abort(404);
-		$user = $user->first();
+		$user = $user->firstOrFail();
 
 		$_events = Event::all();
 		$events = [];
 		$results = [];
 		$competitions = [];
 		foreach ($_events as $event) {
-			$events[$event['readable_id']] = $event;
+			$events[$event->readable_id] = $event;
 
-			$single = Result::where('user_id', $user['id'])->where('event_id', $event['id'])->orderBy('single', 'asc')->orderBy('date', 'asc')->take(1);
+			$single = Result::where('user_id', $user->id)->where('event_id', $event->id)->orderBy('single', 'asc')->orderBy('date', 'asc')->take(1);
 
 			if ($single->count() > 0) {
 				$results[$event['readable_id']]['single'] = $single->first();
 			}
 
-			if ($event->show_average === '1') {
-				$average = Result::where('user_id', $user['id'])
-							->where('event_id', $event['id'])
+			if ($event->showAverage()) {
+				$average = Result::where('user_id', $user->id)
+							->where('event_id', $event->id)
 							->orderBy('average', 'asc')
 							->orderBy('date', 'asc')->take(1);
 				if ($average->count() > 0) {
-					$results[$event['readable_id']]['average'] = $average->first();
+					$results[$event->readable_id]['average'] = $average->first();
 				}
 			}
 		}
