@@ -30,6 +30,21 @@ class Competition extends Eloquent {
 		return $delegates;
 	}
 
+	public function isFinished()
+	{
+		return $this->status == -1;
+	}
+
+	public function registrationsOpened()
+	{
+		return $this->status == 1;
+	}
+
+	public function registrationsClosed()
+	{
+		return $this->status == 0;
+	}
+
 	public static function getEvents($events, $array = FALSE)
 	{
 		if ($array) return explode(' ', $events);

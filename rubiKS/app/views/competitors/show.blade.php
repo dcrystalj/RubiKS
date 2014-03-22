@@ -56,7 +56,7 @@
 			<tr id="e{{ $event['readable_id'] }}" class="_clickable" @if($i++ % 2) style="background-color: #F9F9F9;" @endif >
 				<td>{{ $event->name }}</td>
 				<td><span title="Tekma">{{ Result::parse($a['single']->single, $event->readable_id) }}</span></td>
-				@if (array_key_exists('average', $a))
+				@if ($event->showAverage())
 				<td><span title="Tekma">{{ Result::parse($a['average']->average, $event->readable_id) }}</span></td>
 				@else
 				<td>/</td>

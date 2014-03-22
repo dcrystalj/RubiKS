@@ -71,7 +71,7 @@
 				@endforeach
 			</td>
 		</tr>
-		@if ($competition->status == -1)
+		@if ($competition->isFinished())
 		<tr>
 			<td>Mešalni algoritmi</td>
 			<td><a href="{{ url('algorithms', $competition->short_name) }}">arhiv</a></td>
@@ -79,10 +79,12 @@
 		@endif
 	</table>
 
-	@if ($competition->status <= 0)
+	@if ($competition->isFinished() OR $competition->status == 0) {{-- Second condition will be removed in final version! --}}
 		@include('competitions.results')
-	@elseif ($competition->status == 1)
+	@elseif ($competition->registrationsOpened())
 		<a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a><br>
 		Seznam prijavljenih po disciplinah.
+	@elseif ($competition->registrationsClosed())
+		Prijave so zaprte.
 	@endif
 @stop

@@ -20,4 +20,9 @@ class Event extends Eloquent {
 		}
 	}
 
+	public function showAverage()
+	{
+		return $this->show_average == '1';
+	}
+
 }

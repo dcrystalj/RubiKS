@@ -25,7 +25,7 @@
 		<tr>
 			<td>Državni rekord (RubiKS):</td>
 			<td>
-				@if ($event->show_average)
+				@if ($event->showAverage())
 					{{ Result::parse($single->single, $event->readable_id) }} ({{ Result::parse($average->average, $event->readable_id) }})
 				@else
 					{{ Result::parse($single->single, $event->readable_id) }}
