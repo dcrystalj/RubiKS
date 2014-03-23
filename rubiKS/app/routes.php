@@ -11,10 +11,19 @@
 |
 */
 
-Route::get('/', 'NewsController@index');
+Route::get('/', 'NewsController@lastFive');
 
-Route::get('news/archive', 'NewsController@archive');
 Route::resource('news', 'NewsController');
+
+Route::resource('competitors', 'UsersController');
+
+Route::get('competitions/finished', 'CompetitionsController@indexFinished');
+Route::get('competitions/future', 'CompetitionsController@indexFuture');
+Route::resource('competitions', 'CompetitionsController');
+
+Route::resource('events', 'EventsController', array('only' => array('index', 'show')));
+
+Route::resource('algorithms', 'AlgorithmsController', array('only' => array('index', 'show')));
 
 App::missing(function($exception)
 {

@@ -62,4 +62,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $g === 'm' ? 'moški' : 'ženski';
 	}
 
+	public function getParsedJoinedDate()
+	{
+		return Date::parse($this->attributes['joined_date']);
+	}
+
 }

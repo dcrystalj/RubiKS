@@ -11,4 +11,18 @@ class Event extends Eloquent {
 		return $this->hasMany('Result');
 	}
 
+	public function getTimeLimitAttribute()
+	{
+		if ($this->attributes['time_limit'] < 60) {
+			return $this->attributes['time_limit'] . ' sec';
+		} else {
+			return ($this->attributes['time_limit'] / 60) . ' min';
+		}
+	}
+
+	public function showAverage()
+	{
+		return $this->show_average == '1';
+	}
+
 }

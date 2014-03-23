@@ -21,7 +21,25 @@
 			.competitor_home {  }
 			.competitor_guest { color: #999; }
 
+			tr.results_odd { background-color: #F9F9F9; }
+			tr.gray_header { background-color: #ddd; }
+
+			.text-left { text-align: left; }
+			.text-center { text-align: center; }
+			.text-right { text-align: right; }
+
 			.block { display: inline-block; }
+
+			.competitors_block_left {
+				display: inline-block;
+				width: 50%;
+			}
+			.competitors_block_right {
+				display: inline-block;
+				width: 40%;
+				vertical-align: top;
+				text-align: center;
+			}
 		</style>
 
 		<!-- Bootstrap -->
@@ -64,9 +82,14 @@
 								<span class="glyphicon glyphicon-stats"></span> Rezultati
 							</a>
 						</li>
+						<li @if(Request::is('events*')) class="active" @endif >
+							<a href="{{ url('events') }}">
+								<span class="glyphicon glyphicon-tag"></span> Discipline
+							</a>
+						</li>
 						<li>
 							<a href="{{ url('rules') }}">
-								<span class="glyphicon glyphicon-question-sign"></span> Pravila
+								<span class="glyphicon glyphicon-book"></span> Pravila
 							</a>
 						</li>
 						<li>

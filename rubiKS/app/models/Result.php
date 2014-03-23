@@ -21,7 +21,27 @@ class Result extends Eloquent {
 		return $this->belongsTo('Competition');
 	}
 
-	public static function parse($t, $event = NULL, $additional = NULL)
+	public function isSingleNR()
+	{
+		return $this->single_nr == '1';
+	}
+
+	public function isSinglePB()
+	{
+		return $this->single_pb == '1';
+	}
+
+	public function isAverageNR()
+	{
+		return $this->average_nr == '1';
+	}
+
+	public function isAveragePB()
+	{
+		return $this->average_pb == '1';
+	}
+
+	public static function parse($t, $event = NULL)
 	{
 		if ($t == '77777777') return 'DNF';
 		if ($t == '88888888') return 'DNS';
@@ -33,7 +53,6 @@ class Result extends Eloquent {
 			//return $t . ' kock (' . self::parse($additional) . ')'; // Old format
 			$nrCubes = -1 * ((int) substr($t, 0, 3) - 400);
 			$time = (int) substr($t, 3);
-			//return $t . ' ' . self::format33310MIN($nrCubes, $time); // Testing
 			return $nrCubes . ' kock (' . self::parse($time) . ')';
 		}
 
@@ -49,6 +68,30 @@ class Result extends Eloquent {
 			if ($s < 10) $s = '0' . $s;
 			return $m . ':' . $s . '.' . $c;
 		}
+	}
+
+	public static function parseAll($results, $event = NULL)
+	{
+		$results = explode('@', $results);
+		foreach ($results as $i => $r) $results[$i] = (int) $r;
+		$gotMin = FALSE;
+		$gotMax = FALSE;
+		$final = [];
+		foreach ($results as $i => $r) {
+			$exclude = FALSE;
+			if (!$gotMin AND $r === min($results)) {
+				$exclude = TRUE;
+				$gotMin = TRUE;
+			}
+			if (!$gotMax AND $r === max($results)) {
+				$exclude = TRUE;
+				$gotMax = TRUE;
+			}
+
+			$final[] = array('t' => self::parse($r, $event), 'exclude' => $exclude);
+		}
+
+		return $final;
 	}
 
 	public static function format33310MIN($nrCubes, $time)

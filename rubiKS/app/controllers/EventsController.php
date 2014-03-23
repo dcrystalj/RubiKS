@@ -1,6 +1,6 @@
 <?php
 
-class NewsController extends \BaseController {
+class EventsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,14 +9,9 @@ class NewsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$news = News::orderBy('created_at', 'desc')->get();
-		return View::make('news.archive')->with('news', $news);
-	}
+		$events = Event::all();
 
-	public function lastFive()
-	{
-		$last5 = News::lastFive();
-		return View::make('news.index')->with('news', $last5);
+		return View::make('events.index')->with('events', $events);
 	}
 
 	/**
@@ -42,13 +37,22 @@ class NewsController extends \BaseController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  str  $id
+	 * @param  int  $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
-		$article = News::where('url_slug', $id)->firstOrFail();
-		return View::make('news.show')->with('article', $article);
+		$event = Event::where('readable_id', $id)->firstOrFail();
+		
+		$single = Result::where('event_id', $event->id)->take(1)->orderBy('single', 'asc')->firstOrFail();
+
+		if ($event->show_average) {
+			$average = $event->results()->take(1)->orderBy('average', 'asc')->firstOrFail();
+		} else {
+			$average = NULL;
+		}
+
+		return View::make('events.show')->with('event', $event)->with('single', $single)->with('average', $average);
 	}
 
 	/**
