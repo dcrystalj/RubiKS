@@ -5,5 +5,5 @@
 		{{ $article->text }}
 	</span>
 	<br>
-	<span class="pull-right">Nazaj na <a href="{{ url('news/archive') }}">arhiv novic</a>.</span>
+	<span class="pull-right">Nazaj na <a href="{{ url('news') }}">arhiv novic</a>.</span>
 @stop

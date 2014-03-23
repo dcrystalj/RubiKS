@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', 'NewsController@index');
+Route::get('/', 'NewsController@lastFive');
 
-Route::get('news/archive', 'NewsController@archive');
 Route::resource('news', 'NewsController');
 
 Route::resource('competitors', 'UsersController');

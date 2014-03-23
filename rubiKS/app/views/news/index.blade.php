@@ -9,5 +9,5 @@
 		<hr>
 	@endforeach
 
-	<a href="{{ url('news/archive') }}">Arhiv novic</a>
+	<a href="{{ url('news') }}">Arhiv novic</a>
 @stop

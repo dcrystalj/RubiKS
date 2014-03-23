@@ -9,14 +9,14 @@ class NewsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$last5 = News::lastFive();
-		return View::make('news.index')->with('news', $last5);
-	}
-
-	public function archive()
-	{
 		$news = News::orderBy('created_at', 'desc')->get();
 		return View::make('news.archive')->with('news', $news);
+	}
+
+	public function lastFive()
+	{
+		$last5 = News::lastFive();
+		return View::make('news.index')->with('news', $last5);
 	}
 
 	/**
