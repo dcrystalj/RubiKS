@@ -17,7 +17,8 @@ Route::resource('news', 'NewsController');
 
 Route::resource('competitors', 'UsersController');
 
-Route::get('competitions/without', 'CompetitionsController@indexWithout');
+Route::get('competitions/finished', 'CompetitionsController@indexFinished');
+Route::get('competitions/future', 'CompetitionsController@indexFuture');
 Route::resource('competitions', 'CompetitionsController');
 
 Route::resource('events', 'EventsController', array('only' => array('index', 'show')));

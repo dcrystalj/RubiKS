@@ -2,20 +2,22 @@
 
 class CompetitionsController extends \BaseController {
 
-	public function index($without = FALSE)
+	public function index()
 	{
-		if ($without === FALSE) {
-			$competitions = Competition::orderBy('date', 'desc')->get();
-		} else {
-			$competitions = Competition::where('status', '<', '1')->orderBy('date', 'desc')->get();
-		}
-
+		$competitions = Competition::orderBy('date', 'desc')->get();
 		return View::make('competitions.index')->with('competitions', $competitions);
 	}
 
-	public function indexWithout()
+	public function indexFinished()
 	{
-		return $this->index(TRUE);
+		$competitions = Competition::where('status', '-1')->orderBy('date', 'desc')->get();
+		return View::make('competitions.index')->with('competitions', $competitions);
+	}
+
+	public function indexFuture()
+	{
+		$competitions = Competition::where('status', '>', '-1')->orderBy('date', 'desc')->get();
+		return View::make('competitions.index')->with('competitions', $competitions);
 	}
 
 	public function show($id)
