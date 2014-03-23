@@ -16,6 +16,11 @@ class Competition extends Eloquent {
 		return $this->hasMany('Registration');
 	}
 
+	public function approvedRegistrations()
+	{
+		return $this->registrations()->where('status', '1');	
+	}
+
 	public function getDelegates()
 	{
 		$ids = array($this->delegate1, $this->delegate2, $this->delegate3);
@@ -76,6 +81,17 @@ class Competition extends Eloquent {
 		}
 
 		return array('results' => $results, 'competitors' => $competitors, 'events' => $newEvents);
+	}
+
+	public static function getRegisteredUsers($registrations)
+	{
+		$ids = array();
+		foreach ($registrations as $registration) $ids[] = $registration->user_id;
+		$_competitors = User::find($ids);
+
+		$competitors = array();
+		foreach ($_competitors as $competitor) $competitors[$competitor->id] = $competitor;
+		return $competitors;
 	}
 
 	public static function getEvents($events, $array = FALSE)

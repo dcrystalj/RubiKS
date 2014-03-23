@@ -67,7 +67,7 @@
 			<td>Discipline</td>
 			<td colspan="3">
 				@foreach ($events as $i => $event)
-					<a href="{{ url('events', $event->readable_id) }}">{{ $event->short_name }}</a>@if ($i + 1!= count($events)), @endif
+					<a href="{{ url('events', $event->readable_id) }}" title="{{ $event->name }}">{{ $event->short_name }}</a>@if ($i + 1!= count($events)), @endif
 				@endforeach
 			</td>
 		</tr>
@@ -82,8 +82,8 @@
 	@if ($competition->isFinished())
 		@include('competitions.results')
 	@elseif ($competition->registrationsOpened())
-		<a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a><br>
-		Seznam prijavljenih po disciplinah.
+		@include('competitions.registrations')
+		<b><a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a></b>
 	@elseif ($competition->registrationsClosed())
 		Prijave so zaprte.
 	@endif

@@ -35,9 +35,11 @@ class CompetitionsController extends \BaseController {
 			$results = $parsed['results'];
 			$competitors = $parsed['competitors'];
 			$events = $parsed['events'];
+			$registrations = array();
 		} else {
 			$results = array();
-			$competitors = array();
+			$registrations = $competition->approvedRegistrations()->get();
+			$competitors = Competition::getRegisteredUsers($registrations);
 		}
 
 		return View::make('competitions.show')
@@ -45,6 +47,7 @@ class CompetitionsController extends \BaseController {
 						->with('delegate1', $delegates[0])->with('delegate2', $delegates[1])->with('delegate3', $delegates[2])
 						->with('events', $events)
 						->with('results', $results)
-						->with('competitors', $competitors);
+						->with('competitors', $competitors)
+						->with('registrations', $registrations);
 	}
 }

@@ -64,7 +64,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<span id="chart_e{{ $event['readable_id'] }}" class="_chart" @unless($event->readable_id === '333') style="display:none;" @endif>
+					<span id="chart_e{{ $event['readable_id'] }}" class="_chart @unless($event->readable_id === '333') hidden @endif">
 						<img src="http://www.rubik.si/klub/plotuser.php?id={{ $user->club_id }}&iddisc={{ $event->readable_id }}">
 					</span>
 					{{-- Zakaj span tagi? http://stackoverflow.com/questions/7192335/jquery-slide-toggle-not-working-properly --}}

@@ -25,6 +25,7 @@
 			tr.gray_header { background-color: #ddd; }
 
 			.text-left { text-align: left; }
+			.text-center { text-align: center; }
 			.text-right { text-align: right; }
 
 			.block { display: inline-block; }
