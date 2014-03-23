@@ -53,7 +53,7 @@
 			<?php $i = 1; ?>
 			@foreach ($results as $e => $a)
 			<?php $event = $events[$e]; ?>
-			<tr id="e{{ $event['readable_id'] }}" class="_clickable @if($i++ % 2) results_odd @endif" >
+			<tr id="e{{ $event->readable_id }}" class="_clickable @if($i++ % 2) results_odd @endif" >
 				<td>{{ $event->name }}</td>
 				<td><span title="Tekma">{{ Result::parse($a['single']->single, $event->readable_id) }}</span></td>
 				@if ($event->showAverage())
@@ -64,7 +64,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<span id="chart_e{{ $event['readable_id'] }}" class="_chart @unless($event->readable_id === '333') hidden @endif">
+					<span id="chart_e{{ $event->readable_id }}" class="_chart" @unless($event->readable_id === '333') style="display:none;" @endif>
 						<img src="http://www.rubik.si/klub/plotuser.php?id={{ $user->club_id }}&iddisc={{ $event->readable_id }}">
 					</span>
 					{{-- Zakaj span tagi? http://stackoverflow.com/questions/7192335/jquery-slide-toggle-not-working-properly --}}
@@ -73,8 +73,8 @@
 			@endforeach
 		</tbody>
 		<script>
-			$('._clickable').on('click', function() { $('#chart_' + this.id).slideToggle('fast'); });
-			$('._chart').on('click', function() { $(this).slideToggle('fast'); });
+			$('._clickable').click(function() { $('#chart_' + this.id).slideToggle('fast'); });
+			$('._chart').click(function() { $(this).slideToggle('fast'); });
 		</script>
 	</table>
 @stop
