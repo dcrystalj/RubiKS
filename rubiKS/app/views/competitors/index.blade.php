@@ -3,7 +3,7 @@
 	<h4>Tekmovalci</h4>
 	<table class="table table-striped table-condensed">
 		<thead>
-			<tr style="text-align: left;">
+			<tr class="text-left">
 				<th></th>
 				<th>Tekmovalec</th>
 				<th>Država</th>
@@ -14,7 +14,7 @@
 		<tbody>
 			@foreach ($users as $user)
 				<tr>
-					<td style="text-align: right;">{{ $i++ }}.</td>
+					<td class="text-right">{{ $i++ }}.</td>
 					<td>
 					@if ($user['nationality'] === 'SI')
 						<a class="competitor_home" href="{{ url('competitors', $user['club_id']) }}">

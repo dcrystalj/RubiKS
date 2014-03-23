@@ -2,7 +2,7 @@
 @section('content')
 	<!-- <h4>Tekmovalci</h4> -->
 	<h3>{{ $user->name }} {{ $user->last_name }}</h3>
-	<div class="block" style="width: 50%;">
+	<div class="competitors_block_left">
 		<table class="table table-condensed">
 			<tr>
 				<td>RubiKS ID</td>
@@ -38,7 +38,7 @@
 			</tr>
 		</table>
 	</div>
-	<div class="block pull-right" style="width: 40%; vertical-align: top; text-align: center;">
+	<div class="competitors_block_right pull-right">
 		<img class="competitor_image img-thumbnail" alt="{{ $user->name }} {{ $user->last_name }}" src="http://www.rubik.si/klub/foto/{{ $user['club_id'] }}.jpg" width="150" height="200">
 	</div>
 	<table class="table table-condensed">
@@ -53,7 +53,7 @@
 			<?php $i = 1; ?>
 			@foreach ($results as $e => $a)
 			<?php $event = $events[$e]; ?>
-			<tr id="e{{ $event['readable_id'] }}" class="_clickable" @if($i++ % 2) style="background-color: #F9F9F9;" @endif >
+			<tr id="e{{ $event['readable_id'] }}" class="_clickable @if($i++ % 2) results_odd @endif" >
 				<td>{{ $event->name }}</td>
 				<td><span title="Tekma">{{ Result::parse($a['single']->single, $event->readable_id) }}</span></td>
 				@if ($event->showAverage())

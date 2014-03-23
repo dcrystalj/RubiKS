@@ -3,7 +3,7 @@
 	<h4>Tekmovanja</h4>
 	<table class="table table-striped table-condensed">
 		<thead>
-			<tr style="text-align: left;">
+			<tr class="text-left">
 				<th></th>
 				<th>Tekma</th>
 				<th>Mesto</th>
@@ -13,7 +13,7 @@
 		<tbody>
 			@foreach ($competitions as $i => $competition)
 				<tr>
-					<td style="text-align: right;">{{ count($competitions) - $i }}.</td>
+					<td class="text-right">{{ count($competitions) - $i }}.</td>
 					<td><a href="{{ url('competitions', $competition->short_name) }}">{{ $competition->name }}</a></td>
 					<td>{{ $competition->city }}</td>
 					<td>{{ $competition->getParsedDate() }}</td>

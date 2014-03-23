@@ -21,7 +21,24 @@
 			.competitor_home {  }
 			.competitor_guest { color: #999; }
 
+			tr.results_odd { background-color: #F9F9F9; }
+			tr.gray_header { background-color: #ddd; }
+
+			.text-left { text-align: left; }
+			.text-right { text-align: right; }
+
 			.block { display: inline-block; }
+
+			.competitors_block_left {
+				display: inline-block;
+				width: 50%;
+			}
+			.competitors_block_right {
+				display: inline-block;
+				width: 40%;
+				vertical-align: top;
+				text-align: center;
+			}
 		</style>
 
 		<!-- Bootstrap -->

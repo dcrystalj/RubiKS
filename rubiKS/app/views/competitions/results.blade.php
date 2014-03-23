@@ -2,8 +2,8 @@
 	@foreach ($results[$event->id] as $roundId => $roundResults)
 		<table class="table table-condensed table-striped table-bordered">
 			<thead>
-				<tr>
-					<th colspan="5" style="background-color: #ddd;">{{ $event->name }} @unless ($roundId == '0')- {{ $roundId }}. krog @endunless</th>
+				<tr class="gray_header">
+					<th colspan="5">{{ $event->name }} @unless ($roundId == '0')- {{ $roundId }}. krog @endunless</th>
 				</tr>
 				<tr>
 					<th>#</th>
