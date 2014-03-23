@@ -26,3 +26,8 @@
 		@endforeach
 	</tbody>
 </table>
+@if ($competition->registrationsOpened())
+	<b><a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a></b>
+@else
+	<b>Prijave so zaprte.</b>
+@endif

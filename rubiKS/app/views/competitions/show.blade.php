@@ -81,10 +81,7 @@
 
 	@if ($competition->isFinished())
 		@include('competitions.results')
-	@elseif ($competition->registrationsOpened())
+	@elseif ($competition->registrationsOpened() OR $competition->registrationsClosed())
 		@include('competitions.registrations')
-		<b><a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a></b>
-	@elseif ($competition->registrationsClosed())
-		Prijave so zaprte.
 	@endif
 @stop
