@@ -22,10 +22,13 @@ class Delegate extends Eloquent {
 		return $result[0]->nr_delegating;
 	}
 
-	public static function injectAdditionalData($delegates)
+	public static function injectAdditionalDataAndSort($delegates)
 	{
 		foreach ($delegates as $delegate) $delegate->nr_delegating = $delegate->nrDelegating();
-		return null;
+		$delegates = $delegates->sortBy(function ($delegate) {
+			return -1 * $delegate->nr_delegating;
+		});
+		return $delegates;
 	}
 
 }

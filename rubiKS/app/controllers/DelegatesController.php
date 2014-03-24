@@ -10,7 +10,7 @@ class DelegatesController extends \BaseController {
 	public function index()
 	{
 		$delegates = Delegate::with('user')->get();
-		Delegate::injectAdditionalData($delegates);
+		$delegates = Delegate::injectAdditionalDataAndSort($delegates);
 
 		return View::make('delegates.index')->with('delegates', $delegates);
 	}
