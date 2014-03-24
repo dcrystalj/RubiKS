@@ -22,22 +22,10 @@ class Delegate extends Eloquent {
 		return $result[0]->nr_delegating;
 	}
 
-	public static function getUserData($delegates)
+	public static function injectAdditionalData($delegates)
 	{
-		$ids = array();
-		$nrDelegating = array();
-		foreach ($delegates as $delegate) {
-			$delegate->nr_delegating = $delegate->nrDelegating();
-			$ids[] = $delegate->user_id;
-		}
-
-		$_competitors = User::find($ids);
-		$competitors = array();
-		foreach ($_competitors as $competitor) {
-			$competitors[$competitor->id] = $competitor;
-		}
-
-		return $competitors;
+		foreach ($delegates as $delegate) $delegate->nr_delegating = $delegate->nrDelegating();
+		return null;
 	}
 
 }

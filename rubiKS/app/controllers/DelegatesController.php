@@ -9,10 +9,15 @@ class DelegatesController extends \BaseController {
 	 */
 	public function index()
 	{
-		$delegates = Delegate::all()->sortBy('degree');
-		$users = Delegate::getUserData($delegates);
+		$delegates = Delegate::with('user')->get();
+		Delegate::injectAdditionalData($delegates);
 
-		return View::make('delegates.index')->with('delegates', $delegates)->with('users', $users);
+		return View::make('delegates.index')->with('delegates', $delegates);
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('User');
 	}
 
 }

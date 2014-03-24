@@ -13,13 +13,12 @@
 		</thead>
 		<tbody>
 			@foreach ($delegates as $delegate)
-				<?php $user = $users[$delegate->user_id]; ?>
 				<tr>
-					<td><a href="{{ url('competitors', $user->club_id) }}">{{ $user->name . ' ' . $user->last_name }}</a></td>
+					<td><a href="{{ url('competitors', $delegate->user->club_id) }}">{{ $delegate->user->getFullName() }}</a></td>
 					<td>{{ $delegate->degree }}</td>
 					<td>{{ $delegate->nr_delegating }}</td>
 					<td>{{ $delegate->region }}</td>
-					<td><a href="mailto:{{ $delegate->contact }}"><span class="glyphicon glyphicon-envelope"></span></a></td>
+					<td><a href="mailto:{{ HTML::email($delegate->contact) }}"><span class="glyphicon glyphicon-envelope"></span></a></td>
 				</tr>
 			@endforeach
 		</tbody>
