@@ -28,18 +28,7 @@
 								{{ Result::parse($result->average, $event->readable_id) }}
 								@if ($result->isAverageNR()) <b>NR</b> @elseif ($result->isAveragePB()) PB @endif {{-- NR/PB --}}
 							</td>
-							<td>
-							<small>
-								<?php $resultAllResults = Result::parseAll($result->results); ?>
-								@foreach ($resultAllResults as $i => $subResult)
-									@if ($subResult['exclude'])
-										[{{ $subResult['t'] }}]@if ($i + 1 < count($resultAllResults)), @endif
-									@else
-										{{ $subResult['t'] }}@if ($i + 1 < count($resultAllResults)), @endif
-									@endif
-								@endforeach
-							</small>
-							</td>
+							<td><small>{{ Result::parseAllString($result->results, $event->readable_id); }}</small></td>
 						@else
 							<td>/</td>
 							<td>/</td>

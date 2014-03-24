@@ -6,7 +6,7 @@ class Result extends Eloquent {
 	public $timestamps = false;
 	protected $softDelete = false;
 
-	public function person()
+	public function user()
 	{
 		return $this->belongsTo('User');
 	}
@@ -92,6 +92,16 @@ class Result extends Eloquent {
 		}
 
 		return $final;
+	}
+
+	public static function parseAllString($results, $event)
+	{
+		$parsed = self::parseAll($results, $event);
+		$array = array();
+		foreach ($parsed as $i => $result) {
+			$array[] = $result['exclude'] ? "[" . $result['t'] . "]" : $result['t'];
+		}
+		return implode(", ", $array);
 	}
 
 	public static function format33310MIN($nrCubes, $time)
