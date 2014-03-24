@@ -47,8 +47,7 @@
 		</style>
 
 		<!-- Bootstrap -->
-		{{--<link href="css/bootstrap.min.css" rel="stylesheet">--}}
-		{{ Helpers::get_CSS() }}
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,7 +56,6 @@
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-		{{-- Helpers::get_JS() --}}
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	</head>
 	<body>
@@ -82,7 +80,7 @@
 							</a>
 						</li>
 						<li @if(Request::is('results*')) class="active" @endif >
-							<a href="{{ url('results') }}">
+							<a href="{{ url('rankings') }}">
 								<span class="glyphicon glyphicon-stats"></span> Rezultati
 							</a>
 						</li>

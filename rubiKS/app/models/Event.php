@@ -6,6 +6,8 @@ class Event extends Eloquent {
 	public $timestamps = false;
 	protected $softDelete = false;
 
+	public static $resultTypes = array('single', 'average');
+
 	public function results()
 	{
 		return $this->hasMany('Result');

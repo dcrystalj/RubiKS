@@ -112,4 +112,47 @@ class Result extends Eloquent {
 		return ($a . $b);
 	}
 
+	public static function getResultsByEvent($event, $resultType)
+	{
+		$_results = Result::select('user_id', DB::Raw("MIN(" . $resultType . ") as 'best_result'"))
+							->where('event_id', $event->id)
+							->groupBy('user_id')
+							->orderBy('best_result', 'asc')
+							->get();
+
+		$results = array();
+		foreach ($_results as $result) {
+			$results[] = Result::where('event_id', $event->id)
+								->where('user_id', $result->user_id)
+								->where($resultType, $result->best_result)
+								->orderBy('date', 'asc')
+								->firstOrFail();
+		}
+
+		return $results;
+	}
+
+	public static function injectRanks($results, $resultType)
+	{
+		$rank = 0;
+		$gap = 0;
+		$previousResult = -1;
+
+		foreach ($results as $result) {
+			if ($previousResult == $result[$resultType]) {
+				$gap++;
+			} else {
+				if ($gap > 0) {
+					$rank += $gap;
+					$gap = 0;
+				}
+				$rank++;
+			}
+			$result->injectedRank = $rank;
+			$previousResult = $result[$resultType];
+		}
+
+		return $results;
+	}
+
 }
