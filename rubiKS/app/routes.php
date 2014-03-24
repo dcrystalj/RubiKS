@@ -28,6 +28,8 @@ Route::resource('delegates', 'DelegatesController', array('only' => array('index
 
 Route::resource('algorithms', 'AlgorithmsController', array('only' => array('index', 'show')));
 
+Route::resource('credits', 'CreditsController', array('only' => array('index')));
+
 App::missing(function($exception)
 {
     return Response::view('errors.missing', array(), 404);

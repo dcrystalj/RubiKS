@@ -40,6 +40,10 @@
 				vertical-align: top;
 				text-align: center;
 			}
+
+			td.credit {
+				padding: 15px;
+			}
 		</style>
 
 		<!-- Bootstrap -->
