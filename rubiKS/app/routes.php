@@ -15,6 +15,7 @@ Route::get('/', 'NewsController@lastFive');
 
 Route::resource('news', 'NewsController');
 
+Route::get('members', 'UsersController@clubMembers');
 Route::resource('competitors', 'UsersController');
 
 Route::get('competitions/finished', 'CompetitionsController@indexFinished');

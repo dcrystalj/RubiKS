@@ -43,4 +43,13 @@ class UsersController extends \BaseController {
 
 		return View::make('competitors.show')->with('user', $user)->with('events', $events)->with('results', $results);
 	}
+
+	public function clubMembers()
+	{
+		$year = date("Y");
+		if (date("n") == 1) $year--; // date("n") = month (1-12)
+		$members = User::where('membership_year', '>=', $year)->get();
+		return View::make('competitors.clubmembers')->with('members', $members);
+	}
+
 }
