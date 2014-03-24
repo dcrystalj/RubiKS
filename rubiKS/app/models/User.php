@@ -67,4 +67,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return Date::parse($this->attributes['joined_date']);
 	}
 
+	public function getFullName($inverted = FALSE)
+	{
+		if ($inverted) return $this->attributes['last_name'] . ' ' . $this->attributes['name'];
+		return $this->attributes['name'] . ' ' . $this->attributes['last_name'];
+	}
+
 }

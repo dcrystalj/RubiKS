@@ -37,15 +37,15 @@
 		</tr>
 		<tr>
 			<td>1. delegat</td>
-			<td>@if ($delegate1 !== NULL) <a href="{{ url('competitors', $delegate1->club_id) }}">{{ $delegate1->name . ' ' . $delegate1->last_name }}</a> @endif</td>
+			<td>@if ($delegate1 !== NULL) <a href="{{ url('competitors', $delegate1->club_id) }}">{{ $delegate1->getFullName() }}</a> @endif</td>
 		</tr>
 		<tr>
 			<td>2. delegat</td>
-			<td>@if ($delegate2 !== NULL) <a href="{{ url('competitors', $delegate2->club_id) }}">{{ $delegate2->name . ' ' . $delegate2->last_name }}</a> @endif</td>
+			<td>@if ($delegate2 !== NULL) <a href="{{ url('competitors', $delegate2->club_id) }}">{{ $delegate2->getFullName() }}</a> @endif</td>
 		</tr>
 		<tr>
 			<td>Pomožni delegat</td>
-			<td>@if ($delegate3 !== NULL) <a href="{{ url('competitors', $delegate3->club_id) }}">{{ $delegate3->name . ' ' . $delegate3->last_name }}</a> @endif</td>
+			<td>@if ($delegate3 !== NULL) <a href="{{ url('competitors', $delegate3->club_id) }}">{{ $delegate3->getFullName() }}</a> @endif</td>
 		</tr>
 		<tr>
 			<td>Omejitev št. tekmovalcev</td>

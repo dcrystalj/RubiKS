@@ -14,7 +14,7 @@
 		@foreach ($members as $i => $member)
 			<tr>
 				<td>{{ $i + 1 }}.</td>
-				<td>{{ $member->name . ' ' . $member->last_name }}</td>
+				<td>{{ $member->getFullName() }}</td>
 				<td>{{ $member->club_authority }}</td>
 				<td>{{ $member->membership_year }}</td>
 			</tr>
