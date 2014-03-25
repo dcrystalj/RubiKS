@@ -79,7 +79,7 @@
 								<span class="glyphicon glyphicon-user"></span> Tekmovalci
 							</a>
 						</li>
-						<li @if(Request::is('results*')) class="active" @endif >
+						<li @if(Request::is('rankings*')) class="active" @endif >
 							<a href="{{ url('rankings') }}">
 								<span class="glyphicon glyphicon-stats"></span> Rezultati
 							</a>
