@@ -11,18 +11,11 @@ class RankingsController extends \BaseController {
 	public function show($id)
 	{
 		$resultType = Input::get('type');
-		if (!in_array($resultType, Event::$resultTypes)) $resultType = Event::$resultTypes[0];
 
 		$events = Event::all();
-		$event = null;
-		foreach ($events as $lEvent) {
-			if ($lEvent->readable_id == $id) {
-				$event = $lEvent;
-				break;
-			}
-		}
-		if ($event === null) App::abort(404);
-		if (!$event->showAverage() AND $resultType == 'average') $resultType = Event::$resultTypes[0];
+		$event = Event::whereReadableId($id, $events);
+
+		if (!in_array($resultType, Event::$resultTypes) OR !$event->showAverage() AND $resultType == 'average') $resultType = Event::$resultTypes[0];
 
 		$results = Result::getResultsByEvent($event, $resultType);
 		Result::injectRanks($results, $resultType);

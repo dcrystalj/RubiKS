@@ -27,4 +27,19 @@ class Event extends Eloquent {
 		return $this->show_average == '1';
 	}
 
+	public static function whereReadableId($id, $events = NULL)
+	{
+		if ($events === NULL) return self::where('readable_id', $id)->firstOrFail();
+		
+		$event = NULL;
+		foreach ($events as $lEvent) {
+			if ($lEvent->readable_id == $id) {
+				$event = $lEvent;
+				break;
+			}
+		}
+		if ($event === NULL) return self::whereReadableId($id);
+		return $event;
+	}
+
 }
