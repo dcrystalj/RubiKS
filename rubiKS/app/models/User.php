@@ -69,8 +69,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function getFullName($inverted = FALSE)
 	{
-		if ($inverted) return $this->attributes['last_name'] . ' ' . $this->attributes['name'];
-		return $this->attributes['name'] . ' ' . $this->attributes['last_name'];
+		if ($inverted) {
+			$fullName = $this->attributes['last_name'] . ' ' . $this->attributes['name'];
+		} else {
+			$fullName = $this->attributes['name'] . ' ' . $this->attributes['last_name'];
+		}
+
+		return mb_convert_case($fullName, MB_CASE_TITLE);
 	}
 
 }
