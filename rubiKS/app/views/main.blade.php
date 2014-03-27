@@ -84,6 +84,11 @@
 								<span class="glyphicon glyphicon-stats"></span> Rezultati
 							</a>
 						</li>
+						<li @if(Request::is('records*')) class="active" @endif >
+							<a href="{{ url('records') }}">
+								<span class="glyphicon glyphicon-star"></span> Rekordi
+							</a>
+						</li>
 						<li @if(Request::is('events*')) class="active" @endif >
 							<a href="{{ url('events') }}">
 								<span class="glyphicon glyphicon-tag"></span> Discipline

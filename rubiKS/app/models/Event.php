@@ -42,4 +42,28 @@ class Event extends Eloquent {
 		return $event;
 	}
 
+	public function getRecordSingle()
+	{
+		$result = $this->results()->orderBy('single', 'asc')->take(1);
+		if ($result->count() < 1) return NULL; // This event does not have any results yet!
+		return $result->first();
+	}
+
+	public function getRecordAverage()
+	{
+		if (!$this->showAverage()) return NULL;
+
+		$result = $this->results()->orderBy('average', 'asc')->take(1);
+		if ($result->count() < 1) return NULL;
+		return $result->first();
+	}
+
+	public static function injectRecords($events)
+	{
+		foreach ($events as $event) {
+			$event->singleRecord = $event->getRecordSingle();
+			$event->averageRecord = $event->getRecordAverage();
+		}
+	}
+
 }

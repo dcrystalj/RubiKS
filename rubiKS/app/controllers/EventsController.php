@@ -88,4 +88,16 @@ class EventsController extends \BaseController {
 		//
 	}
 
+	/**
+	 * Display all records.
+	 * @return Response
+	 */
+	public function records()
+	{
+		$events = Event::all();
+		Event::injectRecords($events);
+
+		return View::make('events.records')->with('events', $events);
+	}
+
 }
