@@ -25,7 +25,9 @@
 			<td></td>
 		</tr>
 		@else 
-			Ta disciplina še ni bila izvedena. 
+		<tr>
+			<td colspan="5">Ta disciplina še ni bila izvedena.</td>
+		</tr>
 		@endif
 
 		@if ($event->showAverage() AND $event->averageRecord != NULL)
