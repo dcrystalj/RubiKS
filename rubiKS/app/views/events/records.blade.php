@@ -19,7 +19,7 @@
 		@if ($event->singleRecord != NULL)
 		<tr>
 			<td><small>Posamezno</small></td>
-			<td><b>{{ $event->singleRecord->user->getFullName() }}</b></td>
+			<td><b><a href="{{ url('competitors', $event->singleRecord->user->club_id) }}">{{ $event->singleRecord->user->getFullName() }}</a></b></td>
 			<td>{{ Result::parse($event->singleRecord->single, $event->readable_id) }}</td>
 			<td><a href="{{ url('competitions', $event->singleRecord->competition->short_name) }}" title="{{ Date::parse($event->singleRecord->competition->date) }}">{{ $event->singleRecord->competition->short_name }}</a></td>
 			<td></td>
@@ -33,7 +33,7 @@
 		@if ($event->showAverage() AND $event->averageRecord != NULL)
 		<tr>
 			<td><small>Povprečje</small></td>
-			<td><b>{{ $event->averageRecord->user->getFullName() }}</b></td>
+			<td><b><a href="{{ url('competitors', $event->singleRecord->user->club_id) }}">{{ $event->averageRecord->user->getFullName() }}</a></b></td>
 			<td>{{ Result::parse($event->averageRecord->average, $event->readable_id) }}</td>
 			<td><a href="{{ url('competitions', $event->averageRecord->competition->short_name) }}" title="{{ Date::parse($event->averageRecord->competition->date) }}">{{ $event->averageRecord->competition->short_name }}</a></td>
 			<td><small>{{ Result::parseAllString($event->averageRecord->results, $event->readable_id) }}</small></td>
