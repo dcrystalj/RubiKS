@@ -2,6 +2,16 @@
 
 class RankingsController extends \BaseController {
 
+	public function __construct()
+	{
+		$this->beforeFilter(function()
+			{
+				if (!in_array(Input::get('type'), Event::$resultTypes)) App::abort(404);
+			}, 
+			array('only' => 'show')
+		);
+	}
+
 	public function index()
 	{
 		$events = Event::all();
@@ -15,7 +25,7 @@ class RankingsController extends \BaseController {
 		$events = Event::all();
 		$event = Event::whereReadableId($id, $events);
 
-		if (!in_array($resultType, Event::$resultTypes) OR !$event->showAverage() AND $resultType == 'average') $resultType = Event::$resultTypes[0];
+		if (!$event->showAverage() AND $resultType == 'average') $resultType = Event::$resultTypes[0];
 
 		$results = Result::getResultsByEvent($event, $resultType);
 		Result::injectRanks($results, $resultType);
