@@ -13,11 +13,13 @@
 
 App::before(function($request)
 {
-	DB::listen(function($sql, $bindings, $time)
-	{
-	 var_dump($sql);
-	 //var_dump($bindings);
-	});	
+	if (App::environment('local')) {
+		DB::listen(function($sql, $bindings, $time)
+		{
+			var_dump($sql);
+			//var_dump($bindings);
+		});	
+	}
 });
 
 
