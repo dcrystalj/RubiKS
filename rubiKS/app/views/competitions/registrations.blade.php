@@ -14,7 +14,7 @@
 	</thead>
 	<tbody>
 		@foreach ($registrations as $i => $registration)
-			<?php $competitor = $competitors[$registration->user_id]; $userEvents = 0; ?>
+			<?php $competitor = $registration->user; $userEvents = 0; ?>
 			<tr>
 				<td class="text-right"><small>{{ $i + 1 }}.</small></td>
 				<td><small>{{ $competitor->getFullName() }}</small></td>

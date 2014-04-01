@@ -53,15 +53,12 @@ class Competition extends Eloquent {
 	public function parse($events)
 	{
 		$results = array(); // $results[event id][round id][]
-		$competitors = array();
-		$res = $this->results()->orderBy('event_id', 'asc')->orderBy('average', 'asc')->orderBy('single', 'asc')->get();
+		$res = $this->results()->with('user')->orderBy('event_id', 'asc')->orderBy('average', 'asc')->orderBy('single', 'asc')->get();
 
 		foreach ($res as $r) {
 			if (!array_key_exists($r->event_id, $results)) $results[$r->event_id] = array();
 			if (!array_key_exists($r->round, $results[$r->event_id])) $results[$r->event_id][$r->round] = array();
 			$results[$r->event_id][$r->round][] = $r;
-
-			if (!array_key_exists($r->user_id, $competitors)) $competitors[$r->user_id] = User::find($r->user_id);
 		}
 
 		foreach ($results as $eventId => $rounds) {
@@ -80,7 +77,7 @@ class Competition extends Eloquent {
 			if (in_array($event->id, $eventsWithResults)) $newEvents[] = $event;
 		}
 
-		return array('results' => $results, 'competitors' => $competitors, 'events' => $newEvents);
+		return array('results' => $results, 'events' => $newEvents);
 	}
 
 	public static function getRegisteredUsers($registrations)

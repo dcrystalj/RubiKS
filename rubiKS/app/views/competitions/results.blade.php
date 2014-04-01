@@ -15,7 +15,7 @@
 			</thead>
 			<tbody>
 				@foreach ($roundResults as $result)
-					<?php $competitor = $competitors[$result->user_id]; ?>
+					<?php $competitor = $result->user; ?>
 					<tr>
 						<td>{{ $result->round_rank }}.</td>
 						<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></td>

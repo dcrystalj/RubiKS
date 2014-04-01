@@ -6,6 +6,11 @@ class Registration extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 
+	public function user()
+	{
+		return $this->belongsTo('User');
+	}
+
 	public function approved()
 	{
 		return $this->status == '1';
