@@ -33,7 +33,7 @@
 		@if ($event->showAverage() AND $event->averageRecord != NULL)
 		<tr>
 			<td><small>Povprečje</small></td>
-			<td><b><a href="{{ url('competitors', $event->singleRecord->user->club_id) }}">{{ $event->averageRecord->user->getFullName() }}</a></b></td>
+			<td><b><a href="{{ url('competitors', $event->averageRecord->user->club_id) }}">{{ $event->averageRecord->user->getFullName() }}</a></b></td>
 			<td>{{ Result::parse($event->averageRecord->average, $event->readable_id) }}</td>
 			<td><a href="{{ url('competitions', $event->averageRecord->competition->short_name) }}" title="{{ Date::parse($event->averageRecord->competition->date) }}">{{ $event->averageRecord->competition->short_name }}</a></td>
 			<td><small>{{ Result::parseAllString($event->averageRecord->results, $event->readable_id) }}</small></td>
