@@ -28,15 +28,15 @@ class UsersController extends \BaseController {
 
 			if ($single->count() > 0) {
 				$results[$event['readable_id']]['single'] = $single->first();
-			}
 
-			if ($event->showAverage()) {
-				$average = Result::where('user_id', $user->id)
-							->where('event_id', $event->id)
-							->orderBy('average', 'asc')
-							->orderBy('date', 'asc')->take(1);
-				if ($average->count() > 0) {
-					$results[$event->readable_id]['average'] = $average->first();
+				if ($event->showAverage()) {
+					$average = Result::where('user_id', $user->id)
+								->where('event_id', $event->id)
+								->orderBy('average', 'asc')
+								->orderBy('date', 'asc')->take(1);
+					if ($average->count() > 0) {
+						$results[$event->readable_id]['average'] = $average->first();
+					}
 				}
 			}
 		}
