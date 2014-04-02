@@ -26,7 +26,10 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(function()
 {
-	return $_SERVER['SERVER_NAME'] == 'localhost' ? 'local' : 'production';
+	if (isset($_SERVER['SERVER_NAME'])) {
+		if ($_SERVER['SERVER_NAME'] == 'localhost') return 'local';
+	}
+	return 'production';
 });
 
 /*
