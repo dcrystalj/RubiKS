@@ -15,15 +15,23 @@ Route::get('/', 'NewsController@lastFive');
 
 Route::resource('news', 'NewsController');
 
+Route::get('members', 'UsersController@clubMembers');
 Route::resource('competitors', 'UsersController');
 
 Route::get('competitions/finished', 'CompetitionsController@indexFinished');
 Route::get('competitions/future', 'CompetitionsController@indexFuture');
 Route::resource('competitions', 'CompetitionsController');
 
+Route::resource('rankings', 'RankingsController', array('only' => array('index', 'show')));
+
+Route::get('records', 'EventsController@records');
 Route::resource('events', 'EventsController', array('only' => array('index', 'show')));
 
+Route::resource('delegates', 'DelegatesController', array('only' => array('index')));
+
 Route::resource('algorithms', 'AlgorithmsController', array('only' => array('index', 'show')));
+
+Route::resource('credits', 'CreditsController', array('only' => array('index')));
 
 App::missing(function($exception)
 {

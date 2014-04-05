@@ -44,7 +44,7 @@ class EventsController extends \BaseController {
 	{
 		$event = Event::where('readable_id', $id)->firstOrFail();
 		
-		$single = Result::where('event_id', $event->id)->take(1)->orderBy('single', 'asc')->firstOrFail();
+		$single = $event->results()->take(1)->orderBy('single', 'asc')->firstOrFail();
 
 		if ($event->show_average) {
 			$average = $event->results()->take(1)->orderBy('average', 'asc')->firstOrFail();
@@ -86,6 +86,18 @@ class EventsController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	/**
+	 * Display all records.
+	 * @return Response
+	 */
+	public function records()
+	{
+		$events = Event::all();
+		Event::injectRecords($events);
+
+		return View::make('events.records')->with('events', $events);
 	}
 
 }

@@ -28,19 +28,28 @@ class UsersController extends \BaseController {
 
 			if ($single->count() > 0) {
 				$results[$event['readable_id']]['single'] = $single->first();
-			}
 
-			if ($event->showAverage()) {
-				$average = Result::where('user_id', $user->id)
-							->where('event_id', $event->id)
-							->orderBy('average', 'asc')
-							->orderBy('date', 'asc')->take(1);
-				if ($average->count() > 0) {
-					$results[$event->readable_id]['average'] = $average->first();
+				if ($event->showAverage()) {
+					$average = Result::where('user_id', $user->id)
+								->where('event_id', $event->id)
+								->orderBy('average', 'asc')
+								->orderBy('date', 'asc')->take(1);
+					if ($average->count() > 0) {
+						$results[$event->readable_id]['average'] = $average->first();
+					}
 				}
 			}
 		}
 
 		return View::make('competitors.show')->with('user', $user)->with('events', $events)->with('results', $results);
 	}
+
+	public function clubMembers()
+	{
+		$year = date("Y");
+		if (date("n") == 1) $year--; // date("n") = month (1-12)
+		$members = User::where('membership_year', '>=', $year)->get();
+		return View::make('competitors.clubmembers')->with('members', $members);
+	}
+
 }

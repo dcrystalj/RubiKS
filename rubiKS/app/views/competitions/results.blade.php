@@ -15,10 +15,10 @@
 			</thead>
 			<tbody>
 				@foreach ($roundResults as $result)
-					<?php $competitor = $competitors[$result->user_id]; ?>
+					<?php $competitor = $result->user; ?>
 					<tr>
 						<td>{{ $result->round_rank }}.</td>
-						<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->name . ' ' . $competitor->last_name }}</a></td>
+						<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></td>
 						<td>
 							{{ Result::parse($result->single, $event->readable_id) }}
 							@if ($result->isSingleNR()) <b>NR</b> @elseif ($result->isSinglePB()) PB @endif {{-- NR/PB --}}
@@ -28,18 +28,7 @@
 								{{ Result::parse($result->average, $event->readable_id) }}
 								@if ($result->isAverageNR()) <b>NR</b> @elseif ($result->isAveragePB()) PB @endif {{-- NR/PB --}}
 							</td>
-							<td>
-							<small>
-								<?php $resultAllResults = Result::parseAll($result->results); ?>
-								@foreach ($resultAllResults as $i => $subResult)
-									@if ($subResult['exclude'])
-										[{{ $subResult['t'] }}]@if ($i + 1 < count($resultAllResults)), @endif
-									@else
-										{{ $subResult['t'] }}@if ($i + 1 < count($resultAllResults)), @endif
-									@endif
-								@endforeach
-							</small>
-							</td>
+							<td><small>{{ Result::parseAllString($result->results, $event->readable_id); }}</small></td>
 						@else
 							<td>/</td>
 							<td>/</td>

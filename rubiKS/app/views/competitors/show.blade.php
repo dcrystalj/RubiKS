@@ -1,7 +1,7 @@
 @extends('main')
 @section('content')
 	<!-- <h4>Tekmovalci</h4> -->
-	<h3>{{ $user->name }} {{ $user->last_name }}</h3>
+	<h3>{{ $user->getFullName() }}</h3>
 	<div class="competitors_block_left">
 		<table class="table table-condensed">
 			<tr>
@@ -10,7 +10,7 @@
 			</tr>
 			{{--<tr>
 				<td>Ime in priimek</td>
-				<td>{{ $user->name }} {{ $user->last_name }}</td>
+				<td>{{ $user->getFullName() }}</td>
 			</tr>--}}
 			<tr>
 				<td>Vzdevek</td>
@@ -39,7 +39,7 @@
 		</table>
 	</div>
 	<div class="competitors_block_right pull-right">
-		<img class="competitor_image img-thumbnail" alt="{{ $user->name }} {{ $user->last_name }}" src="http://www.rubik.si/klub/foto/{{ $user['club_id'] }}.jpg" width="150" height="200">
+		<img class="competitor_image img-thumbnail" alt="{{ $user->getFullName() }}" src="http://www.rubik.si/klub/foto/{{ $user['club_id'] }}.jpg" width="150" height="200">
 	</div>
 	<table class="table table-condensed">
 		<thead>

@@ -21,7 +21,7 @@
 					@else
 						<a class="competitor_guest" href="{{ url('competitors', $user['club_id']) }}">
 					@endif
-						{{ $user['last_name'] }} {{ $user['name'] }}</a>
+						{{ $user->getFullName(TRUE) }}</a>
 						</td>
 					<td>
 						{{ Help::country($user['nationality']) }}

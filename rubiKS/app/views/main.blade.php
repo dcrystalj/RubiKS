@@ -40,11 +40,14 @@
 				vertical-align: top;
 				text-align: center;
 			}
+
+			td.credit {
+				padding: 15px;
+			}
 		</style>
 
 		<!-- Bootstrap -->
-		{{--<link href="css/bootstrap.min.css" rel="stylesheet">--}}
-		{{ Helpers::get_CSS() }}
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +56,6 @@
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-		{{-- Helpers::get_JS() --}}
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	</head>
 	<body>
@@ -77,9 +79,14 @@
 								<span class="glyphicon glyphicon-user"></span> Tekmovalci
 							</a>
 						</li>
-						<li @if(Request::is('results*')) class="active" @endif >
-							<a href="{{ url('results') }}">
+						<li @if(Request::is('rankings*')) class="active" @endif >
+							<a href="{{ url('rankings') }}">
 								<span class="glyphicon glyphicon-stats"></span> Rezultati
+							</a>
+						</li>
+						<li @if(Request::is('records*')) class="active" @endif >
+							<a href="{{ url('records') }}">
+								<span class="glyphicon glyphicon-star"></span> Rekordi
 							</a>
 						</li>
 						<li @if(Request::is('events*')) class="active" @endif >

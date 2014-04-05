@@ -14,10 +14,10 @@
 	</thead>
 	<tbody>
 		@foreach ($registrations as $i => $registration)
-			<?php $competitor = $competitors[$registration->user_id]; $userEvents = 0; ?>
+			<?php $competitor = $registration->user; $userEvents = 0; ?>
 			<tr>
 				<td class="text-right"><small>{{ $i + 1 }}.</small></td>
-				<td><small>{{ $competitor->name . ' ' . $competitor->last_name }}</small></td>
+				<td><small><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></small></td>
 				@foreach ($events as $event)
 					<td><small>@if ($registration->signedUpForEvent($event->readable_id)) X <?php $userEvents++; ?>@else - @endif</small></td>
 				@endforeach

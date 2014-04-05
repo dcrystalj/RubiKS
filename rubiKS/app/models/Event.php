@@ -6,6 +6,8 @@ class Event extends Eloquent {
 	public $timestamps = false;
 	protected $softDelete = false;
 
+	public static $resultTypes = array('single', 'average');
+
 	public function results()
 	{
 		return $this->hasMany('Result');
@@ -23,6 +25,40 @@ class Event extends Eloquent {
 	public function showAverage()
 	{
 		return $this->show_average == '1';
+	}
+
+	public static function whereReadableId($id, $events = NULL)
+	{
+		if ($events === NULL) return self::where('readable_id', $id)->firstOrFail();
+		
+		$event = NULL;
+		foreach ($events as $lEvent) {
+			if ($lEvent->readable_id == $id) {
+				$event = $lEvent;
+				break;
+			}
+		}
+		if ($event === NULL) return self::whereReadableId($id);
+		return $event;
+	}
+
+	public function getRecordSingle()
+	{
+		return $this->results()->orderBy('single', 'asc')->first();
+	}
+
+	public function getRecordAverage()
+	{
+		if (!$this->showAverage()) return NULL;
+		return $result = $this->results()->orderBy('average', 'asc')->first();
+	}
+
+	public static function injectRecords($events)
+	{
+		foreach ($events as $event) {
+			$event->singleRecord = $event->getRecordSingle();
+			$event->averageRecord = $event->getRecordAverage();
+		}
 	}
 
 }
