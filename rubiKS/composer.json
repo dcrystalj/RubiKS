@@ -5,6 +5,8 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
+		"laravelbook/ardent": "dev-master",
+		"zizaco/confide": "3.2.x",
 		"magniloquent/magniloquent": "dev-master",
 		"patricktalmadge/bootstrapper": "dev-develop",
 		"anahkiasen/former": "dev-master"

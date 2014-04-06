@@ -109,6 +109,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Former\FormerServiceProvider',
+		'Zizaco\Confide\ConfideServiceProvider',
 
 	),
 
@@ -201,6 +202,7 @@ return array(
 		'Typeahead' 	  => 'Bootstrapper\Typeahead',
 		'Typography' 	  => 'Bootstrapper\Typography',
 		'Former' 		  => 'Former\FormerServiceProvider',
+		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 
 	),
 
