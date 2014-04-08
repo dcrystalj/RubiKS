@@ -105,6 +105,16 @@
 							</a>
 						</li>
 						<hr>
+						<li>
+							<a href="{{ url('credits') }}">
+								<span class="glyphicon glyphicon-heart"></span> Zahvale
+							</a>
+						</li>
+						<li>
+							<a href="{{ url('http://www.rubik.si/') }}">
+								<span class="glyphicon glyphicon-comment"></span> Forum
+							</a>
+						</li>
 					</ul>
 				</div>
 				<div class="col-sm-9">
