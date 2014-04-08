@@ -30,6 +30,11 @@ class User extends ConfideUser {
         'email' => 'required|email|unique:users',
         'password' => 'required|min:4|confirmed',
         'password_confirmation' => 'min:4',
+        'name' => 'required|min:2',
+        'last_name' => 'required|min:2',
+        'gender' => 'required',
+        'nationality' => 'required',
+        'birth_date' => 'required',
     );
 
     /**
@@ -98,9 +103,15 @@ class User extends ConfideUser {
 		return $this->hasMany('Result');
 	}
 
-	public function getGenderAttribute($g) {
+	public function getGenderAttribute($g)
+	{
 		//return $g === 'm' ? 'M' : 'Ž';
 		return $g === 'm' ? 'moški' : 'ženski';
+	}
+
+	public function getRawGenderAttribute()
+	{
+		return $this->attributes['gender'];
 	}
 
 	public function getParsedJoinedDate()
@@ -117,6 +128,24 @@ class User extends ConfideUser {
 		}
 
 		return mb_convert_case($fullName, MB_CASE_TITLE);
+	}
+
+	public static function validGender($gender)
+	{
+		return in_array($gender, ['m', 'f']);
+	}
+
+	public static function validNationality($nationality)
+	{
+		return array_key_exists($nationality, Help::$nationalities);
+	}
+
+	/*
+	 * Generates club ID.
+	 */
+	public static function generateClubId($user)
+	{
+		return strtoupper($user->nationality . $user->getRawGenderAttribute() . substr($user->birth_date, 2, 2) . substr($user->last_name, 0, 3)  . substr($user->name, 0, 2) . date('y'));
 	}
 
 }
