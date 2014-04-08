@@ -13,4 +13,27 @@ class Date {
 		return $dateOnly ? $dt->format('d. m. Y') : $dt->format('d. m. Y H:i');
 	}
 
+	public static function validDate($y, $m, $d)
+	{
+		$y = (int) $y;
+		$m = (int) $m;
+		$d = (int) $m;
+
+		return $y >= 1000 && $y <= 9999 && checkdate($m, $d, $y);
+	}
+
+	public static function ymdToDate($y, $m, $d)
+	{
+		$y = (int) $y;
+		$m = (int) $m;
+		$d = (int) $m;
+		if (!self::validDate($y, $m, $d)) return FALSE;
+
+		$year = (string) $y;
+		$month = ($m < 10) ? '0' . $m : (string) $m;
+		$day = ($d < 10) ? '0' . $d : (string) $d;
+
+		return $year . '-' . $month . '-' . $day;
+	}
+
 }
