@@ -18,7 +18,7 @@ class Competition extends Eloquent {
 
 	public function approvedRegistrations()
 	{
-		return $this->registrations()->where('status', '1');	
+		return $this->registrations()->where('confirmed', '1');	
 	}
 
 	public function getDelegates()

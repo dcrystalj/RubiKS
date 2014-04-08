@@ -13,7 +13,7 @@ class Registration extends Eloquent {
 
 	public function approved()
 	{
-		return $this->status == '1';
+		return $this->confirmed == '1';
 	}
 
 	public function signedUpForEvent($event)

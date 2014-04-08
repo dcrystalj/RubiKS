@@ -12,7 +12,7 @@ class CreateRegistrationsTable extends Migration {
 			$table->integer('competition_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->string('events');
-			$table->string('status', 1);
+			$table->string('confirmed', 1)->default(0);
 			$table->text('notes');
 			$table->timestamps();
 		});
