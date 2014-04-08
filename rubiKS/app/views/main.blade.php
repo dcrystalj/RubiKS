@@ -8,10 +8,10 @@
 		<style>
 			html { overflow-y: scroll; }
 
-			.container { padding: 20px; }
+			.container { min-width: 760px; padding: 20px; }
 
 			.header { background-color: #eee; }
-			.header_main { padding: 0px 40px; }
+			.header_main { width: 100%; padding: 0px 40px; }
 
 			.footer_block { display: inline-block; vertical-align: top; margin: 0px 20px; }
 			.footer { background-color: #ccc; border-top: 3px solid #999; }
@@ -104,13 +104,8 @@
 								<span class="glyphicon glyphicon-info-sign"></span> Informacije
 							</a>
 						</li>
-						<li>
-							<a href="{{ url('login') }}">
-								<span class="glyphicon glyphicon-off"></span> Prijava v sistem
-							</a>
-						</li>
+						<hr>
 					</ul>
-					<hr>
 				</div>
 				<div class="col-sm-9">
 					@yield('content')
