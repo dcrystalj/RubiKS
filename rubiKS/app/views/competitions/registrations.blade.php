@@ -27,7 +27,15 @@
 	</tbody>
 </table>
 @if ($competition->registrationsOpened())
-	<b><a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a></b>
+	<button type="button" class="btn btn-default">
+		<b>
+		@if (Auth::guest())
+			<a href="{{ url('user/create', $competition->short_name) }}">Če še nimate RubiKS računa se lahko prijavite tukaj.</a>
+		@else
+			<a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a>
+		@endif
+		</b>
+	</button>
 @else
 	<b>Prijave so zaprte.</b>
 @endif
