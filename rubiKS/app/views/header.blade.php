@@ -27,6 +27,7 @@
 				<a href="{{ url('logout') }}"><button type="button" class="btn btn-xs btn-default">
 					<span class="glyphicon glyphicon-off"></span> Odjava
 				</button></a>
+				<a href="{{ route('registrations.index') }}"><button type="button" class="btn btn-xs btn-default">Prijave na tekmovanja</button></a>
 			@endif
 			</div>
 		</div>
