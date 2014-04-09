@@ -85,6 +85,7 @@ class UsersConfideController extends BaseController {
         $user->forum_nickname = Input::get('forum_nickname');
         $user->birth_date = $birthDate;
         $user->joined_date = date('Y-m-d');
+        $user->notes = Input::get('user_notes');
 
         $user->club_id = User::generateClubId($user);
 

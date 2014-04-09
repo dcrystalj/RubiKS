@@ -7,14 +7,6 @@
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="competitionName">Prijavljate se na</label>
-            <div class="col-sm-10">
-                <span class="form-control">{{ $competition->name }} ({{ $competition->short_name }})</span>
-            </div>
-            <input type="hidden" name="competition" value="{{ $competition->short_name }}">
-        </div>
-
-        <div class="form-group">
             <label class="col-sm-2 control-label" for="name">Ime *</label>
             <div class="col-sm-10">
                 <input class="form-control" placeholder="Ime" type="text" name="name" id="name" value="{{{ Input::old('name') }}}">
@@ -111,24 +103,15 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="notes">Opombe</label>
+            <label class="col-sm-2 control-label" for="user_notes">Opombe</label>
             <div class="col-sm-10">
-                <input class="form-control" placeholder="Opombe" type="text" name="notes" id="notes" value="{{{ Input::old('notes') }}}">
+                <input class="form-control" placeholder="Opombe" type="text" name="user_notes" id="user_notes" value="{{{ Input::old('user_notes') }}}">
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="events">Izberite discipline *</label>
-            <div class="col-sm-10">
-                @foreach($events as $event)
-                    <div class="checkbox">
-                        <label>
-                            <input name="event_{{ $event->readable_id }}" id="event_{{ $event->readable_id }}" type="checkbox" value="1"> <b>{{ $event->short_name }}</b> ({{ $event->name }})
-                        </label>
-                    </div>
-                @endforeach
-            </div>
-        </div>        
+        <hr>
+
+        @include('registrations.form')
 
         @if ( Session::get('error') )
             <div class="alert alert-error alert-danger">
