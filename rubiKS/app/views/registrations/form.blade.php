@@ -12,7 +12,8 @@
         @foreach($events as $event)
             <div class="checkbox">
                 <label>
-                    <input name="event_{{ $event->readable_id }}" id="event_{{ $event->readable_id }}" type="checkbox" value="1"> <b>{{ $event->short_name }}</b> ({{ $event->name }})
+                    <input name="event_{{ $event->readable_id }}" id="event_{{ $event->readable_id }}" type="checkbox" value="1" @if (Input::old('event_' . $event->readable_id) == '1') checked @endif>
+                    <b>{{ $event->short_name }}</b> ({{ $event->name }})
                 </label>
             </div>
         @endforeach
