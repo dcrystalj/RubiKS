@@ -62,12 +62,7 @@ class UsersConfideController extends BaseController {
         // Competition
         $competition = Competition::getCompetitionByShortName(Input::get('competition'));
         // Parse events
-        $competitionEvents = Competition::getEvents($competition->events, TRUE);
-        $events = [];
-        foreach ($competitionEvents as $event) {
-            if (Input::get('event_' . $event) == '1') $events[] = $event;
-        }
-        $events = implode(' ', $events);
+        $events = Registration::parseSelectedEvents($competition, Input::all());
 
         // User
         $user = new User;

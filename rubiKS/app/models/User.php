@@ -103,6 +103,11 @@ class User extends ConfideUser {
 		return $this->hasMany('Result');
 	}
 
+	public function registrations()
+	{
+		return $this->hasMany('Registration');
+	}
+
 	public function getGenderAttribute($g)
 	{
 		//return $g === 'm' ? 'M' : 'Ž';

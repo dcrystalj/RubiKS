@@ -38,6 +38,8 @@ Route::controller('user', 'UsersConfideController');
 Route::get('login', 'UsersConfideController@getLogin');
 Route::get('logout', 'UsersConfideController@getLogout');
 
+Route::resource('registrations', 'RegistrationsController');
+
 App::missing(function($exception)
 {
     return Response::view('errors.missing', array(), 404);

@@ -44,6 +44,8 @@
 			td.credit {
 				padding: 15px;
 			}
+
+			form.inline { display: inline; }
 		</style>
 
 		<!-- Bootstrap -->
