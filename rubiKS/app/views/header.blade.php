@@ -23,7 +23,7 @@
 				@else
 					Pozdravljena,
 				@endif
-				<a href="{{ URL::to('competitors', Auth::user()->club_id) }}"><b>{{ Auth::user()->getFullName() }}</b></a>!
+				<a href="{{ route('competitors.show', Auth::user()->club_id) }}"><b>{{ Auth::user()->getFullName() }}</b></a>!
 				<a href="{{ url('logout') }}"><button type="button" class="btn btn-xs btn-default">
 					<span class="glyphicon glyphicon-off"></span> Odjava
 				</button></a>

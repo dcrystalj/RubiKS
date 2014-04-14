@@ -153,4 +153,12 @@ class User extends ConfideUser {
 		return strtoupper($user->nationality . $user->getRawGenderAttribute() . substr($user->birth_date, 2, 2) . substr($user->last_name, 0, 3)  . substr($user->name, 0, 2) . date('y'));
 	}
 
+	/*
+	 * Get all confirmed users.
+	 */
+	public static function allConfirmed()
+	{
+		return User::where('confirmed', '1');
+	}
+
 }

@@ -14,7 +14,7 @@
 			@foreach ($competitions as $i => $competition)
 				<tr>
 					<td class="text-right">{{ count($competitions) - $i }}.</td>
-					<td><a href="{{ url('competitions', $competition->short_name) }}">{{ $competition->name }}</a></td>
+					<td><a href="{{ route('competitions.show', $competition->short_name) }}">{{ $competition->name }}</a></td>
 					<td>{{ $competition->city }}</td>
 					<td>{{ $competition->getParsedDate() }}</td>
 				</tr>

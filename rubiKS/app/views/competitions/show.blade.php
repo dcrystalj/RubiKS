@@ -37,15 +37,15 @@
 		</tr>
 		<tr>
 			<td>1. delegat</td>
-			<td>@if ($delegate1 !== NULL) <a href="{{ url('competitors', $delegate1->club_id) }}">{{ $delegate1->getFullName() }}</a> @endif</td>
+			<td>@if ($delegate1 !== NULL) <a href="{{ route('competitors.show', $delegate1->club_id) }}">{{ $delegate1->getFullName() }}</a> @endif</td>
 		</tr>
 		<tr>
 			<td>2. delegat</td>
-			<td>@if ($delegate2 !== NULL) <a href="{{ url('competitors', $delegate2->club_id) }}">{{ $delegate2->getFullName() }}</a> @endif</td>
+			<td>@if ($delegate2 !== NULL) <a href="{{ route('competitors.show', $delegate2->club_id) }}">{{ $delegate2->getFullName() }}</a> @endif</td>
 		</tr>
 		<tr>
 			<td>Pomožni delegat</td>
-			<td>@if ($delegate3 !== NULL) <a href="{{ url('competitors', $delegate3->club_id) }}">{{ $delegate3->getFullName() }}</a> @endif</td>
+			<td>@if ($delegate3 !== NULL) <a href="{{ route('competitors.show', $delegate3->club_id) }}">{{ $delegate3->getFullName() }}</a> @endif</td>
 		</tr>
 		<tr>
 			<td>Omejitev št. tekmovalcev</td>
@@ -67,14 +67,14 @@
 			<td>Discipline</td>
 			<td colspan="3">
 				@foreach ($events as $i => $event)
-					<a href="{{ url('events', $event->readable_id) }}" title="{{ $event->name }}">{{ $event->short_name }}</a>@if ($i + 1!= count($events)), @endif
+					<a href="{{ route('events.show', $event->readable_id) }}" title="{{ $event->name }}">{{ $event->short_name }}</a>@if ($i + 1!= count($events)), @endif
 				@endforeach
 			</td>
 		</tr>
 		@if ($competition->isFinished())
 		<tr>
 			<td>Mešalni algoritmi</td>
-			<td><a href="{{ url('algorithms', $competition->short_name) }}">arhiv</a></td>
+			<td><a href="{{ route('algorithms.show', $competition->short_name) }}">arhiv</a></td>
 		</tr>
 		@endif
 	</table>

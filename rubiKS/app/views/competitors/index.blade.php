@@ -17,9 +17,9 @@
 					<td class="text-right">{{ $i++ }}.</td>
 					<td>
 					@if ($user['nationality'] === 'SI')
-						<a class="competitor_home" href="{{ url('competitors', $user['club_id']) }}">
+						<a class="competitor_home" href="{{ route('competitors.show', $user['club_id']) }}">
 					@else
-						<a class="competitor_guest" href="{{ url('competitors', $user['club_id']) }}">
+						<a class="competitor_guest" href="{{ route('competitors.show', $user['club_id']) }}">
 					@endif
 						{{ $user->getFullName(TRUE) }}</a>
 						</td>

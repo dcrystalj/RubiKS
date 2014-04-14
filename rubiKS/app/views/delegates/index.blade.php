@@ -14,7 +14,7 @@
 		<tbody>
 			@foreach ($delegates as $delegate)
 				<tr>
-					<td><a href="{{ url('competitors', $delegate->user->club_id) }}">{{ $delegate->user->getFullName() }}</a></td>
+					<td><a href="{{ route('competitors.show', $delegate->user->club_id) }}">{{ $delegate->user->getFullName() }}</a></td>
 					<td>{{ $delegate->degree }}</td>
 					<td>{{ $delegate->nr_delegating }}</td>
 					<td>{{ $delegate->region }}</td>
