@@ -13,7 +13,7 @@
 		<tbody>
 		@foreach ($events as $event)
 			<tr>
-				<td><a href="{{ url('events', $event->readable_id) }}">{{ $event->name }}</a></td>
+				<td><a href="{{ route('events.show', $event->readable_id) }}">{{ $event->name }}</a></td>
 				<td>{{ $event->short_name }}</td>
 				<td>{{ $event->attempts }}</td>
 				<td>{{ $event->time_limit }}</td>

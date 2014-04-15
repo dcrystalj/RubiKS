@@ -33,6 +33,13 @@ Route::resource('algorithms', 'AlgorithmsController', array('only' => array('ind
 
 Route::resource('credits', 'CreditsController', array('only' => array('index')));
 
+// Confide RESTful route
+Route::controller('user', 'UsersConfideController');
+Route::get('login', 'UsersConfideController@getLogin');
+Route::get('logout', 'UsersConfideController@getLogout');
+
+Route::resource('registrations', 'RegistrationsController');
+
 App::missing(function($exception)
 {
     return Response::view('errors.missing', array(), 404);

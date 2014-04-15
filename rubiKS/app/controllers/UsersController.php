@@ -4,7 +4,7 @@ class UsersController extends \BaseController {
 
 	public function index()
 	{
-		$users = User::orderBy('last_name')->orderBy('name')->get();
+		$users = User::allConfirmed()->orderBy('last_name')->orderBy('name')->get();
 		return View::make('competitors.index')->with('users', $users)->with('i', 1);
 	}
 

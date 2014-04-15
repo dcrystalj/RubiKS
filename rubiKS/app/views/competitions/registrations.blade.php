@@ -17,7 +17,7 @@
 			<?php $competitor = $registration->user; $userEvents = 0; ?>
 			<tr>
 				<td class="text-right"><small>{{ $i + 1 }}.</small></td>
-				<td><small><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></small></td>
+				<td><small><a href="{{ route('competitors.show', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></small></td>
 				@foreach ($events as $event)
 					<td><small>@if ($registration->signedUpForEvent($event->readable_id)) X <?php $userEvents++; ?>@else - @endif</small></td>
 				@endforeach
@@ -27,7 +27,13 @@
 	</tbody>
 </table>
 @if ($competition->registrationsOpened())
-	<b><a href="{{ url('registrations', $competition->short_name) }}">Prijavite se na tekmo.</a></b>
+	<center>
+		@if (Auth::guest())
+			<a href="{{ url('user/create', $competition->short_name) }}"><button type="button" class="btn btn-default"><b>Če še nimate RubiKS računa se lahko prijavite tukaj.</b></button></a>
+		@else
+			<a href="{{ route('registrations.show', $competition->short_name) }}"><button type="button" class="btn btn-default"><b>Prijavite se na tekmo.</b></button></a>
+		@endif
+	</center>
 @else
-	<b>Prijave so zaprte.</b>
+	<center><b>Prijave so zaprte.</b></center>
 @endif

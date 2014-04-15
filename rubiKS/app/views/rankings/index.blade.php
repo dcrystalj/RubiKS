@@ -9,5 +9,5 @@
 	<br><br>
 
 	<h4>Rezultati po tekmovalcih</h4>
-	<a href="{{ url('competitors') }}">Rezultati po tekmovalcih</a>
+	<a href="{{ route('competitors.index') }}">Rezultati po tekmovalcih</a>
 @stop

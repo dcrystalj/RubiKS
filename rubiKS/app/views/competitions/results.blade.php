@@ -18,7 +18,7 @@
 					<?php $competitor = $result->user; ?>
 					<tr>
 						<td>{{ $result->round_rank }}.</td>
-						<td><a href="{{ url('competitors', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></td>
+						<td><a href="{{ route('competitors.show', $competitor->club_id) }}">{{ $competitor->getFullName() }}</a></td>
 						<td>
 							{{ Result::parse($result->single, $event->readable_id) }}
 							@if ($result->isSingleNR()) <b>NR</b> @elseif ($result->isSinglePB()) PB @endif {{-- NR/PB --}}

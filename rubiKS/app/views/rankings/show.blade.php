@@ -18,11 +18,11 @@
 			@foreach ($results as $result)
 				<tr>
 					<td>{{ $result->injectedRank }}.</td>
-					<td><a href="{{ url('competitors', $result->user->club_id) }}">{{ $result->user->getFullName() }}</a></td>
+					<td><a href="{{ route('competitors.show', $result->user->club_id) }}">{{ $result->user->getFullName() }}</a></td>
 					<td><b>{{ Result::parse($result[$resultType], $event->readable_id) }}</b></td>
 					@if ($event->showAverage()) <td><small>{{ Result::parseAllString($result->results, $event->readable_id) }}</small></td> @endif
 					<td><small>{{ Date::parse($result->date) }}</small></td>
-					<td><small><a title="{{ $result->competition->name }}" href="{{ url('competitions', $result->competition->short_name) }}">{{ $result->competition->short_name }}</a></small></td>
+					<td><small><a title="{{ $result->competition->name }}" href="{{ route('competitions.show', $result->competition->short_name) }}">{{ $result->competition->short_name }}</a></small></td>
 				</tr>
 			@endforeach
 		</tbody>

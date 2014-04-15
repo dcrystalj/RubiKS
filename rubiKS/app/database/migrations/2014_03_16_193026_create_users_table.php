@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration {
 			$table->date('banned_date');
 			$table->timestamps();
 			$table->string('level', 1);
-			$table->string('forum_nickname')->nullable();
+			$table->string('forum_nickname');
 			$table->string('club_authority');
 			$table->integer('membership_year');
 		});

@@ -8,10 +8,10 @@
 		<style>
 			html { overflow-y: scroll; }
 
-			.container { padding: 20px; }
+			.container { min-width: 760px; padding: 20px; }
 
 			.header { background-color: #eee; }
-			.header_main { padding: 0px 40px; }
+			.header_main { width: 100%; padding: 0px 40px; }
 
 			.footer_block { display: inline-block; vertical-align: top; margin: 0px 20px; }
 			.footer { background-color: #ccc; border-top: 3px solid #999; }
@@ -44,6 +44,8 @@
 			td.credit {
 				padding: 15px;
 			}
+
+			form.inline { display: inline; }
 		</style>
 
 		<!-- Bootstrap -->
@@ -104,13 +106,18 @@
 								<span class="glyphicon glyphicon-info-sign"></span> Informacije
 							</a>
 						</li>
+						<hr>
 						<li>
-							<a href="{{ url('login') }}">
-								<span class="glyphicon glyphicon-off"></span> Prijava v sistem
+							<a href="{{ url('credits') }}">
+								<span class="glyphicon glyphicon-heart"></span> Zahvale
+							</a>
+						</li>
+						<li>
+							<a href="{{ url('http://www.rubik.si/') }}">
+								<span class="glyphicon glyphicon-comment"></span> Forum
 							</a>
 						</li>
 					</ul>
-					<hr>
 				</div>
 				<div class="col-sm-9">
 					@yield('content')

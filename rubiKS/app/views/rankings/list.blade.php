@@ -9,5 +9,5 @@
 	<button id="average" type="button" class="btn btn-default">Povprečje</button>
 </form>
 <script>
-	$('#single, #average').click(function() { window.location = '{{ url('rankings') }}' + '/' + $('#event')[0].value + '/?type=' + this.id; });
+	$('#single, #average').click(function() { window.location = '{{ route('rankings.index') }}' + '/' + $('#event')[0].value + '/?type=' + this.id; });
 </script>
