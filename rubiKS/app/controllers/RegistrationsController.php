@@ -8,34 +8,8 @@ class RegistrationsController extends \BaseController {
 	public function __construct()
 	{
 		$this->beforeFilter('auth');
-
-		$this->beforeFilter(function($routes, $request)
-		{
-			$competitionShortName = Input::old('competition') == null ? Input::get('competition') : Input::old('competition');
-			if (is_null($competitionShortName)) return Redirect::to('registrations');
-
-			$competition = Competition::getCompetitionByShortName($competitionShortName); // Competition exists
-			if (!$competition->registrationsOpened()) return Redirect::to('registrations'); // Registrations are opened
-
-			// Making sure that user IS NOT already registered to this competition
-			$registration = Registration::getRegistration(Auth::user()->id, $competition->id);
-			if ($registration !== null) return Redirect::to('registrations/show', $competitionShortName);
-		},
-		[ 'only' => ['create', 'store'] ]);
-
-		$this->beforeFilter(function($routes, $request)
-		{
-			if (count($routes->parameters()) < 1) App::abort(404);
-			$competitionShortName = $routes->parameters()['registrations'];
-
-			$competition = Competition::getCompetitionByShortName($competitionShortName); // Competition exists
-			if (!$competition->registrationsOpened()) return Redirect::to('registrations'); // Registrations are opened
-
-			// Making sure that user IS already registered to this competition
-			$registration = Registration::getRegistration(Auth::user()->id, $competition->id);
-			if ($registration === null) return Redirect::to('registrations');
-		},
-		[ 'only' => ['edit', 'update'] ]);
+		$this->beforeFilter('registrations.createStore', [ 'only' => ['create', 'store'] ]);
+		$this->beforeFilter('registrations.editUpdate', [ 'only' => ['edit', 'update'] ]);
 	}
 
 	/**
