@@ -51,7 +51,16 @@ return array(
 	 * 		'Analytics' => array('E-Commerce' => 'page.ecommerce.analytics'),
 	 *	)
 	 */
-	'menu' => array('news', 'competitions'),
+	'menu' => array(
+		'news', 
+		'competitors', 
+		'competitions',
+		'registrations',
+		'events', 
+		'delegates',
+		'static_pages',
+		'credits',
+	),
 
 	/**
 	 * The permission option is the highest-level authentication check that lets you define a closure that should return true if the current user
