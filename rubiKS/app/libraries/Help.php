@@ -41,4 +41,10 @@ class Help
 		if (array_key_exists($cid, self::$countries)) return self::$countries[$cid];
 		return $cid;
 	}
+
+	public static function checked($bool, $bold = FALSE)
+	{
+		if ($bool) return $bool ? '✔' : '✘';
+		return $bool ? '✓' : '✗';
+	}
 }
