@@ -8,7 +8,7 @@ class CreateDelegatesTable extends Migration {
 	public function up()
 	{
 		Schema::create('delegates', function(Blueprint $table) {
-			$table->increments('delegate_id');
+			$table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->string('degree');
 			$table->string('contact');
