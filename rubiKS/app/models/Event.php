@@ -13,18 +13,34 @@ class Event extends Eloquent {
 		return $this->hasMany('Result');
 	}
 
-	public function getTimeLimitAttribute()
+	public function getTimeLimitAttribute($attribute)
 	{
-		if ($this->attributes['time_limit'] < 60) {
-			return $this->attributes['time_limit'] . ' sec';
+		if ($attribute < 60) {
+			return $attribute . ' sec';
 		} else {
-			return ($this->attributes['time_limit'] / 60) . ' min';
+			return ($attribute / 60) . ' min';
 		}
+	}
+
+	public function setTimeLimitAttribute($value)
+	{
+		$split = explode(' ', $value);
+		if (count($split) != 2) return;
+		$multiplier = $split[1] == 'min' ? 60 : 1;
+		$this->attributes['time_limit'] = (int) $value * $multiplier;
 	}
 
 	public function showAverage()
 	{
 		return $this->show_average == '1';
+	}
+
+	/*
+	 * To ensure compatibility with Administrator package.
+	 */
+	public function getShowAverageAttribute($attribute)
+	{
+		return $attribute;
 	}
 
 	public static function whereReadableId($id, $events = NULL)
