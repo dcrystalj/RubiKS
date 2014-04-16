@@ -16,14 +16,9 @@ class Registration extends Eloquent {
 		return $this->belongsTo('Competition');
 	}
 
-	public function confirmed()
+	public function isConfirmed()
 	{
 		return $this->confirmed == '1';
-	}
-
-	public function approved()
-	{
-		return $this->confirmed();
 	}
 
 	public function signedUpForEvent($event)
