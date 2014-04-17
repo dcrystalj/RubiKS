@@ -1,7 +1,7 @@
 <?php
 
 // Compatibility fix - user was not being saved due to ˙unique` rule
-User::$rules['email'] = 'required|email';
+unset(User::$rules['password'], User::$rules['password_confirmation'], User::$rules['email'], User::$rules['gender']);
 
 return array(
 	'title' => 'Competitors',
