@@ -15,7 +15,7 @@
 			<tr>
 				<td>{{ $i + 1 }}.</td>
 				<td>{{ $member->getFullName() }}</td>
-				<td>{{ $member->club_authority }}</td>
+				<td>{{ $member->club_authority == '' ? 'Zbor članov' : $member->club_authority }}</td>
 				<td>{{ $member->membership_year }}</td>
 			</tr>
 		@endforeach
