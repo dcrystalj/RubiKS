@@ -25,6 +25,7 @@ return array(
 		),
 		'confirmed' => array(
 			'title' => 'Confirmed',
+			'output' => function($value) { return Help::checked($value); },
 		),
 		'created_at' => array(
 			'title' => 'Created at',
