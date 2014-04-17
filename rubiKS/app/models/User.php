@@ -135,6 +135,11 @@ class User extends ConfideUser {
 		return mb_convert_case($fullName, MB_CASE_TITLE);
 	}
 
+	public function getFullNameAttribute($inverted)
+	{
+		return $this->getFullName($inverted);
+	}
+
 	public static function validGender($gender)
 	{
 		return in_array($gender, ['m', 'f']);
@@ -160,5 +165,21 @@ class User extends ConfideUser {
 	{
 		return User::where('confirmed', '1');
 	}
+
+	/**
+     * If provided password is empty, use the old one instead.
+     * Ensures compatibility with Administrator.
+     *
+     * @param string $value 
+     */
+    public function setPasswordAttribute($value)
+    {
+    	if (empty($value) && isset($this->password)) {
+    		$this->attributes['password'] = $this->password;
+    		$this->attributes['password_confirmation'] = $this->password;
+    	} else {
+    		$this->attributes['password'] = $value;
+    	}
+    }
 
 }
