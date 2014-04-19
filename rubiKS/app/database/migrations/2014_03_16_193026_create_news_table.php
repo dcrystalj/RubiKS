@@ -14,7 +14,6 @@ class CreateNewsTable extends Migration {
 			$table->integer('user_id')->unsigned();
 			$table->timestamps();
 			$table->string('url_slug', 60)->unique();
-			$table->string('visible', 1);
 		});
 	}
 

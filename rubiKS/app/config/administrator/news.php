@@ -28,6 +28,9 @@ return array(
 		),
 		'url_slug' => array(
 			'title' => 'URL slug'
+		),
+		'user_id' => array(
+			'title' => 'Author'
 		)
 	)
 );
