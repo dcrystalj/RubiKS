@@ -11,9 +11,10 @@
 			</tr>
 		</thead>
 		<tbody>
-		@foreach ($members as $i => $member)
+		<?php $counter = 1; ?>
+		@foreach ($members as $member)
 			<tr>
-				<td class="text-right">{{ $i + 1 }}.</td>
+				<td class="text-right">{{ $counter++ }}.</td>
 				<td>{{ $member->getFullName() }}</td>
 				<td>{{ $member->club_authority == '' ? 'Zbor članov' : $member->club_authority }}</td>
 				<td>{{ $member->membership_year }}</td>

@@ -49,6 +49,9 @@ class UsersController extends \BaseController {
 		$year = date("Y");
 		if (date("n") == 1) $year--; // date("n") = month (1-12)
 		$members = User::where('membership_year', '>=', $year)->get();
+		$members = $members->sortBy(function($member) {
+			return $member->fullName;
+		});
 		return View::make('competitors.clubmembers')->with('members', $members);
 	}
 
