@@ -68,6 +68,18 @@ class User extends ConfideUser {
         }
     }
 
+    /*
+     * Ardent-like hack
+     */
+    public function updateUnique()
+    {
+    	$oldRule = self::$rules['email'];
+    	self::$rules['email'] .= ',id,' . $this->id;
+        $result = $this->save();
+        self::$rules['email'] = $oldRule;
+        return $result;
+    }
+
 	/**
 	 * Get the unique identifier for the user.
 	 *
