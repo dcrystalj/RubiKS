@@ -52,7 +52,8 @@ return array(
 	 *	)
 	 */
 	'menu' => array(
-		'news', 
+		'news',
+		'notices',
 		'competitors', 
 		'competitions',
 		'registrations',
