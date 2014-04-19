@@ -35,6 +35,8 @@ Route::resource('algorithms', 'AlgorithmsController', array('only' => array('ind
 
 Route::resource('credits', 'CreditsController', array('only' => array('index')));
 
+Route::resource('static', 'StaticPagesController', array('only' => array('index', 'show')));
+
 // Confide RESTful route
 Route::controller('user', 'UsersConfideController');
 Route::get('login', 'UsersConfideController@getLogin');
