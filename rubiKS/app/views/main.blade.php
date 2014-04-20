@@ -102,12 +102,12 @@
 							</a>
 						</li>
 						<li>
-							<a href="{{ url('rules') }}">
+							<a href="{{ url('static/rules') }}">
 								<span class="glyphicon glyphicon-book"></span> Pravila
 							</a>
 						</li>
 						<li>
-							<a href="{{ url('info') }}">
+							<a href="{{ url('static') }}">
 								<span class="glyphicon glyphicon-info-sign"></span> Informacije
 							</a>
 						</li>
