@@ -9,7 +9,8 @@ class StaticPagesController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Redirect::to('/');
+		$pages = StaticPage::all();
+		return View::make('staticpages.index')->withPages($pages);
 	}
 
 	/**
