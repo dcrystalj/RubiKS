@@ -110,6 +110,7 @@ return array(
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Former\FormerServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
+		'Frozennode\Administrator\AdministratorServiceProvider',
 
 	),
 

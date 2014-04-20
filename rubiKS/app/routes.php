@@ -15,6 +15,8 @@ Route::get('/', 'NewsController@lastFive');
 
 Route::resource('news', 'NewsController');
 
+Route::resource('notices', 'NoticesController', array('only' => array('index')));
+
 Route::get('members', 'UsersController@clubMembers');
 Route::resource('competitors', 'UsersController');
 
@@ -32,6 +34,8 @@ Route::resource('delegates', 'DelegatesController', array('only' => array('index
 Route::resource('algorithms', 'AlgorithmsController', array('only' => array('index', 'show')));
 
 Route::resource('credits', 'CreditsController', array('only' => array('index')));
+
+Route::resource('static', 'StaticPagesController', array('only' => array('index', 'show')));
 
 // Confide RESTful route
 Route::controller('user', 'UsersConfideController');

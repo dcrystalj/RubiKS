@@ -150,6 +150,24 @@ class UsersConfideController extends BaseController {
             'remember' => Input::get('remember'),
         );
 
+        // Attempt to migrate password
+        $oldPassword = sha1(@substr(addslashes(strip_tags($input['password'])), 0, 10)); // The old encryption algorithm
+        $oldAuth = $input['email'];
+        $old = User::where(function($query) use ($oldAuth)
+        {
+            $query->where('email', $oldAuth);
+            $query->orWhere('club_id', $oldAuth);
+        })
+        ->where('old_password', $oldPassword);
+
+        if ($old->count() > 0) {
+            $old = $old->firstOrFail();
+            $old->password = $input['password'];
+            $old->password_confirmation = $old->password;
+            $old->old_password = "";
+            $old->updateUnique();
+        }
+
         // If you wish to only allow login from confirmed users, call logAttempt
         // with the second parameter as true.
         // logAttempt will check if the 'email' perhaps is the username.

@@ -71,6 +71,11 @@
 								<span class="glyphicon glyphicon-th-large"></span> Novice
 							</a>
 						</li>
+						<li @if(Request::is('notices*')) class="active" @endif >
+							<a href="{{ url('notices') }}">
+								<span class="glyphicon glyphicon-pushpin"></span> Obvestila
+							</a>
+						</li>
 						<li @if(Request::is('competitions*', 'algorithms*')) class="active" @endif >
 							<a href="{{ url('competitions') }}">
 								<span class="glyphicon glyphicon-map-marker"></span> Tekmovanja
@@ -97,12 +102,12 @@
 							</a>
 						</li>
 						<li>
-							<a href="{{ url('rules') }}">
+							<a href="{{ url('static/rules') }}">
 								<span class="glyphicon glyphicon-book"></span> Pravila
 							</a>
 						</li>
 						<li>
-							<a href="{{ url('info') }}">
+							<a href="{{ url('static') }}">
 								<span class="glyphicon glyphicon-info-sign"></span> Informacije
 							</a>
 						</li>
@@ -118,6 +123,9 @@
 							</a>
 						</li>
 					</ul>
+					<br>
+					<a href="{{ url('members') }}">Člani kluba</a> | 
+					<a href="{{ url('delegates') }}">Delegati</a>
 				</div>
 				<div class="col-sm-9">
 					@yield('content')

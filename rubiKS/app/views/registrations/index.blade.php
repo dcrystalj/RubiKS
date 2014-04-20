@@ -19,7 +19,7 @@
 					<td><a href="{{ route('registrations.show', $competition->short_name) }}">{{ $competition->name }}</a></td>
 					<td>{{ Date::parse($competition->date) }}</td>
 					{{--<td>{{ $registration->events }}</td>--}}
-					<td>@if ($registration->confirmed()) da @else ne @endif</td>
+					<td>@if ($registration->isConfirmed()) da @else ne @endif</td>
 				</tr>
 			@endforeach
 		</table>

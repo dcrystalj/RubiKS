@@ -21,4 +21,9 @@ class News extends Eloquent {
 		return Date::dateTime($this->attributes['created_at'], TRUE);
 	}
 
+	public function setUrlSlugAttribute($value)
+	{
+		$this->attributes['url_slug'] = !empty($value) ? $value : Str::slug($this->title);
+	}
+
 }
