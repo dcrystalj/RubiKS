@@ -71,7 +71,7 @@ return array(
 	 */
 	'permission'=> function()
 	{
-		return Auth::check();
+		return Auth::check() && in_array(Auth::user()->club_id, [ 'SIM93HEKUR10', 'SIM80DUHDA10', 'SIM93VAJJE10', 'SIM91TOMTO10', 'SIM82KOBBR10' ]);
 	},
 
 	/**
