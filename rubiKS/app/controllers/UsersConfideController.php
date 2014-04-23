@@ -292,4 +292,12 @@ class UsersConfideController extends BaseController {
         if (!Competition::getCompetitionByShortName($shortName)->registrationsOpened()) App::abort(404);
     }
 
+    /**
+     *
+     */
+    public function getIndex()
+    {
+        return View::make('user.index');
+    }
+
 }
