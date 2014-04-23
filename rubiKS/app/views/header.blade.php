@@ -9,7 +9,7 @@
 			</button>
 			<a class="navbar-brand" href="{{ url('/') }}">
 				<div class="block">
-					<img src="{{ URL::asset('img/rubiks.png') }}" height="26">
+					<img src="{{ URL::asset('assets/img/rubiks.png') }}" height="26">
 				</div>
 				<div class="block">
 					&nbsp; Rubik klub Slovenija
@@ -26,8 +26,8 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ route('competitors.show', Auth::user()->club_id) }}"><b>{{ Auth::user()->getFullName() }}</b></a></li>
 					<li><a href="{{ route('registrations.index') }}">Prijave na tekmovanja</button></a></li>
-					{{--<li><a href="{{ url('logout') }}"><span class="glyphicon glyphicon-off"></span> Odjava</a></li>--}}
-					<li><a href="{{ url('logout') }}" title="Odjava"><span class="glyphicon glyphicon-off"></span></a></li>
+					<li><a href="{{ url('user') }}" title="Nastavitve"><span class="glyphicon glyphicon-cog"></span><span class="text-xs"> Nastavitve</span></a></li>
+					<li><a href="{{ url('logout') }}" title="Odjava"><span class="glyphicon glyphicon-off"></span><span class="text-xs"> Odjava</span></a></li>
 				</ul>
 			@endif
 			
