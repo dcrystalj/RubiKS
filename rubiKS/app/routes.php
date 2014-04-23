@@ -22,7 +22,7 @@ Route::resource('competitors', 'UsersController');
 
 Route::get('competitions/finished', 'CompetitionsController@indexFinished');
 Route::get('competitions/future', 'CompetitionsController@indexFuture');
-Route::resource('competitions', 'CompetitionsController');
+Route::resource('competitions', 'CompetitionsController', array('only' => array('index', 'show')));
 
 Route::resource('rankings', 'RankingsController', array('only' => array('index', 'show')));
 
