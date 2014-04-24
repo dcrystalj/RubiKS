@@ -14,8 +14,6 @@ body { padding-top: 70px; }
 .footer_block { display: inline-block; vertical-align: top; margin: 0px 20px; }
 .footer { padding: 20px; background-color: #ccc; border-top: 3px solid #999; }
 
-.menu { vertical-align: top; }
-
 .competitor_home {  }
 .competitor_guest { color: #999; }
 
