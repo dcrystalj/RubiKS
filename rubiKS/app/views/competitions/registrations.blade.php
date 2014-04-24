@@ -1,4 +1,4 @@
-<table class="table table-condensed table-striped table-bordered">
+<table class="table table-condensed table-striped table-bordered print-page-break">
 	<thead>
 		<tr class="gray_header">
 			<th colspan="{{ count($events) + 3 }}">Seznam prijavljenih</th>

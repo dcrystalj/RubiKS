@@ -13,6 +13,7 @@
 
 		<!-- Main CSS -->
 		<link rel="stylesheet" href="{{ URL::asset('assets/style.css') }}">
+		<link rel="stylesheet" href="{{ URL::asset('assets/printable.css') }}">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,7 +29,7 @@
 		@include('header')
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4 col-md-3">
+				<div class="col-sm-4 col-md-3 menu">
 					@include('menu')
 				</div>
 
