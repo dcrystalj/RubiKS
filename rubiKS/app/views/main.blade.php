@@ -29,7 +29,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4 col-md-3">
-					@include('menu_temp')
+					@include('menu')
 				</div>
 
 				<div class="col-sm-8 col-md-9 content">
