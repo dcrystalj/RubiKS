@@ -1,7 +1,7 @@
 <div class="footer">
   <div class="container">
   	<div class="footer_block">
-  		<img alt="RubiKS dejavnosti - pridružite se nam!" src="http://www.rubik.si/klub/parola.png" width="150">
+  		<img alt="RubiKS dejavnosti - pridružite se nam!" src="{{ URL::asset('assets/img/parola.png') }}" width="150">
   	</div>
   	<div class="footer_block">
     	<b>Rubik klub Slovenija</b> <br>
