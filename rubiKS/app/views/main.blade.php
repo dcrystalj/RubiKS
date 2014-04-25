@@ -8,10 +8,10 @@
 		<meta name="author" content="RubiKS Rubik klub Slovenija">
 		<title>Rubik klub Slovenija</title>
 
-		<!-- Bootstrap -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		{{-- Bootstrap --}}
+		<link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
 
-		<!-- Main CSS -->
+		{{-- Main CSS --}}
 		<link rel="stylesheet" href="{{ URL::asset('assets/style.css') }}">
 		<link rel="stylesheet" href="{{ URL::asset('assets/printable.css') }}">
 
@@ -22,8 +22,8 @@
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-		<!-- jQuery -->
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		{{-- jQuery --}}
+		<script src="{{ URL::asset('assets/jquery/jquery-1.11.0.min.js') }}"></script>
 	</head>
 	<body>
 		@include('header')
@@ -40,9 +40,7 @@
 		</div>
 		@include('footer')
 
-		<!-- Bootstrap core JavaScript
-		================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		{{-- Bootstrap core JavaScript --}}
+		<script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 	</body>
 </html>
