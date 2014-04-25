@@ -4,7 +4,7 @@ Setup
 * Clone a repository
 	```clone -b dev https://github.com/dcrystalj/RubiKS.git```
 
-* Create ```.env.local.php``` file
+* Create ```.env.local.php``` or ```.env.php``` file
 	```php
 	<?php
 	return array(
@@ -12,6 +12,25 @@ Setup
 	    'MYSQL_DATABASE' => 'rubiks',
 	    'MYSQL_USERNAME' => 'root',
 	    'MYSQL_PASSWORD' => '',
+	);
+	```
+
+	```php
+	<?php
+	return array(
+		'MYSQL_HOST' =>			'localhost',
+		'MYSQL_DATABASE' =>		'rubiks',
+		'MYSQL_USERNAME' =>		'root',
+		'MYSQL_PASSWORD' =>		'',
+
+		'MAIL_HOST' =>			'',
+		'MAIL_PORT' =>			25,
+		'MAIL_USERNAME' =>		'',
+		'MAIL_PASSWORD' =>		'',
+		'MAIL_FROM_ADDRESS' =>	'',
+		'MAIL_FROM_NAME' => 	'',
+
+		'ENCRYPTION_KEY' =>		'',
 	);
 	```
 
@@ -25,6 +44,8 @@ Setup
 	```ln -s path-to-actual-folder name-of-link```,  
 	to confirm, do:  
 	```ls -ld name-of-link```
+
+* ```sudo chmod -R o+w storage```
 
 * Setup Nginx/Apache  
 	Add the following lines to nginx .conf file:
