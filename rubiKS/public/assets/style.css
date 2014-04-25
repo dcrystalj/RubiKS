@@ -14,11 +14,13 @@ body { padding-top: 70px; }
 .footer_block { display: inline-block; vertical-align: top; margin: 0px 20px; }
 .footer { padding: 20px; background-color: #ccc; border-top: 3px solid #999; }
 
+.footer_block > a { color: #333; }
+
 .competitor_home {  }
 .competitor_guest { color: #999; }
 
 tr.results_odd { background-color: #F9F9F9; }
-tr.gray_header { background-color: #ddd; }
+tr.gray_header { background-color: #ddd; font-weight: bold; }
 
 .text-left { text-align: left; }
 .text-center { text-align: center; }
@@ -42,8 +44,8 @@ tr.gray_header { background-color: #ddd; }
 	text-align: center;
 }
 
-td.credit {
-	padding: 15px;
+div.credit {
+	padding: 12px;
 }
 
 form.inline { display: inline; }

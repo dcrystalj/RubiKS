@@ -24,6 +24,9 @@
 
 		{{-- jQuery --}}
 		<script src="{{ URL::asset('assets/jquery/jquery-1.11.0.min.js') }}"></script>
+
+		{{-- Favicon --}}
+		<link rel="shortcut icon" type="image/ico" href="{{ URL::asset('assets/favicon.ico') }}">
 	</head>
 	<body>
 		@include('header')
