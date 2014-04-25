@@ -138,8 +138,8 @@
   right: 20px;
   z-index: 10;
   top: 11.5px;
-  border-top: 2px solid #eeeeee;
-  border-left: 2px solid #eeeeee;
+  border-top: 2px solid #999999;
+  border-left: 2px solid #999999;
   -webkit-transform: rotate(-135deg);
   -moz-transform: rotate(-135deg);
   -ms-transform: rotate(-135deg);
@@ -149,4 +149,4 @@
 #cssmenu ul ul li.active > a::after,
 #cssmenu ul ul li.open > a::after,
 #cssmenu ul ul li > a:hover::after {
-  border-color: #ffffff; }
+  border-color: #eeeeee; }

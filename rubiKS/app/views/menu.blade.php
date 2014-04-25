@@ -49,12 +49,35 @@
 				<li><a href="{{ url('delegates') }}">Delegati</a></li>
 				<li><a href="{{ url('static/datoteke') }}">Datoteke</a></li>
 				<li><a href="{{ url('news') }}">Arhiv novic</a></li>
-				<li><a href="{{ url('credits') }}">Zahvale</a></li>
-				{{-- Multimedija --}}
-				{{-- Forum --}}
-				{{-- Povezave --}}
-				{{-- Podprite kockanje! --}}
+
+				<li class='has-sub'>
+					<a href="#">Multimedija</a>
+					<ul>
+						<li><a href="{{ url('https://picasaweb.google.com/100258962713596029232') }}" target="_blank">Fotogalerija</a></li>
+						<li><a href="{{ url('https://www.youtube.com/user/RubikKlubSlovenija') }}" target="_blank">Videoteka</a></li>
+					</ul>
+				</li>
+
+				<li class='has-sub'>
+					<a href="#">Forum</a>
+					<ul>
+						<li><a href="{{ url('http://www.rubik.si/viewforum.php?f=30') }}" target="_blank">Teme o klubu</a></li>
+						<li><a href="{{ url('http://www.rubik.si/viewforum.php?f=35') }}" target="_blank">Teme za člane</a></li>
+					</ul>
+				</li>
+
+				<li><a href="{{ url('static/zunanje-povezave') }}">Zunanje povezave</a></li>
+
+				<li class='has-sub'>
+					<a href="#">Podprite kockanje!</a>
+					<ul>
+						<li><a href="{{ url('static/tekmujte') }}">Tekmujte</a></li>
+						<li><a href="{{ url('static/vclanite-se-v-klub') }}">Včlanite se v klub</a></li>
+						<li><a href="{{ url('static/podprite-nase-delo') }}">Podprite naše delo</a></li>
+					</ul>
+				</li>
 			</ul>
 		</li>
+		<li><a href="{{ url('credits') }}"><span class="glyphicon glyphicon-heart"></span> Zahvale</a></li>
 	</ul>
 </div>
