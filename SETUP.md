@@ -45,7 +45,7 @@ Setup
 	to confirm, do:  
 	```ls -ld name-of-link```
 
-* ```sudo chmod -R o+w storage```
+* Folders within app/storage require write access by the web server: ```sudo chmod -R o+w app/storage```
 
 * Setup Nginx/Apache  
 	Add the following lines to nginx .conf file:
