@@ -9,7 +9,7 @@ class NewsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$news = News::orderBy('created_at', 'desc')->get();
+		$news = News::orderBy('created_at', 'desc')->paginate(30);
 		return View::make('news.archive')->with('news', $news);
 	}
 
