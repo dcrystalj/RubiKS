@@ -14,7 +14,7 @@
 		<tbody>
 	@foreach ($events as $event)
 		<tr class="gray_header">
-			<th colspan="6">{{ $event->name }}</th>
+			<td colspan="6">{{ $event->name }}</td>
 		</tr>
 		@if ($event->singleRecord != NULL)
 		<tr>

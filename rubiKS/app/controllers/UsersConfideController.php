@@ -18,6 +18,12 @@ class UsersConfideController extends BaseController {
     {
         $this->beforeFilter(function($routes, $request)
         {
+            if (Auth::guest()) return Redirect::to('/');
+        },
+        [ 'only' => 'getIndex' ]);
+
+        $this->beforeFilter(function($routes, $request)
+        {
             if (!Auth::guest()) return Redirect::to('/');
             return $this->registrationsOpenedFilter($routes, $request);
         }, 
@@ -290,6 +296,14 @@ class UsersConfideController extends BaseController {
         }
 
         if (!Competition::getCompetitionByShortName($shortName)->registrationsOpened()) App::abort(404);
+    }
+
+    /**
+     *
+     */
+    public function getIndex()
+    {
+        return View::make('user.index');
     }
 
 }

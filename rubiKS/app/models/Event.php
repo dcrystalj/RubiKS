@@ -58,15 +58,23 @@ class Event extends Eloquent {
 		return $event;
 	}
 
+	/**
+	 * 
+	 */
+	public function recordQuery()
+	{
+		return $this->results()->select('results.*')->leftjoin('users', 'results.user_id', '=', 'users.id')->where('nationality', 'SI');
+	}
+
 	public function getRecordSingle()
 	{
-		return $this->results()->orderBy('single', 'asc')->first();
+		return $this->recordQuery()->orderBy('single', 'asc')->orderBy('date', 'asc')->first();
 	}
 
 	public function getRecordAverage()
 	{
 		if (!$this->showAverage()) return NULL;
-		return $result = $this->results()->orderBy('average', 'asc')->first();
+		return $this->recordQuery()->orderBy('average', 'asc')->orderBy('date', 'asc')->first();
 	}
 
 	public static function injectRecords($events)
