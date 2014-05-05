@@ -108,7 +108,7 @@ class Result extends Eloquent {
 	{
 		$a = (string) (400 - $nrCubes);
 		$b = (string) $time;
-		if (strlen($b) < 5) $b = str_pad($b, 5, '0');
+		if (strlen($b) < 5) $b = str_pad($b, 5, '0', STR_PAD_LEFT);
 		return ($a . $b);
 	}
 
