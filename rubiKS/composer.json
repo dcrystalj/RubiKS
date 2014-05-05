@@ -13,6 +13,8 @@
 		"anahkiasen/former": "dev-master"
 	},
 	"require-dev": {
+		"phpunit/phpunit": "4.1.*",
+		"mockery/mockery": "dev-master",
 		"way/generators": "2.*"
 	},
 	"autoload": {
