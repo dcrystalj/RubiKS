@@ -6,6 +6,12 @@ class Result extends Eloquent {
 	public $timestamps = false;
 	protected $softDelete = false;
 
+	public static $nonNumericalResults = array(
+		'77777777' => 'DNF',
+		'88888888' => 'DNS',
+		'99999999' => 'DSQ',
+	);
+
 	public function user()
 	{
 		return $this->belongsTo('User');
@@ -43,9 +49,8 @@ class Result extends Eloquent {
 
 	public static function parse($t, $event = NULL)
 	{
-		if ($t == '77777777') return 'DNF';
-		if ($t == '88888888') return 'DNS';
-		if ($t == '99999999') return 'DSQ';
+		// DNF, DNS, DSQ
+		if (array_key_exists($t, self::$nonNumericalResults)) return self::$nonNumericalResults[$t];
 
 		if ($event === '333FM') {
 			return $t . ' potez';
