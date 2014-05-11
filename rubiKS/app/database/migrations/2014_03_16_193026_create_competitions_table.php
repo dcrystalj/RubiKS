@@ -25,6 +25,7 @@ class CreateCompetitionsTable extends Migration {
 			$table->string('registration_fee');
 			$table->string('country');
 			$table->integer('status');
+			$table->integer('championship');
 		});
 	}
 
