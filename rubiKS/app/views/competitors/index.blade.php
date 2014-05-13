@@ -15,19 +15,12 @@
 			@foreach ($users as $user)
 				<tr>
 					<td class="text-right">{{ $i++ }}.</td>
-					<td>
-					@if ($user['nationality'] === 'SI')
-						<a class="competitor_home" href="{{ route('competitors.show', $user['club_id']) }}">
-					@else
-						<a class="competitor_guest" href="{{ route('competitors.show', $user['club_id']) }}">
-					@endif
-						{{ $user->getFullName(TRUE) }}</a>
-						</td>
+					<td>{{ $user->link_distinct_foreign_inverse }}</td>
 					<td>
 						{{ Help::country($user['nationality']) }}
 					</td>
 					<td>{{ $user->gender }}</td>
-					<td>{{ $user['club_id'] }}</td>
+					<td>{{ $user->club_id }}</td>
 				</tr>
 			@endforeach
 		</tbody>

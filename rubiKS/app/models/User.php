@@ -162,9 +162,35 @@ class User extends ConfideUser {
 		return mb_convert_case($fullName, MB_CASE_TITLE);
 	}
 
+	/**
+	 * Accessor for compatibility with Administrator.
+	 */
 	public function getFullNameAttribute($inverted)
 	{
 		return $this->getFullName($inverted);
+	}
+
+	/**
+	 * Generate a link to competitor's page.
+	 */
+	public function getLinkAttribute()
+	{
+		return '<a href="' . route('competitors.show', $this->attributes['club_id']) . '">' . $this->full_name . '</a>';
+	}
+
+	public function getLinkInverseAttribute()
+	{
+		return '<a href="' . route('competitors.show', $this->attributes['club_id']) . '">' . $this->getFullName(TRUE) . '</a>';
+	}
+
+	public function getLinkDistinctForeignAttribute()
+	{
+		return $this->link . ($this->nationality == 'SI' ? '' : ' *');
+	}
+
+	public function getLinkDistinctForeignInverseAttribute()
+	{
+		return $this->link_inverse . ($this->nationality == 'SI' ? '' : ' *');
 	}
 
 	public static function validGender($gender)
