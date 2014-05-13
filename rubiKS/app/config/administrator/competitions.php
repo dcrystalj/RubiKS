@@ -84,6 +84,11 @@ return array(
 		'country' => array(
 			'title' => 'Country'
 		),
+		'championship' => array(
+			'title' => 'championship',
+			'type' => 'enum',
+			'options' => array('1', '0'),
+		),
 		'status' => array(
 			'title' => 'Status',
 			'type' => 'enum',
