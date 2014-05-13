@@ -160,4 +160,18 @@ class Result extends Eloquent {
 		return $results;
 	}
 
+	/**
+	 * Calculate a rank-based score
+	 */
+	public static function nationalChampionshipRankFormula($rank, $year = null)
+	{
+		if ($rank == 0) return 0;
+		return 100 / $rank;
+	}
+
+	public static function dnfNumericalValue()
+	{
+		return min(array_map(function($x) { return (int) $x; }, array_keys(self::$nonNumericalResults)));
+	}
+
 }

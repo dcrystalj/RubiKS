@@ -42,9 +42,15 @@ class Help
 		return $cid;
 	}
 
+	public static function formatChampionshipPoints($points)
+	{
+		return number_format($points, 2, ".", " ");
+	}
+	
 	public static function checked($bool, $bold = FALSE)
 	{
 		if ($bool) return $bool ? '✔' : '✘';
 		return $bool ? '✓' : '✗';
 	}
+
 }
