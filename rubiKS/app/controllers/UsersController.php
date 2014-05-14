@@ -41,7 +41,16 @@ class UsersController extends \BaseController {
 			}
 		}
 
-		return View::make('competitors.show')->with('user', $user)->with('events', $events)->with('results', $results);
+		list($finalMedals, $eventMedals) = $user->getMedals();
+		$stats = $user->getStats();
+
+		return View::make('competitors.show')
+			->with('user', $user)
+			->with('events', $events)
+			->with('results', $results)
+			->with('stats', $stats)
+			->with('finalMedals', $finalMedals)
+			->with('eventMedals', $eventMedals);
 	}
 
 	public function clubMembers()

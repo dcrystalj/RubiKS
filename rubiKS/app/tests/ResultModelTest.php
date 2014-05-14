@@ -80,4 +80,10 @@ class ResultModelTest extends TestCase {
 		$this->assertEquals('DNF', Result::$nonNumericalResults[$min]);
 	}
 
+	public function testDNSMustBeSecondSmallestNonNumericalResult()
+	{
+		$val = array_keys(Result::$nonNumericalResults)[1];
+		$this->assertEquals('DNS', Result::$nonNumericalResults[$val]);
+	}
+
 }

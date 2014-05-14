@@ -46,7 +46,13 @@ class Help
 	{
 		return number_format($points, 2, ".", " ");
 	}
-	
+
+	public static function medal($rank)
+	{
+		if ($rank > 3) return '';
+		return '<img width="20" src="' . asset('assets/medals/medal-' . $rank . '.png') . '">';
+	}
+
 	public static function checked($bool, $bold = FALSE)
 	{
 		if ($bool) return $bool ? '✔' : '✘';

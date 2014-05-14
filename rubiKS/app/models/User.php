@@ -235,4 +235,74 @@ class User extends ConfideUser {
     	}
     }
 
+    public function getMedals()
+    {
+    	return array(
+    		NationalChampionshipStatsFinal::where('user_id', $this->id)
+    			->where('year', '<', date('Y'))
+    			->orderBy('year', 'desc')
+    			->orderBy('rank')
+    			->get(),
+    		NationalChampionshipStatsEvent::where('user_id', $this->id)
+    			->where('year', '<', date('Y'))
+    			->where('rank', '<=', 3)
+    			->orderBy('year', 'desc')
+    			->orderBy('rank')
+    			->get()
+    	);
+    }
+
+    public function getStats()
+    {
+    	$medals = array();
+    	$dnf = (string) Result::dnfNumericalValue();
+    	$dns = (string) Result::dnsNumericalValue();
+
+    	$medal_1 = Result::where('user_id', $this->id)->where('medal', '1')->count();
+    	$medal_2 = Result::where('user_id', $this->id)->where('medal', '2')->count();
+    	$medal_3 = Result::where('user_id', $this->id)->where('medal', '3')->count();
+    	$medal_sum = $medal_1 + $medal_2 + $medal_3;
+
+    	$rc = Event::whereReadableId('333');
+    	$medal_rc_1 = Result::where('user_id', $this->id)->where('event_id', $rc->id)->where('medal', '1')->count();
+    	$medal_rc_2 = Result::where('user_id', $this->id)->where('event_id', $rc->id)->where('medal', '2')->count();
+    	$medal_rc_3 = Result::where('user_id', $this->id)->where('event_id', $rc->id)->where('medal', '3')->count();
+    	$medal_rc_sum = $medal_rc_1 + $medal_rc_2 + $medal_rc_3;
+
+    	// http://stackoverflow.com/questions/12344795/count-the-number-of-occurences-of-a-string-in-a-varchar-field
+    	$results = Result::select(DB::raw("SUM(ROUND( CHAR_LENGTH(results) - CHAR_LENGTH( REPLACE(results, '@', '') ) ) + 1) as 'sum_results'"))
+    		->where('user_id', $this->id)
+    		->first();
+    	$results = $results === null ? 0 : $results->sum_results;
+
+    	$dns_results = Result::select(DB::raw("SUM(ROUND(( CHAR_LENGTH(results) - CHAR_LENGTH( REPLACE(results, '" . $dns . "', '') ) ) / " . strlen($dns) . ") ) as 'sum_dns'"))
+    		->where('user_id', $this->id)
+    		->first();
+    	$dns_results = $dns_results === null ? 0 : $dns_results->sum_dns;
+
+    	$dnf_results = Result::select(DB::raw("SUM(ROUND(( CHAR_LENGTH(results) - CHAR_LENGTH( REPLACE(results, '" . $dnf . "', '') ) ) / " . strlen($dnf) . ") ) as 'sum_dnf'"))
+    		->where('user_id', $this->id)
+    		->first();
+    	$dnf_results = $dnf_results === null ? 0 : $dnf_results->sum_dnf;
+
+    	$last_competition = Result::where('user_id', $this->id)->orderBy('date', 'desc')->first();
+    	$last_competition = $last_competition === null ? '0000-00-00' : $last_competition->date;
+
+    	return array(
+    		'medals' => array('1' => $medal_1, '2' => $medal_2, '3' => $medal_3, 'sum' => $medal_sum),
+    		'medals_rc' => array('1' => $medal_rc_1, '2' => $medal_rc_2, '3' => $medal_rc_3, 'sum' => $medal_rc_sum),
+    		'single_nr' => Result::where('user_id', $this->id)->where('single_nr', 1)->count(),
+    		'single_pb' => Result::where('user_id', $this->id)->where('single_pb', 1)->count(),
+    		'average_nr' => Result::where('user_id', $this->id)->where('average_nr', 1)->count(),
+    		'average_pb' => Result::where('user_id', $this->id)->where('average_pb', 1)->count(),
+    		'competitions' => Result::select('competition_id')->distinct()->where('user_id', $this->id)->orderBy('date', 'desc')->with('competition')->get(),
+    		'delegation' => Competition::where('delegate1', $this->id)->orWhere('delegate2', $this->id)->orWhere('delegate3', $this->id)->orderBy('date', 'desc')->get(),
+    		'event_registrations' => Result::select(array('competition_id', 'event_id'))->where('user_id', $this->id)->count(),
+    		'results' => $results - $dns_results,
+    		'dnf_results' => $dnf_results,
+    		'dns_results' => $dns_results,
+    		'last_competition' => $last_competition,
+    	);
+    }
+
 }

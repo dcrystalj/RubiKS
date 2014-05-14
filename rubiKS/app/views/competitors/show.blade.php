@@ -2,6 +2,7 @@
 @section('content')
 	<!-- <h4>Tekmovalci</h4> -->
 	<h3>{{ $user->getFullName() }}</h3>
+
 	<div class="competitors_block_left">
 		<table class="table table-condensed">
 			<tr>
@@ -38,43 +39,26 @@
 			</tr>
 		</table>
 	</div>
+
 	<div class="competitors_block_right pull-right">
 		<img class="competitor_image img-thumbnail" alt="{{ $user->getFullName() }}" src="http://www.rubik.si/klub/foto/{{ $user['club_id'] }}.jpg" width="150" height="200">
 	</div>
-	<table class="table table-condensed">
-		<thead>
-			<tr>
-				<th>Disciplina</th>
-				<th>Posamezno</th>
-				<th>Povprečje</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php $i = 1; ?>
-			@foreach ($results as $e => $a)
-			<?php $event = $events[$e]; ?>
-			<tr id="e{{ $event->readable_id }}" class="_clickable @if($i++ % 2) results_odd @endif" >
-				<td>{{ $event->name }}</td>
-				<td><span title="Tekma">{{ Result::parse($a['single']->single, $event->readable_id) }}</span></td>
-				@if ($event->showAverage())
-				<td><span title="Tekma">{{ Result::parse($a['average']->average, $event->readable_id) }}</span></td>
-				@else
-				<td>/</td>
-				@endif
-			</tr>
-			<tr>
-				<td colspan="3">
-					<span id="chart_e{{ $event->readable_id }}" class="_chart" @unless($event->readable_id === '333') style="display:none;" @endif>
-						<img src="http://www.rubik.si/klub/plotuser.php?id={{ $user->club_id }}&iddisc={{ $event->readable_id }}">
-					</span>
-					{{-- Zakaj span tagi? http://stackoverflow.com/questions/7192335/jquery-slide-toggle-not-working-properly --}}
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
-		<script>
-			$('._clickable').click(function() { $('#chart_' + this.id).slideToggle('fast'); });
-			$('._chart').click(function() { $(this).slideToggle('fast'); });
-		</script>
-	</table>
+
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#best" data-toggle="tab">Najboljši rezultati</a></li>
+		<li><a href="#achievements" data-toggle="tab">Državno prvenstvo</a></li>
+		<li><a href="#stats" data-toggle="tab">Statistika</a></li>
+	</ul>
+	<br>
+	<div class="tab-content">
+		<div class="tab-pane fade in active" id="best">
+			@include('competitors.show_results')
+		</div>
+		<div class="tab-pane fade" id="achievements">
+			@include('competitors.show_achievements')
+		</div>
+		<div class="tab-pane fade" id="stats">
+			@include('competitors.show_stats')
+		</div>
+	</div>	
 @stop

@@ -174,4 +174,9 @@ class Result extends Eloquent {
 		return min(array_map(function($x) { return (int) $x; }, array_keys(self::$nonNumericalResults)));
 	}
 
+	public static function dnsNumericalValue()
+	{
+		return array_keys(Result::$nonNumericalResults)[1];
+	}
+
 }
