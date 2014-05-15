@@ -17,6 +17,11 @@ class NationalChampionshipStatsEvent extends \Eloquent {
 		return $this->belongsTo('Event');
 	}
 
+	/**
+	 * Delete old ranks for a given year (and event) and insert new ranks
+	 * that have been previously calculated in the NationalChampionship model.
+	 *
+	 */
 	public static function updateRanks($year, $eventId, $finalRanks)
 	{
 		self::where('year', $year)->where('event_id', $eventId)->delete();
