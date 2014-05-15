@@ -36,7 +36,7 @@ class NationalChampionshipController extends \BaseController {
 		$resultType = $event->showAverage() ? 'average' : 'single';
 		
 		$periods = NationalChampionshipPeriod::where('year', $year)->get();
-		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event,$periods, TRUE);
+		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event->id, $periods, TRUE);
 
 		// Fetch final event rankings
 		$stats = NationalChampionshipStatsEvent::where('year', $year)
@@ -90,7 +90,7 @@ class NationalChampionshipController extends \BaseController {
 		// Generate ranks (for all periods) for all events
 		$status1 = array();
 		foreach ($events as $event) {
-			if (NationalChampionship::generateRanks($year, $event->readable_id) === True) {
+			if (NationalChampionship::generateRanks($year, $event) === True) {
 				$status[] = $year . ' ' . $event->readable_id . ': success!';
 			} else {
 				$status[] = $year . ' ' . $event->readable_id. ': <b>fail</b>!';
@@ -108,7 +108,7 @@ class NationalChampionshipController extends \BaseController {
 		// Generate yearly stats for all events
 		$status2 = array();
 		foreach ($events as $event) {
-			if (NationalChampionship::generateStatsEvent($year, $event->readable_id) === True) {
+			if (NationalChampionship::generateStatsEvent($year, $event) === True) {
 				$status2[] = $year . ' ' . 'e' . $event->readable_id . ': success!';
 			} else {
 				$status2[] = $year . ' ' . 'e' . $event->readable_id . ': <b>fail</b>!';

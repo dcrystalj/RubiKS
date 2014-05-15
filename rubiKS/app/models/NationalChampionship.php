@@ -10,13 +10,12 @@ class NationalChampionship {
 	 * @param 	string 			Event's readable ID
 	 * @return 	bool
 	 */
-	public static function generateRanks($year, $eventId)
+	public static function generateRanks($year, $event)
 	{
 		if ($year < NationalChampionshipPeriod::minYear()) return False;
 
 		$currentDate = date('Y-m-d');
 		$dnf = Result::dnfNumericalValue();
-		$event = Event::whereReadableId($eventId);
 		$resultType = $event->showAverage() ? 'average' : 'single'; // Result type to be used when comparing results
 
 		// Delete all previous championship ranks for a given year
@@ -115,7 +114,7 @@ class NationalChampionship {
 	/**
 	 * ?
 	 */
-	public static function allResultsAndActualPeriods($year, $event, $periods, $withUsers)
+	public static function allResultsAndActualPeriods($year, $eventId, $periods, $withUsers)
 	{
 		$allResults = array();
 		$actualPeriods = array();
@@ -126,7 +125,7 @@ class NationalChampionship {
 		foreach ($periods as $i => $period) {
 			$startDate = $mergeWithPrevious ? $previousPeriodStartDate : $period->start_date;
 			
-			$results = Result::whereEventId($event->id)
+			$results = Result::whereEventId($eventId)
 				->where('date', '>=', $startDate)
 				->where('date', '<=', $period->end_date)
 				->where('championship_rank', '>', 0)
@@ -166,16 +165,15 @@ class NationalChampionship {
 	 * @param 	string 		Event's readable ID
 	 * @return 	bool
 	 */
-	public static function generateStatsEvent($year, $eventId)
+	public static function generateStatsEvent($year, $event)
 	{
 		if ($year < NationalChampionshipPeriod::minYear()) return False;
 		
 		// Init
-		$event = Event::where('readable_id', $eventId)->firstOrFail();
 		$resultType = $event->showAverage() ? 'average' : 'single';
 		
 		$periods = NationalChampionshipPeriod::where('year', $year)->get();
-		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event,$periods, TRUE);
+		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event->id, $periods, TRUE);
 
 		// Generate
 		$finalRanks = array();
