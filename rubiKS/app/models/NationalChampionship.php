@@ -25,7 +25,7 @@ class NationalChampionship {
 				->where('results.date', '<=', $year . '-12-31')
 				->update(array('championship_rank' => 0));
 
-		// Fetch given year's periods
+		// Fetch periods of the given year
 		$periods = NationalChampionshipPeriod::where('year', $year)->get();
 
 		$mergeWithPrevious = False;
@@ -82,7 +82,7 @@ class NationalChampionship {
 					->firstOrFail();
 			}
 
-			// Sort results by result type
+			// Sort results by result type (single/average)
 			usort($results, function($a, $b) use ($resultType) {
 				if ($a->$resultType == $b->$resultType) return 0;
 				return ($a->$resultType > $b->$resultType) ? 1 : -1;
@@ -112,7 +112,9 @@ class NationalChampionship {
 	}
 
 	/**
-	 * ?
+	 * Fetch results and periods for a given year.
+	 * This method returns actual periods rather than periods from the database,
+	 * because sometimes periods need to be merged if there are not enough results in each period.
 	 */
 	public static function allResultsAndActualPeriods($year, $eventId, $periods, $withUsers)
 	{
@@ -135,7 +137,8 @@ class NationalChampionship {
 
 			if (count($results) < $period->min_results AND $i + 1 < count($periods)) {
 
-				// If 2011 and 3 periods have already been merged, then we cannot merge any more periods!
+				// In 2011, maximum number of merged periods was 3!
+				// In 2012+ there was no maximum number of merged periods.
 				if (!($year == 2011) OR $mergedPeriods < 3) {
 					if (!$mergeWithPrevious) $previousPeriodStartDate = $period->start_date;
 					$mergeWithPrevious = True;
@@ -317,6 +320,44 @@ class NationalChampionship {
 		}
 
 		return True;
+	}
+
+	/**
+	 * Generate all stats (related to national championship) for a given year
+	 */
+	public static function generate($year)
+	{
+		$year = (int) $year;
+		$events = Event::all();
+		$status = array();
+
+		foreach ($events as $event) {
+			// Generate ranks (for all periods) for an event
+			if (NationalChampionship::generateRanks($year, $event) === True) {
+				$success = True;
+			} else {
+				$success = False;
+			}
+			$status[] = array($year, $event->readable_id, $success);
+
+			// Generate yearly stats for an event
+			if (NationalChampionship::generateStatsEvent($year, $event) === True) {
+				$success = True;
+			} else {
+				$success = False;
+			}
+			$status[] = array($year, $event->readable_id . ' FINAL', $success);
+		}
+
+		// Generate final ranks
+		if (NationalChampionship::generateStatsFinal($year) === True) {
+			$success = True;
+		} else {
+			$success = False;
+		}
+		$status[] = array($year, 'FINAL', $success);
+
+		return $status;
 	}
 
 	/**

@@ -82,40 +82,11 @@ class NationalChampionshipController extends \BaseController {
 	{
 		// Auth
 
-		if ($year == 'all') return View::make('national-championship.generateall');
+		if ($year == 'all')
+			return View::make('national-championship.generateall');
 
-		$year = (int) $year;
-		$events = Event::all();
-
-		// Generate ranks (for all periods) for all events
-		$status1 = array();
-		foreach ($events as $event) {
-			if (NationalChampionship::generateRanks($year, $event) === True) {
-				$status[] = $year . ' ' . $event->readable_id . ': success!';
-			} else {
-				$status[] = $year . ' ' . $event->readable_id. ': <b>fail</b>!';
-			}
-		}
-
-		// Generate final ranks
-		$status3 = array();
-		if (NationalChampionship::generateStatsFinal($year) === True) {
-			$status3[] = $year . ' ' . 'final' . ': success!';
-		} else {
-			$status3[] = $year . ' ' . 'final' . ': <b>fail</b>!';
-		}
-
-		// Generate yearly stats for all events
-		$status2 = array();
-		foreach ($events as $event) {
-			if (NationalChampionship::generateStatsEvent($year, $event) === True) {
-				$status2[] = $year . ' ' . 'e' . $event->readable_id . ': success!';
-			} else {
-				$status2[] = $year . ' ' . 'e' . $event->readable_id . ': <b>fail</b>!';
-			}
-		}
-
-		return implode('<br>' . PHP_EOL, array_merge($status, $status2, $status3)) . '<br> <b>Done!</b>';
+		$status = NationalChampionship::generate($year);
+		return View::make('national-championship.generate')->withStatuses($status);
 	}
 
 }
