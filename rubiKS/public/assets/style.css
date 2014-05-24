@@ -1,7 +1,7 @@
 html { overflow-y: scroll; }
 body { padding-top: 70px; }
 
-.container { min-width: 440px; }
+.container, .footer { min-width: 440px; }
 .content { margin-bottom: 20px; }
 
 .navbar {
@@ -11,8 +11,8 @@ body { padding-top: 70px; }
 	box-shadow:         3px 3px 5px 0px rgba(50, 50, 50, 0.25);
 }
 
-.footer_block { display: inline-block; vertical-align: top; margin: 0px 20px; }
-.footer { padding: 20px; background-color: #ccc; border-top: 3px solid #999; }
+.footer_block { display: inline-block; vertical-align: top; margin: 20px 40px; }
+.footer { background-color: #ccc; border-top: 3px solid #999; }
 
 .footer_block > a { color: #333; }
 
