@@ -20,10 +20,6 @@
 			<td>{{ $competition->city }}</td>
 		</tr>
 		<tr>
-			<td>Startnina</td>
-			<td>{{ $competition->registration_fee }}</td>
-		</tr>
-		<tr>
 			<td>Prizorišče</td>
 			<td colspan="3">{{ $competition->venue }}</td>
 		</tr>
@@ -51,10 +47,12 @@
 			<td>Omejitev št. tekmovalcev</td>
 			<td>{{ $competition->max_competitors }}</td>
 		</tr>
+		@if ($competition->registration_fee != "")
 		<tr>
 			<td>Startnina</td>
 			<td>{{ $competition->registration_fee }}</td>
 		</tr>
+		@endif
 		<tr>
 			<td>Zaporedna RubiKS tekma</td>
 			<td>{{ '/' }}</td>
