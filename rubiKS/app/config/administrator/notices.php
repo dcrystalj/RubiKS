@@ -5,6 +5,11 @@ return array(
 	'single' => 'notice',
 	'model' => 'Notice',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('manage_notices');
+	},
+
 	'columns' => array(
 		'title' => array(
 			'title' => 'Title',

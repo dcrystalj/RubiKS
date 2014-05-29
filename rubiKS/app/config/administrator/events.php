@@ -5,6 +5,11 @@ return array(
 	'single' => 'event',
 	'model' => 'Event',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'id',
 		'name',

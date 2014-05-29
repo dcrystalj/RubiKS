@@ -8,6 +8,11 @@ return array(
 	'single' => 'competitor',
 	'model' => 'User',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'id',
 		'full_name',

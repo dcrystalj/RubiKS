@@ -5,6 +5,11 @@ return array(
 	'single' => 'article',
 	'model' => 'News',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('manage_news');
+	},
+
 	'columns' => array(
 		'title' => array(
 			'title' => 'Title',

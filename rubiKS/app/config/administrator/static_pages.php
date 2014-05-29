@@ -5,6 +5,11 @@ return array(
 	'single' => 'static page',
 	'model' => 'StaticPage',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'title' => array(
 			'title' => 'Title',

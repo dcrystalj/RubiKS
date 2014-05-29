@@ -5,6 +5,11 @@ return array(
 	'single' => 'competition',
 	'model' => 'Competition',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('manage_competitions');
+	},
+
 	'columns' => array(
 		'id' => array(
 			'title' => 'ID'

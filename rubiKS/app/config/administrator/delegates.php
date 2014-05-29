@@ -5,6 +5,11 @@ return array(
 	'single' => 'delegate',
 	'model' => 'Delegate',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'user_id' => array(
 			'title' => 'User ID',

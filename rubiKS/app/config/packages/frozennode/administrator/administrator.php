@@ -61,6 +61,10 @@ return array(
 		'delegates',
 		'static_pages',
 		'credits',
+		'roles',
+		'assigned_roles',
+		//'permissions',
+		//'permission_role',
 	),
 
 	/**
@@ -69,9 +73,9 @@ return array(
 	 *
 	 * @type closure
 	 */
-	'permission'=> function()
+	'permission' => function()
 	{
-		return Auth::check() && in_array(Auth::user()->club_id, [ 'SIM93HEKUR10', 'SIM80DUHDA10', 'SIM93VAJJE10', 'SIM91TOMTO10', 'SIM82KOBBR10' ]);
+		return Auth::check() && Auth::user()->can('access_administrator');
 	},
 
 	/**
@@ -80,21 +84,21 @@ return array(
 	 *
 	 * @type bool
 	 */
-	'use_dashboard' => false,
+	'use_dashboard' => true,
 
 	/**
 	 * If you want to create a dashboard view, provide the view string here.
 	 *
 	 * @type string
 	 */
-	'dashboard_view' => '',
+	'dashboard_view' => 'administrator.index',
 
 	/**
 	 * The menu item that should be used as the default landing page of the administrative section
 	 *
 	 * @type string
 	 */
-	'home_page' => 'news',
+	'home_page' => '',
 
 	/**
 	 * The route to which the user will be taken when they click the "back to site" button
