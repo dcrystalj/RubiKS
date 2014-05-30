@@ -23,13 +23,15 @@ return array(
 		)
 	),
 
+	'form_width' => 600,
+
 	'edit_fields' => array(
 		'title' => array(
 			'title' => 'Title',
 		),
 		'text' => array(
 			'title' => 'Text',
-			'type' => 'textarea',
+			'type' => 'wysiwyg',
 		),
 		'url' => array(
 			'title' => 'URL'

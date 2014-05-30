@@ -59,12 +59,16 @@ return array(
 		'registrations',
 		'events', 
 		'delegates',
-		'static_pages',
-		'credits',
-		'roles',
-		'assigned_roles',
-		//'permissions',
-		//'permission_role',
+		'Static' => array(
+			'static_pages',
+			'credits',
+		),
+		'Roles & Permissions' => array(
+			'roles',
+			'assigned_roles',
+			//'permissions',
+			//'permission_role',
+		),
 	),
 
 	/**
