@@ -80,7 +80,7 @@ class NationalChampionshipController extends \BaseController {
 	 */
 	public function getGenerateAll($year = 'all')
 	{
-		// Auth
+		if (Auth::guest() OR !Auth::user()->can('sudo')) return App::abort(404);
 
 		if ($year == 'all')
 			return View::make('national-championship.generateall');
