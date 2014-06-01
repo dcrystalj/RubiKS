@@ -20,14 +20,14 @@ class CreateUsersTable extends Migration {
 			$table->string('city', 40);
 			$table->string('email', 40);
 			$table->text('notes');
-			$table->string('status');
 			$table->date('joined_date');
+			$table->boolean('banned')->default(false);
 			$table->date('banned_date');
 			$table->timestamps();
-			$table->string('level', 1);
 			$table->string('forum_nickname');
 			$table->string('club_authority');
 			$table->integer('membership_year');
+			$table->boolean('no_email_notifications')->default(false);
 		});
 	}
 

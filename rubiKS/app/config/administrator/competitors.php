@@ -46,9 +46,11 @@ return array(
 			'options' => array('m' => 'male', 'f' => 'female')
 		),*/
 		'notes',
-		//'status',
-		//'level',
 		'joined_date',
+		'banned' => array(
+			'title' => 'Banned',
+			'type' => 'bool',
+		),
 		'banned_date',
 		'forum_nickname',
 		'club_authority',
