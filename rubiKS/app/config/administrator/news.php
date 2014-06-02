@@ -38,6 +38,14 @@ return array(
 		),
 		'user_id' => array(
 			'title' => 'Author'
-		)
+		),
+		'hidden' => array(
+			'title' => 'Hidden',
+			'type' => 'bool',
+		),
+		'sticky' => array(
+			'title' => 'Sticky',
+			'type' => 'bool',
+		),
 	)
 );
