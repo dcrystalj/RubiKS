@@ -107,4 +107,9 @@ class Competition extends Eloquent {
 		return Date::parse($this->attributes['date']);
 	}
 
+	public function getYearAttribute()
+	{
+		return substr($this->attributes['date'], 0, 4);
+	}
+
 }
