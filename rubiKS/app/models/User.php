@@ -239,6 +239,9 @@ class User extends ConfideUser {
 
     public function getMedals()
     {
+    	$rubiksCube = Event::whereReadableId('333');
+    	$rubiksCube = $rubiksCube->id;
+
     	return array(
     		NationalChampionshipStatsFinal::where('user_id', $this->id)
     			->where('year', '<', date('Y'))
@@ -247,10 +250,28 @@ class User extends ConfideUser {
     			->get(),
     		NationalChampionshipStatsEvent::where('user_id', $this->id)
     			->where('year', '<', date('Y'))
-    			->where('rank', '<=', 3)
+    			//->where('rank', '<=', 3)
+    			->where(function($query) use ($rubiksCube)
+    			{
+    				$query->where('rank', '<=', '3')->orWhere('event_id', $rubiksCube);
+    			})
     			->orderBy('year', 'desc')
     			->orderBy('rank')
     			->get()
+    			->sort(function ($a, $b) use ($rubiksCube) // Sort by: year DESC, 333 first, rank asc
+    			{
+    				if ($a->year == $b->year) {
+    					if ($a->event_id == $rubiksCube) {
+	    					return -1;
+	    				} elseif ($b->event_id == $rubiksCube) {
+	    					return 1;
+	    				} else {
+	    					return $a->rank > $b->rank;
+	    				}
+    				} else {
+    					return $a->year < $b->year;
+    				}
+    			})
     	);
     }
 

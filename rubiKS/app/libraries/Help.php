@@ -49,7 +49,7 @@ class Help
 
 	public static function medal($rank)
 	{
-		if ($rank > 3) return '';
+		if ($rank > 3) $rank = 'x';
 		return '<img width="20" src="' . asset('assets/medals/medal-' . $rank . '.png') . '">';
 	}
 
