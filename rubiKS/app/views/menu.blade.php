@@ -46,6 +46,7 @@
 			<ul>
 				<li><a href="{{ url('static/o-klubu') }}">O klubu</a></li>
 				<li><a href="{{ url('members') }}">Člani kluba</a></li>
+				<li><a href="{{ url('history-of-nr') }}">Zgodovina državnih rekordov</a></li>
 				<li><a href="{{ url('delegates') }}">Delegati</a></li>
 				<li><a href="{{ url('static/datoteke') }}">Datoteke</a></li>
 				<li><a href="{{ url('news') }}">Arhiv novic</a></li>
