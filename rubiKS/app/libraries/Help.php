@@ -47,6 +47,9 @@ class Help
 		return number_format($points, 2, ".", " ");
 	}
 
+	/**
+	 * Medals: http://findicons.com/search/medal - licensed under "Commercial-use" and "No Link Required"
+	 */
 	public static function medal($rank)
 	{
 		if ($rank > 3) $rank = 'x';

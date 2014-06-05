@@ -1,4 +1,3 @@
-{{-- Medals: http://findicons.com/search/medal - licensed under "Commercial-use" and "No Link Required" --}}
 <div id="achievements" class="panel panel-success">
 	<div class="panel-heading"><b>Državno prvenstvo</b></div>
 	<div class="panel-body">
