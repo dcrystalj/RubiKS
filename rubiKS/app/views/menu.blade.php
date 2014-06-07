@@ -82,3 +82,4 @@
 		<li><a href="{{ url('credits') }}"><span class="glyphicon glyphicon-heart"></span> Zahvale</a></li>
 	</ul>
 </div>
+<hr>
