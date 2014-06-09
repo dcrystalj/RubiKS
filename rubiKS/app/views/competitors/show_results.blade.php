@@ -1,7 +1,6 @@
 <div class="panel panel-default">
 	<div class="panel-heading"><b>Najboljši rezultati</b></div>
 
-	<script>$('#achievements').click(function () { $('#slidableAchievements').slideToggle(); });</script>
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -27,17 +26,20 @@
 			</tr>
 			<tr>
 				<td colspan="4" class="text-center">
-					<span id="chart_e{{ $event->readable_id }}" class="_chart" @unless($event->readable_id === '333') style="display:none;" @endif>
-						<img src="http://www.rubik.si/klub/plotuser.php?id={{ $user->club_id }}&iddisc={{ $event->readable_id }}">
-					</span>
-					{{-- Zakaj span tagi? http://stackoverflow.com/questions/7192335/jquery-slide-toggle-not-working-properly --}}
+					<div id="chart_e{{ $event->readable_id }}" class="_chart" @unless($event->readable_id === '333') style="display:none;" @endif>
+						<div id="chart_{{ $event->readable_id }}" style="width:100%;"></div>
+					</div>
 				</td>
 			</tr>
 			@endforeach
 		</tbody>
-		<script>
-			$('._clickable').click(function() { $('#chart_' + this.id).slideToggle('fast'); });
-			$('._chart').click(function() { $(this).slideToggle('fast'); });
-		</script>
 	</table>
 </div>
+{{-- HighCharts --}}
+<script src="{{ asset('assets/highcharts/highcharts.js') }}"></script>
+<script src="{{ asset('assets/highcharts/charts.js') }}"></script>
+<script>
+	$('._clickable').click(function() { $('#chart_' + this.id).slideToggle('fast'); loadChart(this.id.substr(1)); });
+	$('._chart').click(function() { $(this).slideToggle('fast'); });
+	loadChart("333");
+</script>
