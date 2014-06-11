@@ -16,40 +16,41 @@
 		$('#event').on('change', (function() { window.location = '{{ url('history-of-nr') }}' + '/event/' + $('#event')[0].value; }));
 	</script>
 
+	@foreach ($allResults as $type => $results)
+	<?php if (count($results) < 1) continue; ?>
+
 	<table class="table table-condensed table-striped">
 		<thead>
 			<tr>
 				<th>Datum</th>
-				<th>Posamezno</th>
-				<th>Povprečje</th>
+				<th>@if ($type == 'single') Posamezno @else Povprečje @endif</th>
 				<th>Tekmovalec</th>
 				<th>Tekmovanje</th>
 			</tr>
 		</thead>
 
-		@foreach ($allResults as $type => $results)
-			@foreach ($results as $result)
-				<?php if ($result->user->nationality != $country) continue; ?>
-				<tr>
-					<td>
-						<small>{{ Date::parse($result->date) }}</small>
-					</td>
-					@if ($type == 'single')
-						<td>
-							<b>{{ Result::parse($result->single, $event->readable_id) }}</b>
-						</td>
-						<td></td>
-					@else
-						<td></td>
-						<td>
-							<b>{{ Result::parse($result->average, $event->readable_id) }}</b>
-						</td>
-					@endif
-					<td>{{ $result->user->link }}</td>
-					<td><a href="{{ route('competitions.show', $result->competition->short_name) }}">{{ $result->competition->name }}</a></td>
-				</tr>
-			@endforeach			
-		@endforeach
+		@foreach ($results as $result)
+			<?php if ($result->user->nationality != $country) continue; ?>
+			<tr>
+				<td>
+					<small>{{ Date::parse($result->date) }}</small>
+				</td>
+				<td>
+					<b>
+						@if ($type == 'single')
+							{{ Result::parse($result->single, $event->readable_id) }}
+						@else
+							{{ Result::parse($result->average, $event->readable_id) }}
+						 @endif
+					</b>
+				</td>
+				<td>{{ $result->user->link }}</td>
+				<td><a href="{{ route('competitions.show', $result->competition->short_name) }}">{{ $result->competition->name }}</a></td>
+			</tr>
+		@endforeach		
 
 	</table>
+	
+	@endforeach
+
 @stop
