@@ -91,8 +91,8 @@ class UsersController extends \BaseController {
 		if ($event->showAverage()) $data['average'] = array();
 
 		foreach ($results as $result) {
-			$data['single'][] = $result->single;
-			if ($event->showAverage()) $data['average'][] = $result->average;
+			$data['single'][] = (int) $result->single;
+			if ($event->showAverage()) $data['average'][] = (int) $result->average;
 			$data['date'][] = $result->date;
 		}
 
