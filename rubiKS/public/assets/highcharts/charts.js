@@ -30,6 +30,7 @@ var drawChart = function(title, subtitle, renderTo, series, categories, yText, x
 				width: 1,
 				color: '#808080'
 			}],
+			min: 0,
 			labels: {
 				formatter: yAxisFormatter
 			},
