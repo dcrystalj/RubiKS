@@ -11,7 +11,7 @@ class CreateResultsTable extends Migration {
 			$table->increments('id');
 			$table->integer('competition_id')->unsigned();
 			$table->integer('event_id')->unsigned();
-			$table->string('round', 10);
+			$table->integer('round_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->integer('single');
 			$table->integer('average');

@@ -52,20 +52,70 @@ class Competition extends Eloquent {
 
 	public function parse($events)
 	{
+		$rounds = Round::all();
+		$allRounds = array();
+		foreach ($rounds as $round) $allRounds[$round->id] = $round;
+
 		$results = array(); // $results[event id][round id][]
 		$res = $this->results()->with('user')->orderBy('event_id', 'asc')->orderBy('average', 'asc')->orderBy('single', 'asc')->get();
 
 		foreach ($res as $r) {
 			if (!array_key_exists($r->event_id, $results)) $results[$r->event_id] = array();
-			if (!array_key_exists($r->round, $results[$r->event_id])) $results[$r->event_id][$r->round] = array();
-			$results[$r->event_id][$r->round][] = $r;
+			if (!array_key_exists($r->round_id, $results[$r->event_id])) $results[$r->event_id][$r->round_id] = array();
+			$results[$r->event_id][$r->round_id][] = $r;
 		}
 
 		foreach ($results as $eventId => $rounds) {
+			// Sort rounds by sort_key
+			$results[$eventId] = array_sort($results[$eventId], function($value) use ($allRounds) {
+				return $allRounds[$value[0]->round_id]->sort_key;
+			});
+
+			// Generate an extra round with best results from each competitor
+			if (count($results[$eventId]) > 1) {
+				$finalRound = array();
+				foreach ($res as $r) {
+					if ($r->event_id != $eventId) continue;
+
+					if (!array_key_exists($r->user_id, $finalRound)) {
+						$finalRound[$r->user_id] = $r->replicate();
+					}
+
+					// Check whether a better result exists
+					if ($r->single < $finalRound[$r->user_id]->single) $finalRound[$r->user_id]->single = $r->single;
+					if ($r->average < $finalRound[$r->user_id]->average) {
+						$finalRound[$r->user_id]->average = $r->average;
+						$finalRound[$r->user_id]->results = $r->results;
+					}
+				}
+
+				// Re-sort
+				usort($finalRound, function($a, $b) {
+					if ($a->average == $b->average) {
+						if ($a->single == $b->single) return 0;
+						return $a->single > $b->single ? 1 : -1;
+					}
+					return $a->average > $b->average ? 1 : -1;
+				});
+				$results[$eventId][Round::DEFAULT_FINAL_ROUND_ID] = $finalRound;
+			}
+		}
+		
+		// Calculate ranks for each round
+		foreach ($results as $eventId => $rounds) {
 			foreach ($rounds as $roundId => $round) {
 				$rank = 1;
+				$i = 0;
+				$previous = array('single' => null, 'average' => null);
 				foreach ($round as $i => $result) {
-					$result->round_rank = $rank++;
+					if ($result->average == $previous['average'] AND $result->single == $previous['single']) {
+						$result->round_rank = $rank;
+						$i++;
+					} else {
+						$result->round_rank = $rank + $i;
+						$i = 0;
+					}
+					$previous = $result;
 				}
 			}
 		}
@@ -77,7 +127,7 @@ class Competition extends Eloquent {
 			if (in_array($event->id, $eventsWithResults)) $newEvents[] = $event;
 		}
 
-		return array('results' => $results, 'events' => $newEvents);
+		return array($results, $newEvents, $allRounds);
 	}
 
 	public static function getRegisteredUsers($registrations)

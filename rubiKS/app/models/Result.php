@@ -27,6 +27,11 @@ class Result extends Eloquent {
 		return $this->belongsTo('Competition');
 	}
 
+	public function round()
+	{
+		return $this->belongsTo('Round');
+	}
+
 	public function isSingleNR()
 	{
 		return $this->single_nr == '1';
