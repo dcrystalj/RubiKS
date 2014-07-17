@@ -26,8 +26,12 @@ Route::resource('competitions', 'CompetitionsController', array('only' => array(
 
 Route::resource('rankings', 'RankingsController', array('only' => array('index', 'show')));
 
+Route::controller('national-championship', 'NationalChampionshipController');
+
 Route::get('records', 'EventsController@records');
 Route::resource('events', 'EventsController', array('only' => array('index', 'show')));
+
+Route::controller('history-of-nr', 'HistoryOfNRController');
 
 Route::resource('delegates', 'DelegatesController', array('only' => array('index')));
 

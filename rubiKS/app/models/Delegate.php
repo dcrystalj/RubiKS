@@ -22,6 +22,11 @@ class Delegate extends Eloquent {
 		return $result[0]->nr_delegating;
 	}
 
+	public function isActive()
+	{
+		return $this->activity == '1';
+	}
+
 	public static function injectAdditionalDataAndSort($delegates)
 	{
 		foreach ($delegates as $delegate) $delegate->nr_delegating = $delegate->nrDelegating();

@@ -8,6 +8,11 @@ return array(
 	'single' => 'competitor',
 	'model' => 'User',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'id',
 		'full_name',
@@ -41,9 +46,11 @@ return array(
 			'options' => array('m' => 'male', 'f' => 'female')
 		),*/
 		'notes',
-		//'status',
-		//'level',
 		'joined_date',
+		'banned' => array(
+			'title' => 'Banned',
+			'type' => 'bool',
+		),
 		'banned_date',
 		'forum_nickname',
 		'club_authority',

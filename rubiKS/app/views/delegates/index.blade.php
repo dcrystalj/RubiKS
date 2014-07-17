@@ -13,8 +13,9 @@
 		</thead>
 		<tbody>
 			@foreach ($delegates as $delegate)
+				<?php if (!$delegate->isActive()) continue; ?>
 				<tr>
-					<td><a href="{{ route('competitors.show', $delegate->user->club_id) }}">{{ $delegate->user->getFullName() }}</a></td>
+					<td>{{ $delegate->user->link }}</td>
 					<td>{{ $delegate->degree }}</td>
 					<td>{{ $delegate->nr_delegating }}</td>
 					<td>{{ $delegate->region }}</td>
@@ -31,7 +32,9 @@
 		<dd>tekmo lahko vodi ob pomoči delegata stopnje A</dd>
 		<dt>kandidat - K</dt>
 		<dd>na usposabljanju za delegata</dd>
+		<!--
 		<dt>neaktiven - N</dt>
 		<dd>v zadnjih sezonah brez delegiranj</dd>
+		-->
 	</dl>
 @stop

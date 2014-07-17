@@ -28,6 +28,7 @@ $env = $app->detectEnvironment(function()
 {
 	if (isset($_SERVER['SERVER_NAME'])) {
 		if ($_SERVER['SERVER_NAME'] == 'localhost') return 'local';
+		if ($_SERVER['SERVER_NAME'] == 'rubiks.app') return 'homestead';
 	}
 	return 'production';
 });

@@ -5,6 +5,11 @@ return array(
 	'single' => 'competition',
 	'model' => 'Competition',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('manage_competitions');
+	},
+
 	'columns' => array(
 		'id' => array(
 			'title' => 'ID'
@@ -83,6 +88,11 @@ return array(
 		),
 		'country' => array(
 			'title' => 'Country'
+		),
+		'championship' => array(
+			'title' => 'championship',
+			'type' => 'enum',
+			'options' => array('1', '0'),
 		),
 		'status' => array(
 			'title' => 'Status',

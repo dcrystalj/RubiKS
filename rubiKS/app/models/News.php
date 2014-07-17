@@ -8,7 +8,14 @@ class News extends Eloquent {
 
 	public static function lastFive()
 	{
-		return self::orderBy('created_at', 'desc')->take(5)->get();
+		$sticky = self::where('hidden', '0')->where('sticky', '1')->orderBy('created_at', 'desc')->get();
+		$lastFive = self::where('hidden', '0')->where('sticky', '0')->orderBy('created_at', 'desc')->take(5)->get();
+		return $sticky->merge($lastFive);
+	}
+
+	public static function allNotHidden()
+	{
+		return self::where('hidden', '0')->orderBy('created_at', 'desc');
 	}
 
 	public function getParsedDate()

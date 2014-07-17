@@ -20,10 +20,6 @@
 			<td>{{ $competition->city }}</td>
 		</tr>
 		<tr>
-			<td>Startnina</td>
-			<td>{{ $competition->registration_fee }}</td>
-		</tr>
-		<tr>
 			<td>Prizorišče</td>
 			<td colspan="3">{{ $competition->venue }}</td>
 		</tr>
@@ -37,24 +33,26 @@
 		</tr>
 		<tr>
 			<td>1. delegat</td>
-			<td>@if ($delegate1 !== NULL) <a href="{{ route('competitors.show', $delegate1->club_id) }}">{{ $delegate1->getFullName() }}</a> @endif</td>
+			<td>@if ($delegate1 !== NULL) {{ $delegate1->link }} @endif</td>
 		</tr>
 		<tr>
 			<td>2. delegat</td>
-			<td>@if ($delegate2 !== NULL) <a href="{{ route('competitors.show', $delegate2->club_id) }}">{{ $delegate2->getFullName() }}</a> @endif</td>
+			<td>@if ($delegate2 !== NULL) {{ $delegate2->link }} @endif</td>
 		</tr>
 		<tr>
 			<td>Pomožni delegat</td>
-			<td>@if ($delegate3 !== NULL) <a href="{{ route('competitors.show', $delegate3->club_id) }}">{{ $delegate3->getFullName() }}</a> @endif</td>
+			<td>@if ($delegate3 !== NULL) {{ $delegate3->link }} @endif</td>
 		</tr>
 		<tr>
 			<td>Omejitev št. tekmovalcev</td>
 			<td>{{ $competition->max_competitors }}</td>
 		</tr>
+		@if ($competition->registration_fee != "")
 		<tr>
 			<td>Startnina</td>
 			<td>{{ $competition->registration_fee }}</td>
 		</tr>
+		@endif
 		<tr>
 			<td>Zaporedna RubiKS tekma</td>
 			<td>{{ '/' }}</td>

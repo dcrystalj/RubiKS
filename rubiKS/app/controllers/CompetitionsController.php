@@ -34,11 +34,11 @@ class CompetitionsController extends \BaseController {
 
 		if ($competition->isFinished()) {
 			$parsed = $competition->parse($events);
-			$results = $parsed['results'];
-			$events = $parsed['events'];
+			list($results, $events, $rounds) = $parsed;
 			$registrations = array();
 		} else {
 			$results = array();
+			$rounds = array();
 			$registrations = $competition->approvedRegistrations()->with('user')->get();
 		}
 
@@ -46,6 +46,7 @@ class CompetitionsController extends \BaseController {
 						->with('competition', $competition)
 						->with('delegate1', $delegates[0])->with('delegate2', $delegates[1])->with('delegate3', $delegates[2])
 						->with('events', $events)
+						->with('rounds', $rounds)
 						->with('results', $results)
 						->with('registrations', $registrations);
 	}

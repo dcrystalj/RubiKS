@@ -25,7 +25,10 @@
 			@else
 				<ul class="nav navbar-nav">
 					<li><a href="{{ route('competitors.show', Auth::user()->club_id) }}"><b>{{ Auth::user()->getFullName() }}</b></a></li>
-					<li><a href="{{ route('registrations.index') }}">Prijave na tekmovanja</button></a></li>
+					<li><a href="{{ route('registrations.index') }}">Prijave{{-- na tekmovanja--}}</button></a></li>
+					@if (Auth::user()->can('access_administrator'))
+						<li><a href="{{ url('admin') }}" title="Administrator"><span class="glyphicon glyphicon-lock"></span><span class="text-xs"> Administrator</span></a></li>
+					@endif
 					<li><a href="{{ url('user') }}" title="Nastavitve"><span class="glyphicon glyphicon-cog"></span><span class="text-xs"> Nastavitve</span></a></li>
 					<li><a href="{{ url('logout') }}" title="Odjava"><span class="glyphicon glyphicon-off"></span><span class="text-xs"> Odjava</span></a></li>
 				</ul>

@@ -42,9 +42,24 @@ class Help
 		return $cid;
 	}
 
+	public static function formatChampionshipPoints($points)
+	{
+		return number_format($points, 2, ".", " ");
+	}
+
+	/**
+	 * Medals: http://findicons.com/search/medal - licensed under "Commercial-use" and "No Link Required"
+	 */
+	public static function medal($rank)
+	{
+		if ($rank > 3) $rank = 'x';
+		return '<img width="20" src="' . asset('assets/medals/medal-' . $rank . '.png') . '">';
+	}
+
 	public static function checked($bool, $bold = FALSE)
 	{
 		if ($bool) return $bool ? '✔' : '✘';
 		return $bool ? '✓' : '✗';
 	}
+
 }

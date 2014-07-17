@@ -1,7 +1,7 @@
 html { overflow-y: scroll; }
 body { padding-top: 70px; }
 
-.container { min-width: 440px; }
+.container, .footer { min-width: 440px; }
 .content { margin-bottom: 20px; }
 
 .navbar {
@@ -11,8 +11,8 @@ body { padding-top: 70px; }
 	box-shadow:         3px 3px 5px 0px rgba(50, 50, 50, 0.25);
 }
 
-.footer_block { display: inline-block; vertical-align: top; margin: 0px 20px; }
-.footer { padding: 20px; background-color: #ccc; border-top: 3px solid #999; }
+.footer_block { padding: 20px; }
+.footer { background-color: #ccc; border-top: 3px solid #999; }
 
 .footer_block > a { color: #333; }
 
@@ -49,3 +49,23 @@ div.credit {
 }
 
 form.inline { display: inline; }
+
+.competition_year {
+	vertical-align: middle !important;
+	text-align: center !important;
+	background-color: #fff !important;
+}
+
+.rotate {
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-ms-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;  
+}

@@ -2,7 +2,7 @@ Setup
 --------------------------
 
 * Clone a repository
-	```clone -b dev https://github.com/dcrystalj/RubiKS.git```
+	```git clone -b dev https://github.com/dcrystalj/RubiKS.git```
 
 * Create ```.env.local.php``` or ```.env.php``` file
 	```php

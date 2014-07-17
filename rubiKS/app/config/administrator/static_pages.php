@@ -5,6 +5,11 @@ return array(
 	'single' => 'static page',
 	'model' => 'StaticPage',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'title' => array(
 			'title' => 'Title',
@@ -18,13 +23,15 @@ return array(
 		)
 	),
 
+	'form_width' => 600,
+
 	'edit_fields' => array(
 		'title' => array(
 			'title' => 'Title',
 		),
 		'text' => array(
 			'title' => 'Text',
-			'type' => 'textarea',
+			'type' => 'wysiwyg',
 		),
 		'url' => array(
 			'title' => 'URL'

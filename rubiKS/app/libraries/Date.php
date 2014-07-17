@@ -17,7 +17,7 @@ class Date {
 	{
 		$y = (int) $y;
 		$m = (int) $m;
-		$d = (int) $m;
+		$d = (int) $d;
 
 		return $y >= 1000 && $y <= 9999 && checkdate($m, $d, $y);
 	}
@@ -26,7 +26,7 @@ class Date {
 	{
 		$y = (int) $y;
 		$m = (int) $m;
-		$d = (int) $m;
+		$d = (int) $d;
 		if (!self::validDate($y, $m, $d)) return FALSE;
 
 		$year = (string) $y;

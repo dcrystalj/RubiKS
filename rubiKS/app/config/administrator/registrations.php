@@ -5,6 +5,11 @@ return array(
 	'single' => 'registration',
 	'model' => 'Registration',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('manage_registrations');
+	},
+
 	'columns' => array(
 		'competition' => array(
 			'title' => 'Competition',

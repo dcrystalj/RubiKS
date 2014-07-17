@@ -6,6 +6,12 @@ class Result extends Eloquent {
 	public $timestamps = false;
 	protected $softDelete = false;
 
+	public static $nonNumericalResults = array(
+		'77777777' => 'DNF',
+		'88888888' => 'DNS',
+		'99999999' => 'DSQ',
+	);
+
 	public function user()
 	{
 		return $this->belongsTo('User');
@@ -19,6 +25,11 @@ class Result extends Eloquent {
 	public function competition()
 	{
 		return $this->belongsTo('Competition');
+	}
+
+	public function round()
+	{
+		return $this->belongsTo('Round');
 	}
 
 	public function isSingleNR()
@@ -43,9 +54,8 @@ class Result extends Eloquent {
 
 	public static function parse($t, $event = NULL)
 	{
-		if ($t == '77777777') return 'DNF';
-		if ($t == '88888888') return 'DNS';
-		if ($t == '99999999') return 'DSQ';
+		// DNF, DNS, DSQ
+		if (array_key_exists($t, self::$nonNumericalResults)) return self::$nonNumericalResults[$t];
 
 		if ($event === '333FM') {
 			return $t . ' potez';
@@ -108,7 +118,7 @@ class Result extends Eloquent {
 	{
 		$a = (string) (400 - $nrCubes);
 		$b = (string) $time;
-		if (strlen($b) < 5) $b = str_pad($b, 5, '0');
+		if (strlen($b) < 5) $b = str_pad($b, 5, '0', STR_PAD_LEFT);
 		return ($a . $b);
 	}
 
@@ -153,6 +163,16 @@ class Result extends Eloquent {
 		}
 
 		return $results;
+	}
+
+	public static function dnfNumericalValue()
+	{
+		return min(array_map(function($x) { return (int) $x; }, array_keys(self::$nonNumericalResults)));
+	}
+
+	public static function dnsNumericalValue()
+	{
+		return array_keys(Result::$nonNumericalResults)[1];
 	}
 
 }

@@ -110,6 +110,7 @@ return array(
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Former\FormerServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
 		'Frozennode\Administrator\AdministratorServiceProvider',
 
 	),
@@ -204,6 +205,7 @@ return array(
 		'Typography' 	  => 'Bootstrapper\Typography',
 		'Former' 		  => 'Former\FormerServiceProvider',
 		'Confide'    => 'Zizaco\Confide\ConfideFacade',
+		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
 
 	),
 

@@ -5,6 +5,11 @@ return array(
 	'single' => 'credit',
 	'model' => 'Credit',
 
+	'permission' => function()
+	{
+		return Auth::user()->can('sudo');
+	},
+
 	'columns' => array(
 		'organization',
 		'address',

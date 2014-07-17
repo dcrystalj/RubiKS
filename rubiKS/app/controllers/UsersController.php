@@ -2,6 +2,17 @@
 
 class UsersController extends \BaseController {
 
+	public function __construct()
+	{
+		$this->beforeFilter(function($route, $request)
+		{
+			if (Input::has('event')) {
+				$competitor = $route->parameters()[$route->parameterNames()[0]];
+				return $this->getJsonCompetitorsResults($competitor, Input::get('event'));
+			}
+		}, array('only' => 'show'));
+	}
+
 	public function index()
 	{
 		$users = User::allConfirmed()->orderBy('last_name')->orderBy('name')->get();
@@ -41,7 +52,16 @@ class UsersController extends \BaseController {
 			}
 		}
 
-		return View::make('competitors.show')->with('user', $user)->with('events', $events)->with('results', $results);
+		list($finalMedals, $eventMedals) = $user->getMedals();
+		$stats = $user->getStats();
+
+		return View::make('competitors.show')
+			->with('user', $user)
+			->with('events', $events)
+			->with('results', $results)
+			->with('stats', $stats)
+			->with('finalMedals', $finalMedals)
+			->with('eventMedals', $eventMedals);
 	}
 
 	public function clubMembers()
@@ -53,6 +73,30 @@ class UsersController extends \BaseController {
 			return $member->fullName;
 		});
 		return View::make('competitors.clubmembers')->with('members', $members);
+	}
+
+	public function getJsonCompetitorsResults($clubId, $event)
+	{
+		$event = Event::whereReadableId($event);
+		$competitor = User::where('club_id', $clubId)->firstOrFail();
+		$results = Result::where('user_id', $competitor->id)->where('event_id', $event->id)->get();
+
+		$data = array(
+			'event' => $event->readable_id,
+			'event_name' => $event->name,
+			'competitor' => $competitor->full_name,
+			'single' => array(),
+			'date' => array(),
+		);
+		if ($event->showAverage()) $data['average'] = array();
+
+		foreach ($results as $result) {
+			$data['single'][] = (int) $result->single;
+			if ($event->showAverage()) $data['average'][] = (int) $result->average;
+			$data['date'][] = $result->date;
+		}
+
+		return Response::json($data);
 	}
 
 }

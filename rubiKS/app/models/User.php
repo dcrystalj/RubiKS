@@ -1,8 +1,10 @@
 <?php
 
 use Zizaco\Confide\ConfideUser;
+use Zizaco\Entrust\HasRole;
 
 class User extends ConfideUser {
+	use HasRole;
 
 	/**
 	 * The database table used by the model.
@@ -162,9 +164,35 @@ class User extends ConfideUser {
 		return mb_convert_case($fullName, MB_CASE_TITLE);
 	}
 
+	/**
+	 * Accessor for compatibility with Administrator.
+	 */
 	public function getFullNameAttribute($inverted)
 	{
 		return $this->getFullName($inverted);
+	}
+
+	/**
+	 * Generate a link to competitor's page.
+	 */
+	public function getLinkAttribute()
+	{
+		return '<a href="' . route('competitors.show', $this->attributes['club_id']) . '">' . $this->full_name . '</a>';
+	}
+
+	public function getLinkInverseAttribute()
+	{
+		return '<a href="' . route('competitors.show', $this->attributes['club_id']) . '">' . $this->getFullName(TRUE) . '</a>';
+	}
+
+	public function getLinkDistinctForeignAttribute()
+	{
+		return $this->link . ($this->nationality == 'SI' ? '' : ' *');
+	}
+
+	public function getLinkDistinctForeignInverseAttribute()
+	{
+		return $this->link_inverse . ($this->nationality == 'SI' ? '' : ' *');
 	}
 
 	public static function validGender($gender)
@@ -207,6 +235,97 @@ class User extends ConfideUser {
     	} else {
     		$this->attributes['password'] = $value;
     	}
+    }
+
+    public function getMedals()
+    {
+    	$rubiksCube = Event::whereReadableId('333');
+    	$rubiksCube = $rubiksCube->id;
+
+    	return array(
+    		NationalChampionshipStatsFinal::where('user_id', $this->id)
+    			->where('year', '<', date('Y'))
+    			->orderBy('year', 'desc')
+    			->orderBy('rank')
+    			->get(),
+    		NationalChampionshipStatsEvent::where('user_id', $this->id)
+    			->where('year', '<', date('Y'))
+    			//->where('rank', '<=', 3)
+    			->where(function($query) use ($rubiksCube)
+    			{
+    				$query->where('rank', '<=', '3')->orWhere('event_id', $rubiksCube);
+    			})
+    			->orderBy('year', 'desc')
+    			->orderBy('rank')
+    			->get()
+    			->sort(function ($a, $b) use ($rubiksCube) // Sort by: year DESC, 333 first, rank asc
+    			{
+    				if ($a->year == $b->year) {
+    					if ($a->event_id == $rubiksCube) {
+	    					return -1;
+	    				} elseif ($b->event_id == $rubiksCube) {
+	    					return 1;
+	    				} else {
+	    					return $a->rank > $b->rank;
+	    				}
+    				} else {
+    					return $a->year < $b->year;
+    				}
+    			})
+    	);
+    }
+
+    public function getStats()
+    {
+    	$medals = array();
+    	$dnf = (string) Result::dnfNumericalValue();
+    	$dns = (string) Result::dnsNumericalValue();
+
+    	$medal_1 = Result::where('user_id', $this->id)->where('medal', '1')->count();
+    	$medal_2 = Result::where('user_id', $this->id)->where('medal', '2')->count();
+    	$medal_3 = Result::where('user_id', $this->id)->where('medal', '3')->count();
+    	$medal_sum = $medal_1 + $medal_2 + $medal_3;
+
+    	$rc = Event::whereReadableId('333');
+    	$medal_rc_1 = Result::where('user_id', $this->id)->where('event_id', $rc->id)->where('medal', '1')->count();
+    	$medal_rc_2 = Result::where('user_id', $this->id)->where('event_id', $rc->id)->where('medal', '2')->count();
+    	$medal_rc_3 = Result::where('user_id', $this->id)->where('event_id', $rc->id)->where('medal', '3')->count();
+    	$medal_rc_sum = $medal_rc_1 + $medal_rc_2 + $medal_rc_3;
+
+    	// http://stackoverflow.com/questions/12344795/count-the-number-of-occurences-of-a-string-in-a-varchar-field
+    	$results = Result::select(DB::raw("SUM(ROUND( CHAR_LENGTH(results) - CHAR_LENGTH( REPLACE(results, '@', '') ) ) + 1) as 'sum_results'"))
+    		->where('user_id', $this->id)
+    		->first();
+    	$results = $results === null ? 0 : $results->sum_results;
+
+    	$dns_results = Result::select(DB::raw("SUM(ROUND(( CHAR_LENGTH(results) - CHAR_LENGTH( REPLACE(results, '" . $dns . "', '') ) ) / " . strlen($dns) . ") ) as 'sum_dns'"))
+    		->where('user_id', $this->id)
+    		->first();
+    	$dns_results = $dns_results === null ? 0 : $dns_results->sum_dns;
+
+    	$dnf_results = Result::select(DB::raw("SUM(ROUND(( CHAR_LENGTH(results) - CHAR_LENGTH( REPLACE(results, '" . $dnf . "', '') ) ) / " . strlen($dnf) . ") ) as 'sum_dnf'"))
+    		->where('user_id', $this->id)
+    		->first();
+    	$dnf_results = $dnf_results === null ? 0 : $dnf_results->sum_dnf;
+
+    	$last_competition = Result::where('user_id', $this->id)->orderBy('date', 'desc')->first();
+    	$last_competition = $last_competition === null ? '0000-00-00' : $last_competition->date;
+
+    	return array(
+    		'medals' => array('1' => $medal_1, '2' => $medal_2, '3' => $medal_3, 'sum' => $medal_sum),
+    		'medals_rc' => array('1' => $medal_rc_1, '2' => $medal_rc_2, '3' => $medal_rc_3, 'sum' => $medal_rc_sum),
+    		'single_nr' => Result::where('user_id', $this->id)->where('single_nr', 1)->count(),
+    		'single_pb' => Result::where('user_id', $this->id)->where('single_pb', 1)->count(),
+    		'average_nr' => Result::where('user_id', $this->id)->where('average_nr', 1)->count(),
+    		'average_pb' => Result::where('user_id', $this->id)->where('average_pb', 1)->count(),
+    		'competitions' => Result::select('competition_id')->distinct()->where('user_id', $this->id)->orderBy('date', 'desc')->with('competition')->get(),
+    		'delegation' => Competition::where('delegate1', $this->id)->orWhere('delegate2', $this->id)->orWhere('delegate3', $this->id)->orderBy('date', 'desc')->get(),
+    		'event_registrations' => Result::select(array('competition_id', 'event_id'))->where('user_id', $this->id)->count(),
+    		'results' => $results - $dns_results,
+    		'dnf_results' => $dnf_results,
+    		'dns_results' => $dns_results,
+    		'last_competition' => $last_competition,
+    	);
     }
 
 }
