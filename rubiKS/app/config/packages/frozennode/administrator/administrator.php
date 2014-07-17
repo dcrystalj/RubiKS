@@ -58,6 +58,7 @@ return array(
 		'competitions',
 		'registrations',
 		'events', 
+		'rounds',
 		'delegates',
 		'Static' => array(
 			'static_pages',
