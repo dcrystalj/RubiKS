@@ -4,7 +4,7 @@
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
         <div class="form-group">
-            <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
+            <label for="email">{{{ Lang::get('confide::confide.e_mail') }}} ali RubiKS ID</label>
             <input class="form-control" tabindex="1" placeholder="Email" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
         </div>
 
