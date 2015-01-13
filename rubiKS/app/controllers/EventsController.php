@@ -43,12 +43,16 @@ class EventsController extends \BaseController {
 	public function show($id)
 	{
 		$event = Event::where('readable_id', $id)->firstOrFail();
-		
-		$single = $event->results()->take(1)->orderBy('single', 'asc')->firstOrFail();
 
-		if ($event->show_average) {
-			$average = $event->results()->take(1)->orderBy('average', 'asc')->firstOrFail();
+		if ($event->results()->count() > 0) {
+			$single = $event->results()->take(1)->orderBy('single', 'asc')->firstOrFail();
+			if ($event->show_average) {
+					$average = $event->results()->take(1)->orderBy('average', 'asc')->firstOrFail();
+			} else {
+				$average = NULL;
+			}
 		} else {
+			$single = NULL;
 			$average = NULL;
 		}
 
