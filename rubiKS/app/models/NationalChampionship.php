@@ -1,9 +1,9 @@
 <?php
 
 class NationalChampionship {
-	
+
 	/**
-	 * Generate national championship results for a given year and 
+	 * Generate national championship results for a given year and
 	 * save (update `national_championship_rank` column) results to `results` table
 	 *
 	 * @param 	integer			Year
@@ -12,7 +12,7 @@ class NationalChampionship {
 	 */
 	public static function generateRanks($year, $event)
 	{
-		if ($year < NationalChampionshipPeriod::minYear()) return False;
+		if ($year < NationalChampionshipPeriod::minYear()) return True;
 
 		$currentDate = date('Y-m-d');
 		$dnf = Result::dnfNumericalValue();
@@ -126,7 +126,7 @@ class NationalChampionship {
 		$previousPeriodStartDate = null;
 		foreach ($periods as $i => $period) {
 			$startDate = $mergeWithPrevious ? $previousPeriodStartDate : $period->start_date;
-			
+
 			$results = Result::whereEventId($eventId)
 				->where('date', '>=', $startDate)
 				->where('date', '<=', $period->end_date)
@@ -146,7 +146,7 @@ class NationalChampionship {
 					continue;
 				}
 			}
-			
+
 			$allResults[] = $results;
 			$actualPeriods[] = array(
 				'start_date' => $startDate,
@@ -171,10 +171,10 @@ class NationalChampionship {
 	public static function generateStatsEvent($year, $event)
 	{
 		if ($year < NationalChampionshipPeriod::minYear()) return False;
-		
+
 		// Init
 		$resultType = $event->showAverage() ? 'average' : 'single';
-		
+
 		$periods = NationalChampionshipPeriod::where('year', $year)->get();
 		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event->id, $periods, TRUE);
 
@@ -186,8 +186,8 @@ class NationalChampionship {
 			foreach ($results as $result) {
 				if (!array_key_exists($result->user_id, $finalRanks)) {
 					$finalRanks[$result->user_id] = array(
-						'score' => 0, 
-						'best' => $result->$resultType, 
+						'score' => 0,
+						'best' => $result->$resultType,
 						'periods' => array(),
 					);
 
@@ -220,8 +220,8 @@ class NationalChampionship {
 		uasort($finalRanks, $sort);
 
 		// Calculate ranks
-		$rank = 0; 
-		$previousScore = null; 
+		$rank = 0;
+		$previousScore = null;
 		$previousSameScore = 1;
 		foreach ($finalRanks as $userId => $entry) {
 			$thisScore = array($entry['score'], $entry['best']);
@@ -237,7 +237,7 @@ class NationalChampionship {
 		}
 
 		// Add details
-		foreach ($finalRanks as $userId => $entry) 
+		foreach ($finalRanks as $userId => $entry)
 			$finalRanks[$userId]['details'] = $entry['best'] . '|' . implode(',', $entry['periods']);
 
 		// Delete score for 2011
@@ -291,8 +291,8 @@ class NationalChampionship {
 
 		// Calculate rank for each competitor
 		$ranks = array();
-		$rank = 0; 
-		$previousScore = null; 
+		$rank = 0;
+		$previousScore = null;
 		$previousSameResults = 1;
 		foreach ($scores as $userId => $score) {
 			if ($score == $previousScore) {
