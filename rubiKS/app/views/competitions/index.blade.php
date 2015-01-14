@@ -25,10 +25,17 @@
 			@foreach ($competitions as $i => $competition)
 				<tr>
 					@if (!in_array($competition->year, $years))
-						<td class="competition_year" rowspan="{{ nrCompetitionsInAYear($competitions, $competition->year) }}">
+						<?php $nrComp = nrCompetitionsInAYear($competitions, $competition->year); ?>
+						<td class="competition_year" rowspan="{{ $nrComp }}">
+							@if ($nrComp > 1)
 							<div class="rotate">
 								<b>{{ $competition->year }}</b>
 							</div>
+							@else
+							 <div>
+							 	<b>{{ $competition->year }}</b>
+							 </div>
+							@endif
 						</td>
 						<?php $years[] = $competition->year; ?>
 					@endif
@@ -40,4 +47,11 @@
 			@endforeach
 		</tbody>
 	</table>
+	@if (isset($future) && count($competitions) < 1)
+		<p><b>Trenutno ni najavljenih tekem.</b></p>
+		<p>
+			Za plan tekem obiščite <a href="http://www.rubik.si/forum/"><b>forum</b></a>. <br>
+			Za organizacijo tekem se obrnite na <a href="http://www.rubik.si/delegates"><b>delegate</b></a>.
+		</p>
+	@endif
 @stop
