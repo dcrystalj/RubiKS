@@ -22,7 +22,7 @@
 				<span class="glyphicon glyphicon-tower"></span> Državno prvenstvo
 			</a>
 		</li>
-		
+
 		<li><a href="{{ url('competitors') }}"><span class="glyphicon glyphicon-user"></span> Tekmovalci</a></li>
 		<li><a href="{{ url('records') }}"><span class="glyphicon glyphicon-star"></span> Rekordi</a></li>
 		<li><a href="{{ url('rankings') }}"><span class="glyphicon glyphicon-stats"></span> Rezultati</a></li>
@@ -80,6 +80,7 @@
 			</ul>
 		</li>
 		<li><a href="{{ url('credits') }}"><span class="glyphicon glyphicon-heart"></span> Zahvale</a></li>
+		<li><a href="http://www.rubik.si/forum/"><span class="glyphicon glyphicon-comment"></span> Forum</a></li>
 	</ul>
 </div>
 <hr>
