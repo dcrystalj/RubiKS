@@ -41,7 +41,7 @@
 	</div>
 
 	<div class="competitors_block_right pull-right">
-		<img class="competitor_image img-thumbnail" alt="{{ $user->getFullName() }}" src="http://www.rubik.si/klub/foto/{{ $user['club_id'] }}.jpg" width="150" height="200">
+		<img class="competitor_image img-thumbnail" alt="{{ $user->getFullName() }}" src="{{ asset("files/photos/{$user['club_id']}.jpg") }}" width="150" height="200">
 	</div>
 
 	<ul class="nav nav-pills">
@@ -60,5 +60,5 @@
 		<div class="tab-pane fade" id="stats">
 			@include('competitors.show_stats')
 		</div>
-	</div>	
+	</div>
 @stop
