@@ -26,6 +26,7 @@ class AlgorithmsController extends \BaseController {
 		$competition = Competition::getCompetitionByShortName($id);
 		$path = public_path() . '/' . self::algorithmsPath() . '/' . $competition->short_name;
 		$contents = Dir::read($path);
+		sort($contents, SORT_STRING | SORT_NATURAL);
 
 		return View::make('algorithms.show')->with('contents', $contents)->with('path', self::algorithmsPath())->with('competition', $competition);
 	}
