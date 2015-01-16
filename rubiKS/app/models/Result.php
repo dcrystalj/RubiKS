@@ -175,4 +175,9 @@ class Result extends Eloquent {
 		return array_keys(Result::$nonNumericalResults)[1];
 	}
 
+	public static function dsqNumericalValue()
+	{
+		return array_keys(Result::$nonNumericalResults)[2];
+	}
+
 }
