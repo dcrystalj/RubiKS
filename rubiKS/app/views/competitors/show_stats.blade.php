@@ -87,7 +87,11 @@
 			</tr>
 			<tr>
 				<td>Zanesljivost tekmovalca (poskusi brez DNF)</td>
+				@if ($stats['results'] > 0)
 				<td><b>{{ number_format(($stats['results'] - $stats['dnf_results']) / $stats['results'] * 100, 2) }} %</b></td>
+				@else
+				<td></td>
+				@endif
 			</tr>
 			<tr>
 				<td>Pretečen čas od zadnjega tekmovanja</td>

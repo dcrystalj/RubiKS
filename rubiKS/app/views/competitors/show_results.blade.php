@@ -1,6 +1,10 @@
 <div class="panel panel-default">
 	<div class="panel-heading"><b>Najboljši rezultati</b></div>
-
+	@if ($stats['results'] == 0)
+		<tr>
+			<td colspan="4"><br><p class="text-center">Tekmovalec je brez uradnega rezultata.</p></td>
+		</tr>
+	@else
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -34,6 +38,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	@endif
 </div>
 {{-- HighCharts --}}
 <script src="{{ asset('assets/highcharts/highcharts.js') }}"></script>
