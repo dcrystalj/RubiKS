@@ -20,7 +20,7 @@
 			@if (Auth::guest())
 				<ul class="nav navbar-nav">
 					<li @if(Request::is('login', 'user/login')) class="active" @endif><a href="{{ url('login') }}">Prijava v sistem</a></li>
-					<li @if(Request::is('competitions/future')) class="active" @endif><a href="{{ url('competitions/future') }}">Registracija</a></li>
+					<li @if(Request::is('competitions/future')) class="active" @endif><a href="{{ url('competitions/future') }}">Predregistracija</a></li>
 				</ul>
 			@else
 				<ul class="nav navbar-nav">
@@ -33,7 +33,7 @@
 					<li><a href="{{ url('logout') }}" title="Odjava"><span class="glyphicon glyphicon-off"></span><span class="text-xs"> Odjava</span></a></li>
 				</ul>
 			@endif
-			
+
 		</div><!--/.nav-collapse -->
 	</div>
 </div>

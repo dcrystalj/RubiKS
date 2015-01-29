@@ -62,8 +62,8 @@
 				<li class='has-sub'>
 					<a href="#">Forum</a>
 					<ul>
-						<li><a href="{{ url('http://www.rubik.si/viewforum.php?f=30') }}" target="_blank">Teme o klubu</a></li>
-						<li><a href="{{ url('http://www.rubik.si/viewforum.php?f=35') }}" target="_blank">Teme za člane</a></li>
+						<li><a href="{{ url('http://www.rubik.si/forum/viewforum.php?f=30') }}" target="_blank">Teme o klubu</a></li>
+						<li><a href="{{ url('http://www.rubik.si/forum/viewforum.php?f=35') }}" target="_blank">Teme za člane</a></li>
 					</ul>
 				</li>
 
