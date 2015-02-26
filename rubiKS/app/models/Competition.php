@@ -18,7 +18,7 @@ class Competition extends Eloquent {
 
 	public function approvedRegistrations()
 	{
-		return $this->registrations()->where('confirmed', '1');	
+		return $this->registrations()->where('confirmed', '1');
 	}
 
 	public function getDelegates()
@@ -31,7 +31,7 @@ class Competition extends Eloquent {
 
 		$delegates = array();
 		foreach ($ids as $id) $delegates[] = $id == NULL ? NULL : $_delegates[$id];
-		
+
 		return $delegates;
 	}
 
@@ -100,18 +100,19 @@ class Competition extends Eloquent {
 				$results[$eventId][Round::DEFAULT_FINAL_ROUND_ID] = $finalRound;
 			}
 		}
-		
+
 		// Calculate ranks for each round
 		foreach ($results as $eventId => $rounds) {
 			foreach ($rounds as $roundId => $round) {
-				$rank = 1;
+				$rank = 0;
 				$i = 0;
 				$previous = array('single' => null, 'average' => null);
-				foreach ($round as $i => $result) {
+				foreach ($round as $j => $result) {
 					if ($result->average == $previous['average'] AND $result->single == $previous['single']) {
 						$result->round_rank = $rank;
 						$i++;
 					} else {
+						$rank++;
 						$result->round_rank = $rank + $i;
 						$i = 0;
 					}
@@ -119,6 +120,9 @@ class Competition extends Eloquent {
 				}
 			}
 		}
+
+		// Backwards compatibility - add events even if they're not in `events` column.
+		$events = Event::all();
 
 		// Backwards compatibility - delete events with no results
 		$eventsWithResults = array_keys($results);
