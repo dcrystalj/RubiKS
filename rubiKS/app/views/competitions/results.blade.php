@@ -1,7 +1,7 @@
 @foreach ($events as $event)
 	@foreach ($results[$event->id] as $roundId => $roundResults)
 		<?php $round = $rounds[$roundId]; ?>
-		<table class="table table-condensed table-striped table-bordered">
+		<table class="table table-condensed table-striped table-bordered table-results">
 			<thead>
 				<tr class="gray_header">
 					<th colspan="5">
@@ -22,7 +22,12 @@
 					<?php $competitor = $result->user; ?>
 					<tr>
 						<td>{{ $result->round_rank }}.</td>
-						<td>{{ $competitor->link }}</td>
+						<td>
+							{{ $competitor->link }}
+							@if ( (count($results[$event->id]) <= 1 || $roundId == Round::DEFAULT_FINAL_ROUND_ID) && $result->medal > 0 )
+								{{ Help::medal($result->medal) }}
+							@endif
+						</td>
 						<td>
 							{{ Result::parse($result->single, $event->readable_id) }}
 							@if ($result->isSingleNR()) <b>NR</b> @elseif ($result->isSinglePB()) PB @endif {{-- NR/PB --}}

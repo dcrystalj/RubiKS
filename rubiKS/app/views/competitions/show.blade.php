@@ -55,7 +55,7 @@
 		@endif
 		<tr>
 			<td>Zaporedna RubiKS tekma</td>
-			<td>{{ '/' }}</td>
+			<td>{{ Competition::where('date', '<', $competition->date)->count() + 1 }}</td>
 		</tr>
 		<tr>
 			<td>ID tekme</td>
