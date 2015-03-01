@@ -46,7 +46,7 @@ class Event extends Eloquent {
 	public static function whereReadableId($id, $events = NULL)
 	{
 		if ($events === NULL) return self::where('readable_id', $id)->firstOrFail();
-		
+
 		$event = NULL;
 		foreach ($events as $lEvent) {
 			if ($lEvent->readable_id == $id) {
@@ -59,7 +59,7 @@ class Event extends Eloquent {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function recordQuery()
 	{
@@ -68,13 +68,26 @@ class Event extends Eloquent {
 
 	public function getRecordSingle()
 	{
-		return $this->recordQuery()->orderBy('single', 'asc')->orderBy('date', 'asc')->first();
+		return $this->recordQuery()
+			->orderBy('single', 'asc')
+			->orderBy('date', 'asc')
+			//->first();
+			->where('single', '=', function($query) {
+				$query->from('results')->selectRaw('min(single)')->where('event_id', $this->id);
+			})
+			->get();
 	}
 
 	public function getRecordAverage()
 	{
-		if (!$this->showAverage()) return NULL;
-		return $this->recordQuery()->orderBy('average', 'asc')->orderBy('date', 'asc')->first();
+		if (!$this->showAverage()) return new Illuminate\Support\Collection;
+		return $this->recordQuery()
+			->orderBy('average', 'asc')
+			->orderBy('date', 'asc')
+			->where('average', '=', function($query) {
+				$query->from('results')->selectRaw('min(average)')->where('event_id', $this->id);
+			})
+			->get();
 	}
 
 	public static function injectRecords($events)
