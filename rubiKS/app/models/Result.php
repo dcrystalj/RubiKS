@@ -109,7 +109,11 @@ class Result extends Eloquent {
 		$parsed = static::parseAll($results, $event);
 		$array = array();
 		foreach ($parsed as $i => $result) {
-			$array[] = $result['exclude'] ? "[" . $result['t'] . "]" : $result['t'];
+			if (count($parsed) == 5) {
+				$array[] = $result['exclude'] ? "[" . $result['t'] . "]" : $result['t'];
+			} else {
+				$array[] = $result['t'];
+			}
 		}
 		return implode(", ", $array);
 	}
