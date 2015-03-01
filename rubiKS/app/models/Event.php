@@ -8,6 +8,21 @@ class Event extends Eloquent {
 
 	public static $resultTypes = array('single', 'average');
 
+	/**
+	 * Hardcoded rule to push 333 (id=2) on top (as 1st element) when using Events::all().
+	 */
+	public static function all($columns = array('*'))
+	{
+		return parent::all($columns)->sort(function($a, $b) {
+			if ($a->id == 2) return -2;
+			if ($b->id == 2) return 2;
+			$cmp = strcmp($a->readable_id, $b->readable_id);
+			if ($cmp < 0) return -1;
+			if ($cmp > 0) return 1;
+			return 0;
+		});
+	}
+
 	public function results()
 	{
 		return $this->hasMany('Result');
