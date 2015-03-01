@@ -195,6 +195,13 @@ class User extends ConfideUser {
 		return $this->link_inverse . ($this->nationality == 'SI' ? '' : ' *');
 	}
 
+    public function isClubMember()
+    {
+        $year = (int) date("Y");
+        if (date("n") == 1) $year--; // date("n") = month (1-12)
+        return $year <= $this->membership_year;
+    }
+
 	public static function validGender($gender)
 	{
 		return in_array($gender, ['m', 'f']);
