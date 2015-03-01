@@ -73,3 +73,7 @@ form.inline { display: inline; }
 table.table-results tr td {
 	padding: 2px 5px;
 }
+
+span.news-article {
+	text-align: justify;
+}
