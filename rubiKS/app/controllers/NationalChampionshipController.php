@@ -20,7 +20,7 @@ class NationalChampionshipController extends \BaseController {
 
 	public function getIndex()
 	{
-		return $this->getEvent(date('Y'), '333');
+		return $this->getFinal(date('Y'));
 	}
 
 	/**
@@ -34,7 +34,7 @@ class NationalChampionshipController extends \BaseController {
 		// Init
 		$event = Event::where('readable_id', $eventId)->firstOrFail();
 		$resultType = $event->showAverage() ? 'average' : 'single';
-		
+
 		$periods = NationalChampionshipPeriod::where('year', $year)->get();
 		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event->id, $periods, TRUE);
 
