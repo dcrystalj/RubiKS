@@ -8,6 +8,7 @@
 				<th>Kratica</th>
 				<th>Št. poskusov</th>
 				<th>Časovna omejitev</th>
+				<th>Št. izvedb</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -17,6 +18,7 @@
 				<td>{{ $event->short_name }}</td>
 				<td>{{ $event->attempts }}</td>
 				<td>{{ $event->time_limit }}</td>
+				<td>{{ $event->nrPerformances() }}
 			</tr>
 		@endforeach
 		</tbody>

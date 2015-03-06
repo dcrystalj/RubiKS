@@ -50,6 +50,11 @@ class Event extends Eloquent {
 		return $this->show_average == '1';
 	}
 
+	public function nrPerformances()
+	{
+		return Result::selectRaw('COUNT(DISTINCT(competition_id)) as nr')->where('event_id', $this->id)->first()->nr;
+	}
+
 	/*
 	 * To ensure compatibility with Administrator package.
 	 */

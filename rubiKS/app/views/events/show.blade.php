@@ -36,6 +36,10 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Število izvedb</td>
+			<td>{{ $event->nrPerformances() }}</td>
+		</tr>
+		<tr>
 			<td>Pomoč:</td>
 			<td><a href="{{ $event->help }}">{{ $event->help }}</a></td>
 		</tr>
