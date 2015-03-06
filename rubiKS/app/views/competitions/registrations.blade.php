@@ -19,9 +19,14 @@
 				<td class="text-right"><small>{{ $i + 1 }}.</small></td>
 				<td>
 					<small>
-						{{ $competitor->link }}
+						<?php $canManageCompetitions = !Auth::guest() && Auth::user()->can('manage_competitions'); ?>
+						@if (!$competitor->confirmed && !$canManageCompetitions)
+							{{ $competitor->full_name }}
+						@else
+							{{ $competitor->link }}
+						@endif
 						@if ($competitor->isClubMember()) <img src="{{ asset('favicon.ico') }}" width="16"> @endif
-						@if (!Auth::guest() && Auth::user()->can('manage_competitions')) ({{ $competitor->id }}) @endif
+						@if ($canManageCompetitions) ({{ $competitor->id }}) @endif
 					</small>
 				</td>
 				@foreach ($events as $event)
