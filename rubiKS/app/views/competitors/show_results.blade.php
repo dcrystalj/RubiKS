@@ -21,9 +21,15 @@
 			<tr id="e{{ $event->readable_id }}" class="_clickable @if($i++ % 2) results_odd @endif" >
 				<td></td>
 				<td>{{ $event->name }}</td>
-				<td><span title="Tekma">{{ Result::parse($a['single']->single, $event->readable_id) }}</span></td>
+				<td><span title="Tekma">
+					{{ Result::parse($a['single']->single, $event->readable_id) }}
+					@if ($a['single_nr']) <b>NR</b> @endif
+				</span></td>
 				@if ($event->showAverage())
-				<td><span title="Tekma">{{ Result::parse($a['average']->average, $event->readable_id) }}</span></td>
+				<td><span title="Tekma">
+					{{ Result::parse($a['average']->average, $event->readable_id) }}
+					@if ($a['average_nr']) <b>NR</b> @endif
+				</span></td>
 				@else
 				<td>/</td>
 				@endif

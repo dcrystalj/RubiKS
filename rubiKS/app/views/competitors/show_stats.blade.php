@@ -1,6 +1,7 @@
 <div class="panel panel-info">
 	<div class="panel-heading"><b>Statistika</b></div>
 	<div class="panel-body">
+		@unless ($stats['results'] == 0)
 		<table class="table">
 			<thead>
 				<tr>
@@ -102,5 +103,6 @@
 			$('#click_competitions').click(function(e) { e.preventDefault(); $('#stats_competitions').slideToggle(); })
 			$('#click_delegation').click(function(e) { e.preventDefault(); $('#stats_delegation').slideToggle(); })
 		</script>
+		@endunless
 	</div>
 </div>

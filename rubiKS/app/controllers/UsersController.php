@@ -38,7 +38,15 @@ class UsersController extends \BaseController {
 			$single = Result::where('user_id', $user->id)->where('event_id', $event->id)->orderBy('single', 'asc')->orderBy('date', 'asc')->take(1);
 
 			if ($single->count() > 0) {
-				$results[$event['readable_id']]['single'] = $single->first();
+				$single = $single->first();
+				$results[$event['readable_id']]['single'] = $single;
+				// Single NR
+				$results[$event['readable_id']]['single_nr'] = false;
+				if ($single->single_nr) {
+					if ($single->event->getRecordSingle()[0]->single == $single->single)
+						$results[$event['readable_id']]['single_nr'] = true;
+				}
+
 
 				if ($event->showAverage()) {
 					$average = Result::where('user_id', $user->id)
@@ -46,7 +54,14 @@ class UsersController extends \BaseController {
 								->orderBy('average', 'asc')
 								->orderBy('date', 'asc')->take(1);
 					if ($average->count() > 0) {
-						$results[$event->readable_id]['average'] = $average->first();
+						$average = $average->first();
+						$results[$event->readable_id]['average'] = $average;
+						// Average NR
+						$results[$event->readable_id]['average_nr'] = false;
+						if ($average->average_nr) {
+							if ($average->event->getRecordAverage()[0]->average == $average->average)
+								$results[$event->readable_id]['average_nr'] = true;
+						}
 					}
 				}
 			}
