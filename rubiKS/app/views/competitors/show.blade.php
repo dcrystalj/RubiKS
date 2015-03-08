@@ -7,8 +7,16 @@
 		<table class="table table-condensed">
 			<tr>
 				<td>RubiKS ID</td>
-				<td>{{ $user->club_id }}</td>
+				<td>
+					{{ $user->club_id }}
+				</td>
 			</tr>
+			@if (!Auth::guest() && Auth::user()->can('sudo'))
+			<tr>
+				<td>ID</td>
+				<td>{{ $user->id }}</td>
+			</tr>
+			@endif
 			{{--<tr>
 				<td>Ime in priimek</td>
 				<td>{{ $user->getFullName() }}</td>

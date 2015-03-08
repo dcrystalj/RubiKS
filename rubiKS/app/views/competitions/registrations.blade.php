@@ -1,3 +1,15 @@
+@if ($competition->registrationsOpened())
+	<center>
+		@if (Auth::guest())
+			<a href="{{ url('user/create', $competition->short_name) }}"><button type="button" class="btn btn-primary"><b>Če še nimate RubiKS računa se lahko prijavite tukaj.</b></button></a>
+		@else
+			<a href="{{ route('registrations.show', $competition->short_name) }}"><button type="button" class="btn btn-primary"><b>Prijavite se na tekmo.</b></button></a>
+		@endif
+	</center>
+@else
+	<center><b>Prijave so zaprte.</b></center>
+@endif
+<br>
 <table class="table table-condensed table-striped table-bordered print-page-break">
 	<thead>
 		<tr class="gray_header">
@@ -37,14 +49,3 @@
 		@endforeach
 	</tbody>
 </table>
-@if ($competition->registrationsOpened())
-	<center>
-		@if (Auth::guest())
-			<a href="{{ url('user/create', $competition->short_name) }}"><button type="button" class="btn btn-primary"><b>Če še nimate RubiKS računa se lahko prijavite tukaj.</b></button></a>
-		@else
-			<a href="{{ route('registrations.show', $competition->short_name) }}"><button type="button" class="btn btn-primary"><b>Prijavite se na tekmo.</b></button></a>
-		@endif
-	</center>
-@else
-	<center><b>Prijave so zaprte.</b></center>
-@endif
