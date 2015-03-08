@@ -115,7 +115,7 @@ class UsersConfideController extends BaseController {
             }
 
             //$notice = Lang::get('confide::confide.alerts.account_created') . ' ' . Lang::get('confide::confide.alerts.instructions_sent');
-            $notice = 'Vaš račun je bil uspešno ustvarjen. Po potrditvi boste dobili e-mail z dodatnimi navodili.';
+            $notice = 'Prijavnica je bila poslana! Ko bomo vašo prijavo obdelali, boste na seznamu prijavljenih na tekmo videli tudi svoje podatke.';
 
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
             return Redirect::to('user/login')->with('notice', $notice);

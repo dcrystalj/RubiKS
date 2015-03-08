@@ -250,6 +250,19 @@ class User extends ConfideUser {
     	}
     }
 
+    public function setConfirmedAttribute($value)
+    {
+        if ($this->attributes['confirmed'] == "0" && $value == "1") {
+            $address = $this->email;
+            Mail::send('emails.confirmed', array('user' => $this), function($message) use ($address) {
+                $message->to($address)->subject('Vaš račun je potrjen!');
+            });
+            $this->attributes['confirmed'] = "1";
+        } else {
+            $this->attributes['confirmed'] = $value;
+        }
+    }
+
     public function getMedals()
     {
     	$rubiksCube = Event::whereReadableId('333');
