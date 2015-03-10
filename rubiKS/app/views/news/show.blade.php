@@ -1,7 +1,7 @@
 @extends('main')
 @section('content')
 	<h2>{{ $article->title }} <small class="pull-right">{{ $article->getParsedDateShort() }}</small></h2>
-	<span>
+	<span class="news-article">
 		{{ $article->text }}
 	</span>
 	<br>

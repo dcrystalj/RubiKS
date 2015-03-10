@@ -1,6 +1,10 @@
 <div class="panel panel-default">
 	<div class="panel-heading"><b>Najboljši rezultati</b></div>
-
+	@if ($stats['results'] == 0)
+		<tr>
+			<td colspan="4"><br><p class="text-center">Tekmovalec je brez uradnega rezultata.</p></td>
+		</tr>
+	@else
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -17,9 +21,15 @@
 			<tr id="e{{ $event->readable_id }}" class="_clickable @if($i++ % 2) results_odd @endif" >
 				<td></td>
 				<td>{{ $event->name }}</td>
-				<td><span title="Tekma">{{ Result::parse($a['single']->single, $event->readable_id) }}</span></td>
+				<td><span title="Tekma">
+					{{ Result::parse($a['single']->single, $event->readable_id) }}
+					@if ($a['single_nr']) <b>NR</b> @endif
+				</span></td>
 				@if ($event->showAverage())
-				<td><span title="Tekma">{{ Result::parse($a['average']->average, $event->readable_id) }}</span></td>
+				<td><span title="Tekma">
+					{{ Result::parse($a['average']->average, $event->readable_id) }}
+					@if ($a['average_nr']) <b>NR</b> @endif
+				</span></td>
 				@else
 				<td>/</td>
 				@endif
@@ -34,6 +44,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	@endif
 </div>
 {{-- HighCharts --}}
 <script src="{{ asset('assets/highcharts/highcharts.js') }}"></script>

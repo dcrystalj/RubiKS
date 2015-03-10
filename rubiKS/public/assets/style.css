@@ -67,5 +67,13 @@ form.inline { display: inline; }
 	-moz-transform-origin: 50% 50%;
 	-ms-transform-origin: 50% 50%;
 	-o-transform-origin: 50% 50%;
-	transform-origin: 50% 50%;  
+	transform-origin: 50% 50%;
+}
+
+table.table-results tr td {
+	padding: 2px 5px;
+}
+
+span.news-article {
+	text-align: justify;
 }

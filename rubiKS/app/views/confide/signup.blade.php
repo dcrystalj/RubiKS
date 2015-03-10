@@ -101,13 +101,14 @@
                 <input class="form-control" placeholder="Vzdevek na forumu" type="text" name="forum_nickname" id="forum_nickname" value="{{{ Input::old('forum_nickname') }}}">
             </div>
         </div>
-
+        {{--
         <div class="form-group">
             <label class="col-sm-2 control-label" for="user_notes">Opombe</label>
             <div class="col-sm-10">
                 <input class="form-control" placeholder="Opombe" type="text" name="user_notes" id="user_notes" value="{{{ Input::old('user_notes') }}}">
             </div>
         </div>
+        --}}
 
         <hr>
 

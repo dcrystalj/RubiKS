@@ -12,7 +12,7 @@
 class UsersConfideController extends BaseController {
 
     /**
-     * 
+     *
      */
     public function __construct()
     {
@@ -26,7 +26,7 @@ class UsersConfideController extends BaseController {
         {
             if (!Auth::guest()) return Redirect::to('/');
             return $this->registrationsOpenedFilter($routes, $request);
-        }, 
+        },
         ['only' => ['getCreate', 'postIndex'] ]);
     }
 
@@ -86,7 +86,7 @@ class UsersConfideController extends BaseController {
         $user->forum_nickname = Input::get('forum_nickname');
         $user->birth_date = $birthDate;
         $user->joined_date = date('Y-m-d');
-        $user->notes = Input::get('user_notes');
+        //$user->notes = Input::get('user_notes');
 
         $user->club_id = User::generateClubId($user);
 
@@ -114,9 +114,9 @@ class UsersConfideController extends BaseController {
                 return Redirect::to('user/create/' . Input::get('competition'))->withInput(Input::except('password'))->with('error', 'Napačna prijava.');
             }
 
-            //$notice = Lang::get('confide::confide.alerts.account_created') . ' ' . Lang::get('confide::confide.alerts.instructions_sent'); 
-            $notice = 'Vaš račun je bil uspešno ustvarjen. Po potrditvi boste dobili e-mail z dodatnimi navodili.';
-                    
+            //$notice = Lang::get('confide::confide.alerts.account_created') . ' ' . Lang::get('confide::confide.alerts.instructions_sent');
+            $notice = 'Prijavnica je bila poslana! Ko bomo vašo prijavo obdelali, boste na seznamu prijavljenih na tekmo videli tudi svoje podatke.';
+
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
             return Redirect::to('user/login')->with('notice', $notice);
         } else {
@@ -134,7 +134,7 @@ class UsersConfideController extends BaseController {
     public function getLogin()
     {
         if (Confide::user()) {
-            // If user is logged, redirect to internal 
+            // If user is logged, redirect to internal
             // page, change it to '/admin', '/dashboard' or something
             return Redirect::to('/');
         } else {
@@ -278,12 +278,12 @@ class UsersConfideController extends BaseController {
     public function getLogout()
     {
         Confide::logout();
-        
+
         return Redirect::to('/');
     }
 
     /**
-     *  
+     *
      */
     public function registrationsOpenedFilter($routes, $request)
     {

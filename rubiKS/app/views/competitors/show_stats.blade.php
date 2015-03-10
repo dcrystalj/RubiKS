@@ -1,6 +1,7 @@
 <div class="panel panel-info">
 	<div class="panel-heading"><b>Statistika</b></div>
 	<div class="panel-body">
+		@unless ($stats['results'] == 0)
 		<table class="table">
 			<thead>
 				<tr>
@@ -87,7 +88,11 @@
 			</tr>
 			<tr>
 				<td>Zanesljivost tekmovalca (poskusi brez DNF)</td>
+				@if ($stats['results'] > 0)
 				<td><b>{{ number_format(($stats['results'] - $stats['dnf_results']) / $stats['results'] * 100, 2) }} %</b></td>
+				@else
+				<td></td>
+				@endif
 			</tr>
 			<tr>
 				<td>Pretečen čas od zadnjega tekmovanja</td>
@@ -98,5 +103,6 @@
 			$('#click_competitions').click(function(e) { e.preventDefault(); $('#stats_competitions').slideToggle(); })
 			$('#click_delegation').click(function(e) { e.preventDefault(); $('#stats_delegation').slideToggle(); })
 		</script>
+		@endunless
 	</div>
 </div>

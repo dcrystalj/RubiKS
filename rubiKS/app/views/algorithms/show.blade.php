@@ -5,7 +5,9 @@
 	@unless (count($contents) > 0)
 		Algoritmi za to tekmo niso na voljo.
 	@endunless
+    <ul>
 	@foreach ($contents as $file)
-		<a href="{{ asset($path . '/' . $competition->short_name . '/' . $file) }}">{{ $file }}</a>
+		<li><a href="{{ asset($path . '/' . $competition->short_name . '/' . $file) }}">{{ $file }}</a></li>
 	@endforeach
+    </ul>
 @stop

@@ -8,6 +8,21 @@ class Event extends Eloquent {
 
 	public static $resultTypes = array('single', 'average');
 
+	/**
+	 * Hardcoded rule to push 333 (id=2) on top (as 1st element) when using Events::all().
+	 */
+	public static function all($columns = array('*'))
+	{
+		return parent::all($columns)->sort(function($a, $b) {
+			if ($a->id == 2) return -2;
+			if ($b->id == 2) return 2;
+			$cmp = strcmp($a->readable_id, $b->readable_id);
+			if ($cmp < 0) return -1;
+			if ($cmp > 0) return 1;
+			return 0;
+		});
+	}
+
 	public function results()
 	{
 		return $this->hasMany('Result');
@@ -35,6 +50,11 @@ class Event extends Eloquent {
 		return $this->show_average == '1';
 	}
 
+	public function nrPerformances()
+	{
+		return Result::selectRaw('COUNT(DISTINCT(competition_id)) as nr')->where('event_id', $this->id)->first()->nr;
+	}
+
 	/*
 	 * To ensure compatibility with Administrator package.
 	 */
@@ -46,7 +66,7 @@ class Event extends Eloquent {
 	public static function whereReadableId($id, $events = NULL)
 	{
 		if ($events === NULL) return self::where('readable_id', $id)->firstOrFail();
-		
+
 		$event = NULL;
 		foreach ($events as $lEvent) {
 			if ($lEvent->readable_id == $id) {
@@ -59,7 +79,7 @@ class Event extends Eloquent {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function recordQuery()
 	{
@@ -68,13 +88,26 @@ class Event extends Eloquent {
 
 	public function getRecordSingle()
 	{
-		return $this->recordQuery()->orderBy('single', 'asc')->orderBy('date', 'asc')->first();
+		return $this->recordQuery()
+			->orderBy('single', 'asc')
+			->orderBy('date', 'asc')
+			//->first();
+			->where('single', '=', function($query) {
+				$query->from('results')->selectRaw('min(single)')->where('event_id', $this->id);
+			})
+			->get();
 	}
 
 	public function getRecordAverage()
 	{
-		if (!$this->showAverage()) return NULL;
-		return $this->recordQuery()->orderBy('average', 'asc')->orderBy('date', 'asc')->first();
+		if (!$this->showAverage()) return new Illuminate\Support\Collection;
+		return $this->recordQuery()
+			->orderBy('average', 'asc')
+			->orderBy('date', 'asc')
+			->where('average', '=', function($query) {
+				$query->from('results')->selectRaw('min(average)')->where('event_id', $this->id);
+			})
+			->get();
 	}
 
 	public static function injectRecords($events)

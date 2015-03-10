@@ -49,15 +49,17 @@ class RegistrationsController extends \BaseController {
 	public function store()
 	{
 		$competition = Competition::getCompetitionByShortName(Input::get('competition'));
+		$user = Auth::user();
 
 		$registration = new Registration;
-		$registration->user_id = Auth::user()->id;
+		$registration->user_id = $user->id;
 		$registration->competition_id = $competition->id;
 		$registration->events = Registration::parseSelectedEvents($competition, Input::all());
 		$registration->notes = Input::get('notes');
 
-		$registration->save();
-
+		if (!$registration->save()) {
+			return Redirect::to('registrations/' . $competition->short_name)->withNotice('Pri shranjevanju prijave je prišlo do napake.');
+		}
 		return Redirect::to('registrations/' . $competition->short_name)->withSuccess('Vaša prijava je bila shranjena.');
 	}
 
@@ -71,7 +73,7 @@ class RegistrationsController extends \BaseController {
 	{
 		$competition = Competition::getCompetitionByShortName($competitionShortName);
 		$registration = Registration::getRegistration(Auth::user()->id, $competition->id);
-		
+
 		if ($registration === null) {
 			return Redirect::to('registrations/create')->withInput(['competition' => $competitionShortName]);
 		}

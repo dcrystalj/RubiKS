@@ -44,6 +44,13 @@
 		@endforeach
 	</table>
 
+	@if (count($competitions) < 1)
+		<p><b>Trenutno ni najavljenih tekem.</b></p>
+		<p>
+			Za plan tekem obiščite <a href="http://www.rubik.si/forum/"><b>forum</b></a>. <br>
+			Za organizacijo tekem se obrnite na <a href="http://www.rubik.si/delegates"><b>delegate</b></a>.
+		</p>
+	@endif
 	<br><br>
 	@include('alerts')
 @stop

@@ -1,9 +1,9 @@
 <?php
 
 class NationalChampionship {
-	
+
 	/**
-	 * Generate national championship results for a given year and 
+	 * Generate national championship results for a given year and
 	 * save (update `national_championship_rank` column) results to `results` table
 	 *
 	 * @param 	integer			Year
@@ -12,7 +12,7 @@ class NationalChampionship {
 	 */
 	public static function generateRanks($year, $event)
 	{
-		if ($year < NationalChampionshipPeriod::minYear()) return False;
+		if ($year < NationalChampionshipPeriod::minYear()) return True;
 
 		$currentDate = date('Y-m-d');
 		$dnf = Result::dnfNumericalValue();
@@ -20,7 +20,7 @@ class NationalChampionship {
 
 		// Delete all previous championship ranks for a given year
 		Result::whereEventId($event->id)
-				->where('championship_rank', '>', '0')
+				->where('championship_rank', '!=', '0')
 				->where('results.date', '>=', $year . '-01-01')
 				->where('results.date', '<=', $year . '-12-31')
 				->update(array('championship_rank' => 0));
@@ -41,14 +41,33 @@ class NationalChampionship {
 				->where('competitions.championship', '1')
 				->whereEventId($event->id)
 				->where('results.date', '>=', $startDate)
-				->where('results.date', '<=', $period->end_date)
-				->where($resultType, '<', $dnf)
+				->where('results.date', '<=', $period->end_date)//;
+			//if (FALSE && $year < 2015) {
+			//	$periodResults = $periodResults->where($resultType, '<', $dnf);
+			//}
+			//$periodResults = $periodResults
 				->groupBy('user_id')
 				->get();
 
+			$countValidResults = 0;
+			foreach ($periodResults as $r) {
+				//if ((int) $r->$resultType < (int) $dnf) $countValidResults += 1; // Weird data coming out of GROUP BY ORDER BY!
+				$temp = Result::select('results.*')
+					->join('competitions', 'results.competition_id', '=', 'competitions.id')
+					->where('competitions.championship', '1')
+					->whereUserId($r->user_id)
+					->whereEventId($event->id)
+					->where('results.date', '>=', $startDate)
+					->where('results.date', '<=', $period->end_date)
+					->orderBy($resultType, 'asc')
+					->orderBy('results.date', 'asc')
+					->firstOrFail();
+				if ((int) $temp->$resultType < (int) $dnf) $countValidResults += 1;
+			}
+			//if ($event->readable_id == "333BLD") var_dump($countValidResults);
 			// If there are less than N results in a period, then periods get merged!
 			// $i + 1 < count($periods), because the last period cannot be merged.
-			if (count($periodResults) < $period->min_results AND $i + 1 < count($periods)) {
+			if ($countValidResults < $period->min_results AND $i + 1 < count($periods)) {
 
 				// If 2011 and 3 periods have already been merged, then we cannot merge any more periods!
 				if (!($year == 2011) OR $mergedPeriods < 3) {
@@ -102,6 +121,12 @@ class NationalChampionship {
 				}
 				$previousResult = $result->$resultType;
 
+				// DNF, DNS, ...
+				if ((int) $result->$resultType >= (int) Result::dnfNumericalValue()) {
+					$rank = -1;
+					$playersWithSameResult = 0;
+				}
+
 				// Save
 				$result->championship_rank = $rank;
 				$result->save();
@@ -121,21 +146,37 @@ class NationalChampionship {
 		$allResults = array();
 		$actualPeriods = array();
 
+		$dnf = Result::dnfNumericalValue();
+		$event = Event::findOrFail($eventId);
+		$resultType = $event->showAverage() ? 'average' : 'single'; // Result type to be used when comparing results
+
 		$mergeWithPrevious = False;
 		$mergedPeriods = 1;
 		$previousPeriodStartDate = null;
 		foreach ($periods as $i => $period) {
 			$startDate = $mergeWithPrevious ? $previousPeriodStartDate : $period->start_date;
-			
+
 			$results = Result::whereEventId($eventId)
 				->where('date', '>=', $startDate)
 				->where('date', '<=', $period->end_date)
-				->where('championship_rank', '>', 0)
+				->where('championship_rank', '!=', 0)
 				->orderBy('championship_rank', 'asc');
 			if ($withUsers) $results = $results->with('user');
 			$results = $results->get();
 
-			if (count($results) < $period->min_results AND $i + 1 < count($periods)) {
+			// Sort
+			$results->sort(function($a, $b) {
+				if ($a->championship_rank == $b->championship_rank) return 0;
+				if ($a->championship_rank < 0) return 1;
+				if ($b->championship_rank < 0) return -1;
+				return $a->championship_rank < $b->championship_rank ? -1 : 1;
+			});
+
+
+			$countValidResults = 0;
+			foreach ($results as $r) { if ((int) $r->$resultType < (int) $dnf) $countValidResults += 1; }
+			//if ($event->readable_id == "333BLD") var_dump($countValidResults);
+			if ($countValidResults < $period->min_results AND $i + 1 < count($periods)) {
 
 				// In 2011, maximum number of merged periods was 3!
 				// In 2012+ there was no maximum number of merged periods.
@@ -146,7 +187,7 @@ class NationalChampionship {
 					continue;
 				}
 			}
-			
+
 			$allResults[] = $results;
 			$actualPeriods[] = array(
 				'start_date' => $startDate,
@@ -171,10 +212,10 @@ class NationalChampionship {
 	public static function generateStatsEvent($year, $event)
 	{
 		if ($year < NationalChampionshipPeriod::minYear()) return False;
-		
+
 		// Init
 		$resultType = $event->showAverage() ? 'average' : 'single';
-		
+
 		$periods = NationalChampionshipPeriod::where('year', $year)->get();
 		list($allResults, $actualPeriods) = NationalChampionship::allResultsAndActualPeriods($year, $event->id, $periods, TRUE);
 
@@ -186,8 +227,8 @@ class NationalChampionship {
 			foreach ($results as $result) {
 				if (!array_key_exists($result->user_id, $finalRanks)) {
 					$finalRanks[$result->user_id] = array(
-						'score' => 0, 
-						'best' => $result->$resultType, 
+						'score' => 0,
+						'best' => $result->$resultType,
 						'periods' => array(),
 					);
 
@@ -197,8 +238,10 @@ class NationalChampionship {
 						$finalRanks[$result->user_id]['periods'][] = '-';
 				}
 
-				$finalRanks[$result->user_id]['score'] += self::nationalChampionshipRankFormula($result->championship_rank, $year);
-				$finalRanks[$result->user_id]['periods'][$i] = $result->championship_rank;
+				if ($result->championship_rank > 0) {
+					$finalRanks[$result->user_id]['score'] += self::nationalChampionshipRankFormula($result->championship_rank, $year);
+					$finalRanks[$result->user_id]['periods'][$i] = $result->championship_rank;
+				}
 
 				if ($result->$resultType < $finalRanks[$result->user_id]['best'])
 					$finalRanks[$result->user_id]['best'] = $result->$resultType;
@@ -220,8 +263,8 @@ class NationalChampionship {
 		uasort($finalRanks, $sort);
 
 		// Calculate ranks
-		$rank = 0; 
-		$previousScore = null; 
+		$rank = 0;
+		$previousScore = null;
 		$previousSameScore = 1;
 		foreach ($finalRanks as $userId => $entry) {
 			$thisScore = array($entry['score'], $entry['best']);
@@ -237,7 +280,7 @@ class NationalChampionship {
 		}
 
 		// Add details
-		foreach ($finalRanks as $userId => $entry) 
+		foreach ($finalRanks as $userId => $entry)
 			$finalRanks[$userId]['details'] = $entry['best'] . '|' . implode(',', $entry['periods']);
 
 		// Delete score for 2011
@@ -261,7 +304,7 @@ class NationalChampionship {
 		if ($year == 2011) return False; // This did not exist in 2011!
 
 		// Get all results that count towards the national championship
-		$results = Result::where('championship_rank', '>', 0)
+		$results = Result::where('championship_rank', '!=', 0)
 				->where('date', '>=', $year . '-01-01')
 				->where('date', '<=', $year . '-12-31')
 				->orderBy('championship_rank', 'asc')
@@ -277,6 +320,7 @@ class NationalChampionship {
 				$additional[$result->user_id] = array();
 			}
 
+			if ($result->championship_rank < 1) continue;
 			$scores[$result->user_id] += self::nationalChampionshipRankFormula($result->championship_rank, $year);
 			$additional[$result->user_id][] = $result->championship_rank;
 		}
@@ -291,8 +335,8 @@ class NationalChampionship {
 
 		// Calculate rank for each competitor
 		$ranks = array();
-		$rank = 0; 
-		$previousScore = null; 
+		$rank = 0;
+		$previousScore = null;
 		$previousSameResults = 1;
 		foreach ($scores as $userId => $score) {
 			if ($score == $previousScore) {
@@ -365,7 +409,7 @@ class NationalChampionship {
 	 */
 	public static function nationalChampionshipRankFormula($rank, $year = null)
 	{
-		if ($rank == 0) return 0;
+		if ($rank <= 0) return 0;
 
 		if (2011 == $year) return 1 / pow(10, $rank);
 

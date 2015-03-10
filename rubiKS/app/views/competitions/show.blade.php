@@ -12,12 +12,8 @@
 			<td>{{ $competition->time }}</td>
 		</tr>
 		<tr>
-			<td>Država</td>
-			<td>{{ $competition->country }}</td>
-		</tr>
-		<tr>
 			<td>Kraj</td>
-			<td>{{ $competition->city }}</td>
+			<td>{{ $competition->city }}, {{ $competition->country }}</td>
 		</tr>
 		<tr>
 			<td>Prizorišče</td>
@@ -32,16 +28,12 @@
 			<td>{{ $competition->organiser }}</td>
 		</tr>
 		<tr>
-			<td>1. delegat</td>
-			<td>@if ($delegate1 !== NULL) {{ $delegate1->link }} @endif</td>
-		</tr>
-		<tr>
-			<td>2. delegat</td>
-			<td>@if ($delegate2 !== NULL) {{ $delegate2->link }} @endif</td>
-		</tr>
-		<tr>
-			<td>Pomožni delegat</td>
-			<td>@if ($delegate3 !== NULL) {{ $delegate3->link }} @endif</td>
+			<td>Delegati</td>
+			<td>
+				@if ($delegate1 !== NULL) {{ $delegate1->link }} <small>(1. delegat)</small>@endif{{ $delegate2 !== NULL ? ", " : "" }}
+				@if ($delegate2 !== NULL) {{ $delegate2->link }} <small>(2. delegat)</small>@endif{{ $delegate3 !== NULL ? ", " : "" }}
+				@if ($delegate3 !== NULL) {{ $delegate3->link }} <small>(pomožni delegat)</small>@endif
+			</td>
 		</tr>
 		<tr>
 			<td>Omejitev št. tekmovalcev</td>
@@ -52,10 +44,15 @@
 			<td>Startnina</td>
 			<td>{{ $competition->registration_fee }}</td>
 		</tr>
+		@else
+		<tr>
+			<td>Pogoji sodelovanja</td>
+			<td><a href="{{ asset('files/sodelujmo.pdf') }}">Preberi!</a></td>
+		</tr>
 		@endif
 		<tr>
 			<td>Zaporedna RubiKS tekma</td>
-			<td>{{ '/' }}</td>
+			<td>{{ Competition::where('date', '<', $competition->date)->count() + 1 }}.</td>
 		</tr>
 		<tr>
 			<td>ID tekme</td>
@@ -79,6 +76,16 @@
 
 	@if ($competition->isFinished())
 		@include('competitions.results')
+
+		<hr>
+		<p>
+			<b>NR</b> – državni rekord pod organizacijo RubiKS <br>
+			<b>PB</b> – osebni rekord pod organizacijo RubiKS <br>
+			<i>Ti dosežki niso v zvezi z dosežki pod organizacijo <a href="https://www.worldcubeassociation.org/">WCA</a>! Za absolutne rekorde in celovit pogled morate upoštevati oboje.﻿</i>
+		</p>
+
+		<small>Legenda:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNS – ni štartal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNF – ni končal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[x] – poskus ne šteje za povprečje&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format časa – MINUTE:SEKUNDE.STOTINKE</small>
+
 	@elseif ($competition->registrationsOpened() OR $competition->registrationsClosed())
 		@include('competitions.registrations')
 	@endif

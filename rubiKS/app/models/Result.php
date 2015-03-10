@@ -55,15 +55,15 @@ class Result extends Eloquent {
 	public static function parse($t, $event = NULL)
 	{
 		// DNF, DNS, DSQ
-		if (array_key_exists($t, self::$nonNumericalResults)) return self::$nonNumericalResults[$t];
+		if (array_key_exists($t, static::$nonNumericalResults)) return static::$nonNumericalResults[$t];
 
 		if ($event === '333FM') {
 			return $t . ' potez';
 		} elseif ($event === '33310MIN') {
-			//return $t . ' kock (' . self::parse($additional) . ')'; // Old format
+			//return $t . ' kock (' . static::parse($additional) . ')'; // Old format
 			$nrCubes = -1 * ((int) substr($t, 0, 3) - 400);
 			$time = (int) substr($t, 3);
-			return $nrCubes . ' kock (' . self::parse($time) . ')';
+			return $nrCubes . ' kock (' . static::parse($time) . ')';
 		}
 
 		$c = $t % 100;
@@ -98,7 +98,7 @@ class Result extends Eloquent {
 				$gotMax = TRUE;
 			}
 
-			$final[] = array('t' => self::parse($r, $event), 'exclude' => $exclude);
+			$final[] = array('t' => static::parse($r, $event), 'exclude' => $exclude);
 		}
 
 		return $final;
@@ -106,10 +106,14 @@ class Result extends Eloquent {
 
 	public static function parseAllString($results, $event)
 	{
-		$parsed = self::parseAll($results, $event);
+		$parsed = static::parseAll($results, $event);
 		$array = array();
 		foreach ($parsed as $i => $result) {
-			$array[] = $result['exclude'] ? "[" . $result['t'] . "]" : $result['t'];
+			if (count($parsed) == 5) {
+				$array[] = $result['exclude'] ? "[" . $result['t'] . "]" : $result['t'];
+			} else {
+				$array[] = $result['t'];
+			}
 		}
 		return implode(", ", $array);
 	}
@@ -124,7 +128,7 @@ class Result extends Eloquent {
 
 	public static function getResultsByEvent($event, $resultType)
 	{
-		$_results = Result::select('user_id', DB::Raw("MIN(" . $resultType . ") as 'best_result'"))
+		$_results = static::select('user_id', DB::Raw("MIN(" . $resultType . ") as 'best_result'"))
 							->where('event_id', $event->id)
 							->groupBy('user_id')
 							->orderBy('best_result', 'asc')
@@ -132,7 +136,7 @@ class Result extends Eloquent {
 
 		$results = array();
 		foreach ($_results as $result) {
-			$results[] = Result::where('event_id', $event->id)
+			$results[] = static::where('event_id', $event->id)
 								->where('user_id', $result->user_id)
 								->where($resultType, $result->best_result)
 								->orderBy('date', 'asc')
@@ -167,12 +171,17 @@ class Result extends Eloquent {
 
 	public static function dnfNumericalValue()
 	{
-		return min(array_map(function($x) { return (int) $x; }, array_keys(self::$nonNumericalResults)));
+		return min(array_map(function($x) { return (int) $x; }, array_keys(static::$nonNumericalResults)));
 	}
 
 	public static function dnsNumericalValue()
 	{
 		return array_keys(Result::$nonNumericalResults)[1];
+	}
+
+	public static function dsqNumericalValue()
+	{
+		return array_keys(Result::$nonNumericalResults)[2];
 	}
 
 }

@@ -22,7 +22,7 @@
 				<span class="glyphicon glyphicon-tower"></span> Državno prvenstvo
 			</a>
 		</li>
-		
+
 		<li><a href="{{ url('competitors') }}"><span class="glyphicon glyphicon-user"></span> Tekmovalci</a></li>
 		<li><a href="{{ url('records') }}"><span class="glyphicon glyphicon-star"></span> Rekordi</a></li>
 		<li><a href="{{ url('rankings') }}"><span class="glyphicon glyphicon-stats"></span> Rezultati</a></li>
@@ -62,8 +62,8 @@
 				<li class='has-sub'>
 					<a href="#">Forum</a>
 					<ul>
-						<li><a href="{{ url('http://www.rubik.si/viewforum.php?f=30') }}" target="_blank">Teme o klubu</a></li>
-						<li><a href="{{ url('http://www.rubik.si/viewforum.php?f=35') }}" target="_blank">Teme za člane</a></li>
+						<li><a href="{{ url('http://www.rubik.si/forum/viewforum.php?f=30') }}" target="_blank">Teme o klubu</a></li>
+						<li><a href="{{ url('http://www.rubik.si/forum/viewforum.php?f=35') }}" target="_blank">Teme za člane</a></li>
 					</ul>
 				</li>
 
@@ -80,6 +80,7 @@
 			</ul>
 		</li>
 		<li><a href="{{ url('credits') }}"><span class="glyphicon glyphicon-heart"></span> Zahvale</a></li>
+		<li><a href="http://www.rubik.si/forum/"><span class="glyphicon glyphicon-comment"></span> Forum</a></li>
 	</ul>
 </div>
 <hr>

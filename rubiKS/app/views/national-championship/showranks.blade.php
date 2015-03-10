@@ -2,7 +2,7 @@
 @foreach ($periods as $i => $period)
 	<?php if (strtotime($period['start_date']) > strtotime(date('Y-m-d'))) continue; ?>
 	<div class="col-md-6">
-		<table class="table table-condensed table-striped">
+		<table class="table table-condensed table-striped table-results">
 			<thead>
 				<tr>
 					<th></th>
@@ -14,7 +14,12 @@
 				@foreach ($results[$i] as $result)
 					<?php $user = $result->user; ?>
 					<tr>
-						<td class="text-right">{{ $result->championship_rank }}. </td>
+						<td class="text-right">
+							@if ($result->championship_rank > 0)
+								{{ $result->championship_rank }}.
+							@endif
+							&nbsp;
+						</td>
 						<td>{{ $user->link_distinct_foreign }}</td>
 						<td>{{ Result::parse($result->$resultType, $event->readable_id) }}</td>
 					</tr>

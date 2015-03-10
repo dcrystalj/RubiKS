@@ -4,7 +4,7 @@
 
 	@include('national-championship.selection')
 
-	<table class="table table-condensed table-striped">
+	<table class="table table-condensed table-striped table-results">
 		<thead>
 			<tr>
 				<th class="text-right">Mesto</th>
@@ -14,7 +14,7 @@
 		</thead>
 		<tbody>
 			{{-- 2011 --}}
-			@if ($year == 2011) 
+			@if ($year == 2011)
 				<tr>
 					<td colspan="3" class="text-center">
 						<b>Leta 2011 nismo beležili skupnega vrstnega reda. </b>
@@ -28,7 +28,7 @@
 					<td class="text-right">{{ $entry->rank }}.</td>
 					<td>{{ $user->link_distinct_foreign }}</td>
 					<td class="text-right">
-						<?php 
+						<?php
 							// Format competitor's ranks
 							$individualRanks = array();
 							foreach (explode(',', $entry->details) as $rank) {

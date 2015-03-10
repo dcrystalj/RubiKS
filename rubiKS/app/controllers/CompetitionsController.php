@@ -17,7 +17,7 @@ class CompetitionsController extends \BaseController {
 	public function indexFuture()
 	{
 		$competitions = Competition::where('status', '>', '-1')->orderBy('date', 'desc')->get();
-		return View::make('competitions.index')->with('competitions', $competitions);
+		return View::make('competitions.index')->with('competitions', $competitions)->with('future', true);
 	}
 
 	public function show($id)

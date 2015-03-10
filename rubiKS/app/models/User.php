@@ -195,6 +195,13 @@ class User extends ConfideUser {
 		return $this->link_inverse . ($this->nationality == 'SI' ? '' : ' *');
 	}
 
+    public function isClubMember()
+    {
+        $year = (int) date("Y");
+        if (date("n") == 1) $year--; // date("n") = month (1-12)
+        return $year <= $this->membership_year;
+    }
+
 	public static function validGender($gender)
 	{
 		return in_array($gender, ['m', 'f']);
@@ -210,7 +217,13 @@ class User extends ConfideUser {
 	 */
 	public static function generateClubId($user)
 	{
-		return strtoupper($user->nationality . $user->getRawGenderAttribute() . substr($user->birth_date, 2, 2) . substr($user->last_name, 0, 3)  . substr($user->name, 0, 2) . date('y'));
+        $search = array(' ', 'č', 'Č', 'š', 'Š', 'ž', 'Ž', 'ć', 'Ć', 'đ', 'Đ');
+        $replace = array('', 'C', 'C', 'S', 'S', 'Z', 'Z', 'C', 'C', 'D', 'D');
+        $name = str_replace($search, $replace, $user->name);
+        $last_name = str_replace($search, $replace, $user->last_name);
+        $name = preg_replace('/[^A-Za-z]/', '', $name);
+        $last_name = preg_replace('/[^A-Za-z]/', '', $last_name);
+		return strtoupper($user->nationality . $user->getRawGenderAttribute() . substr($user->birth_date, 2, 2) . substr($last_name, 0, 3)  . substr($name, 0, 2) . date('y'));
 	}
 
 	/*
@@ -225,7 +238,7 @@ class User extends ConfideUser {
      * If provided password is empty, use the old one instead.
      * Ensures compatibility with Administrator.
      *
-     * @param string $value 
+     * @param string $value
      */
     public function setPasswordAttribute($value)
     {
@@ -235,6 +248,19 @@ class User extends ConfideUser {
     	} else {
     		$this->attributes['password'] = $value;
     	}
+    }
+
+    public function setConfirmedAttribute($value)
+    {
+        if ($this->attributes['confirmed'] == "0" && $value == "1") {
+            $address = $this->email;
+            Mail::send('emails.confirmed', array('user' => $this), function($message) use ($address) {
+                $message->to($address)->subject('Vaš račun je potrjen!');
+            });
+            $this->attributes['confirmed'] = "1";
+        } else {
+            $this->attributes['confirmed'] = $value;
+        }
     }
 
     public function getMedals()

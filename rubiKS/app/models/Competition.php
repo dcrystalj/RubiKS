@@ -18,7 +18,7 @@ class Competition extends Eloquent {
 
 	public function approvedRegistrations()
 	{
-		return $this->registrations()->where('confirmed', '1');	
+		return $this->registrations()->where('confirmed', '1');
 	}
 
 	public function getDelegates()
@@ -31,7 +31,7 @@ class Competition extends Eloquent {
 
 		$delegates = array();
 		foreach ($ids as $id) $delegates[] = $id == NULL ? NULL : $_delegates[$id];
-		
+
 		return $delegates;
 	}
 
@@ -82,11 +82,11 @@ class Competition extends Eloquent {
 					}
 
 					// Check whether a better result exists
-					if ($r->single < $finalRound[$r->user_id]->single) $finalRound[$r->user_id]->single = $r->single;
 					if ($r->average < $finalRound[$r->user_id]->average) {
 						$finalRound[$r->user_id]->average = $r->average;
 						$finalRound[$r->user_id]->results = $r->results;
 					}
+					// Zaenkrat ne bomo podpirali več krogov disicplin, ki se razvrščajo po single-u!
 				}
 
 				// Re-sort
@@ -100,18 +100,19 @@ class Competition extends Eloquent {
 				$results[$eventId][Round::DEFAULT_FINAL_ROUND_ID] = $finalRound;
 			}
 		}
-		
+
 		// Calculate ranks for each round
 		foreach ($results as $eventId => $rounds) {
 			foreach ($rounds as $roundId => $round) {
-				$rank = 1;
+				$rank = 0;
 				$i = 0;
 				$previous = array('single' => null, 'average' => null);
-				foreach ($round as $i => $result) {
+				foreach ($round as $j => $result) {
 					if ($result->average == $previous['average'] AND $result->single == $previous['single']) {
 						$result->round_rank = $rank;
 						$i++;
 					} else {
+						$rank++;
 						$result->round_rank = $rank + $i;
 						$i = 0;
 					}
@@ -119,6 +120,9 @@ class Competition extends Eloquent {
 				}
 			}
 		}
+
+		// Backwards compatibility - add events even if they're not in `events` column.
+		$events = Event::all();
 
 		// Backwards compatibility - delete events with no results
 		$eventsWithResults = array_keys($results);
@@ -144,7 +148,15 @@ class Competition extends Eloquent {
 	public static function getEvents($events, $array = FALSE)
 	{
 		if ($array) return explode(' ', $events);
-		return Event::whereRaw("readable_id IN ('" . implode("','", explode(' ', $events)) . "')")->get();
+		//return Event::whereRaw("readable_id IN ('" . implode("','", explode(' ', $events)) . "')")->get();
+		// We want to preserve the order of the `events` column
+		$collection = new Illuminate\Support\Collection(array());
+		$events = explode(' ', $events);
+		foreach ($events as $eventReadableId) {
+			$e = Event::where('readable_id', $eventReadableId)->first();
+			if ($e != NULL) $collection->push($e);
+		}
+		return $collection;
 	}
 
 	public static function getCompetitionByShortName($shortName)
