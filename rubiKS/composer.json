@@ -8,10 +8,7 @@
 		"laravelbook/ardent": "dev-master",
 		"zizaco/confide": "3.2.x",
 		"zizaco/entrust": "1.2.0",
-		"frozennode/administrator": "dev-master",
-		"magniloquent/magniloquent": "dev-master",
-		"patricktalmadge/bootstrapper": "dev-develop",
-		"anahkiasen/former": "dev-master"
+		"frozennode/administrator": "4.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.1.*",
