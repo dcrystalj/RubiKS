@@ -43,7 +43,13 @@
 			</tr>
 			<tr>
 				<td>Status</td>
-				<td>{{ $user->club_authority }}</td>
+				<?php
+					$roles = array();
+					foreach ($user->roles as $role) $roles[] = $role->name;
+					if ($user->isClubMember()) $roles[] = "Član kluba";
+					$roles = implode(", ", $roles);
+				?>
+				<td>{{ $roles }}</td>
 			</tr>
 		</table>
 	</div>
