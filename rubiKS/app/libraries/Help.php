@@ -12,6 +12,7 @@ class Help
 		'ES' => 'špansko',
 		'FR' => 'francosko',
 		'BR' => 'brazilsko',
+		'UA' => 'ukrajinsko',
 
 		'XX' => 'drugo',
 	];
@@ -26,6 +27,7 @@ class Help
 		'ES' => 'Španija',
 		'FR' => 'Francija',
 		'BR' => 'Brazilija',
+		'UA' => 'Ukrajina',
 
 		'XX' => '/',
 	];
@@ -35,7 +37,7 @@ class Help
 		if (array_key_exists($nid, self::$nationalities)) return self::$nationalities[$nid];
 		return 'XX';
 	}
-	
+
 	public static function country($cid)
 	{
 		if (array_key_exists($cid, self::$countries)) return self::$countries[$cid];
