@@ -13,6 +13,7 @@ class Help
 		'FR' => 'francosko',
 		'BR' => 'brazilsko',
 		'UA' => 'ukrajinsko',
+		'RU' => 'rusko',
 
 		'XX' => 'drugo',
 	];
@@ -28,6 +29,7 @@ class Help
 		'FR' => 'Francija',
 		'BR' => 'Brazilija',
 		'UA' => 'Ukrajina',
+		'RU' => 'Rusija',
 
 		'XX' => '/',
 	];
