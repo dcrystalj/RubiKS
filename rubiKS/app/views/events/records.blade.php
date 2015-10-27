@@ -1,7 +1,7 @@
 @extends('main')
 @section('content')
 	<h4>Rekordi</h4>
-	<table class="table table-condensed">
+	<table class="table table-condensed table-results">
 		<thead>
 			<tr>
 				<th>Disciplina</th>

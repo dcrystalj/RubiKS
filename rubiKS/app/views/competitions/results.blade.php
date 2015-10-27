@@ -1,3 +1,4 @@
+<?php $showNB = false; ?>
 @foreach ($events as $event)
 	@foreach ($results[$event->id] as $roundId => $roundResults)
 		<?php $round = $rounds[$roundId]; ?>
@@ -40,7 +41,8 @@
 							@if ($result->isSingleNR() && $result->user->nationality === "SI")
 								 <b>NR</b>
 							@elseif ($result->isSingleNR())
-								 <b>NB</b>
+								 NB
+								 <?php $showNB = true; ?>
 							@elseif ($result->isSinglePB())
 							 	 PB
 							@endif {{-- NR/NB/PB --}}
@@ -51,7 +53,8 @@
 								@if ($result->isAverageNR() && $result->user->nationality === "SI")
 									 <b>NR</b>
 								@elseif ($result->isAverageNR())
-									 <b>NB</b>
+									 NB
+									 <?php $showNB = true; ?>
 								@elseif ($result->isAveragePB())
 									 PB
 								@endif {{-- NR/NB/PB --}}
@@ -66,3 +69,13 @@
 		</table>
 	@endforeach
 @endforeach
+
+<hr>
+<p>
+	<b>NR</b> – državni rekord pod organizacijo RubiKS <br>
+	@if ($showNB) <b>NB</b> – najboljši rezultat tuje države pod organizacijo RubiKS <br> @endif
+	<b>PB</b> – osebni rekord pod organizacijo RubiKS <br>
+	<i>Ti dosežki niso v zvezi z dosežki pod organizacijo <a href="https://www.worldcubeassociation.org/">WCA</a>! Za absolutne rekorde in celovit pogled morate upoštevati oboje.﻿</i>
+</p>
+
+<small>Legenda:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNS – ni štartal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNF – ni končal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[x] – poskus ne šteje za povprečje&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format časa – MINUTE:SEKUNDE.STOTINKE</small>

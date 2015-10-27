@@ -36,7 +36,11 @@
 				</tr>
 			</thead>
 			<tr>
+				@if ($user->nationality === "SI")
 				<td>Državni rekordi (posamično + povprečje)</td>
+				@else
+				<td>Rezultatov države (posamično + povprečje)</td>
+				@endif
 				<td>{{ $stats['single_nr'] }} + {{ $stats['average_nr'] }} = <b>{{ $stats['single_nr'] + $stats['average_nr'] }}</b></td>
 			</tr>
 			<tr>

@@ -23,6 +23,14 @@ class Event extends Eloquent {
 		});
 	}
 
+	/**
+	 * Default behaviour of Eloquent::all().
+	 * Needed in SimpleResultsController.
+	 */
+	public static function allSortById($columns = array('*')) {
+		return parent::all($columns);
+	}
+
 	public function results()
 	{
 		return $this->hasMany('Result');

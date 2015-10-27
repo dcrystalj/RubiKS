@@ -76,16 +76,6 @@
 
 	@if ($competition->isFinished())
 		@include('competitions.results')
-
-		<hr>
-		<p>
-			<b>NR</b> – državni rekord pod organizacijo RubiKS <br>
-			<b>PB</b> – osebni rekord pod organizacijo RubiKS <br>
-			<i>Ti dosežki niso v zvezi z dosežki pod organizacijo <a href="https://www.worldcubeassociation.org/">WCA</a>! Za absolutne rekorde in celovit pogled morate upoštevati oboje.﻿</i>
-		</p>
-
-		<small>Legenda:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNS – ni štartal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNF – ni končal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[x] – poskus ne šteje za povprečje&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format časa – MINUTE:SEKUNDE.STOTINKE</small>
-
 	@elseif ($competition->registrationsOpened() OR $competition->registrationsClosed())
 		@include('competitions.registrations')
 	@endif
