@@ -9,7 +9,7 @@ class CreditsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$credits = Credit::all();
+		$credits = Credit::orderBy('id', 'desc')->get();
 		return View::make('credits.index')->with('credits', $credits);
 	}
 
