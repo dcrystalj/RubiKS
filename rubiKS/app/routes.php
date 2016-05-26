@@ -48,6 +48,27 @@ Route::get('logout', 'UsersConfideController@getLogout');
 
 Route::resource('registrations', 'RegistrationsController');
 
+if (App::environment('local') || App::environment('homestead') || (!Auth::guest() && Auth::user()->can('manage_competitions'))) {
+    Route::get('simpleresults/export', 'SimpleResultsController@export');
+    Route::resource('simpleresults', 'SimpleResultsController');
+    Route::get('entry', 'SimpleResultsController@dataentry');
+    Route::controller('results', 'ResultsController');
+
+    /*
+    Route::get('entry/delete-all', function() {
+        return SimpleResult::where('id', '>', 0)->delete();
+    });
+    // */
+}
+
+// Migrate
+if (!Auth::guest() && Auth::user()->can('sudo')) {
+    Route::get('migrate', function() {
+        $status = Artisan::call('migrate');
+        var_dump($status);
+    });
+}
+
 App::missing(function($exception)
 {
     return Response::view('errors.missing', array(), 404);
